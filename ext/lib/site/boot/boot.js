@@ -1,6 +1,4 @@
-import 'native-promise-only'
-import 'whatwg-fetch'
-import 'location-origin'
+import 'lib/site/polyfills/polyfills'
 import '../user/user'
 import './overrides'
 import '../signup-complete/signup-complete'
