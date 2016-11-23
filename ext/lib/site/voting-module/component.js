@@ -151,12 +151,14 @@ function VotingSuccess () {
       <div className='social-links'>
         <SharerFacebook
           params={{
-            picture: 'https://cldup.com/quswAMk9Ns.png',
-            link: 'https://participa.rosario.gob.ar/presupuesto'
+            picture: 'https://cldup.com/1ZhVXvP3RF.jpg',
+            link: 'https://participa.rosario.gob.ar/presupuesto',
+            name: 'Rosario Participa',
+            description: 'Votá en el Presupuesto Participativo entrando a participa.rosario.gob.ar. Sumate a mejorar tu lugar #YoVotoPorMiBarrio'
           }} />
         <a
           target='_blank'
-          href={`http://twitter.com/home?status=${encodeURIComponent('Ya voté en el Presupuesto Participativo. Entrá a participa.rosario.gob.ar y sumate a mejorar tu lugar #YoVotoPorMiBarrio @RParticipa https://participa.rosario.gob.ar/presupuesto')}`}>
+          href={`http://twitter.com/home?status=${encodeURIComponent('Ya voté en el Presupuesto Participativo. Entrá y sumate a mejorar tu lugar #YoVotoPorMiBarrio @RParticipa https://participa.rosario.gob.ar/presupuesto')}`}>
           <i className='icon-social-twitter' />
         </a>
       </div>
