@@ -35,6 +35,14 @@ class VotingModule extends Component {
     //   loading: false,
     //   message: <VotingSuccess />
     // })
+    // return this.setState({
+    //   loading: false,
+    //   message: (<Link
+    //     to='/ext/api/participatory-budget/vote'
+    //     className='btn btn-lg btn-block btn-primary'>
+    //     Votar
+    //   </Link>)
+    // })
 
     if (props.user.state.pending) {
       return this.setState({loading: true})
