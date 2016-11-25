@@ -31,6 +31,11 @@ class VotingModule extends Component {
   }
 
   componentWillReceiveProps (props) {
+    // return this.setState({
+    //   loading: false,
+    //   message: <VotingSuccess />
+    // })
+
     if (props.user.state.pending) {
       return this.setState({loading: true})
     }
@@ -141,27 +146,56 @@ class VotingModule extends Component {
 
 export default userConnector(VotingModule)
 
-function VotingSuccess () {
-  return (
-    <div className='voting-success' role='alert'>
-      <div className='text'>
-        <h1>¡Gracias por tu Voto!</h1>
-        <span>Compartilo con tus vecinos</span>
-      </div>
-      <div className='social-links'>
-        <SharerFacebook
-          params={{
-            picture: 'https://cldup.com/1ZhVXvP3RF.jpg',
-            link: 'https://participa.rosario.gob.ar/presupuesto',
-            name: 'Rosario Participa',
-            description: 'Votá en el Presupuesto Participativo entrando a participa.rosario.gob.ar. Sumate a mejorar tu lugar #YoVotoPorMiBarrio'
-          }} />
-        <a
-          target='_blank'
-          href={`http://twitter.com/home?status=${encodeURIComponent('Ya voté en el Presupuesto Participativo. Entrá y sumate a mejorar tu lugar #YoVotoPorMiBarrio @RParticipa https://participa.rosario.gob.ar/presupuesto')}`}>
-          <i className='icon-social-twitter' />
-        </a>
-      </div>
-    </div>
-  )
+class VotingSuccess extends Component {
+  hidden = false
+
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      hidden: VotingSuccess.hidden
+    }
+  }
+
+  handleCloseClick = (evt) => {
+    VotingSuccess.hidden = true
+    this.setState({hidden: true})
+  }
+
+  render () {
+    if (this.state.hidden) return null
+
+    return (
+      <div className='voting-success' role='alert'>
+        <div className='text'>
+          <h1>¡Gracias por tu Voto!</h1>
+          <span>Compartilo con tus vecinos</span>
+        </div>
+        <span className='btn-close' onClick={this.handleCloseClick}>
+          <i className='icon-close' />
+        </span>
+        <div className='social-links'>
+          <SharerFacebook
+            params={{
+              picture: 'https://cldup.com/1ZhVXvP3RF.jpg',
+              link: 'https://participa.rosario.gob.ar/presupuesto',
+              name: 'Rosario Participa',
+              description: 'Votá en el Presupuesto Participativo entrando a participa.rosario.gob.ar. Sumate a mejorar tu lugar #YoVotoPorMiBarrio'
+            }} />
+            <a
+              target='_blank'
+              href={`http://twitter.com/home?status=${encodeURIComponent('Ya voté en el Presupuesto Participativo. Entrá y sumate a mejorar tu lugar #YoVotoPorMiBarrio @RParticipa https://participa.rosario.gob.ar/presupuesto')}`}>
+              <i className='icon-social-twitter' />
+            </a>
+          </div>
+          <a
+            className='survey'
+            target='_blank'
+            rel='noopener noreferrer'
+            href='https://democracyos.typeform.com/to/F3oBGE'>
+            <p>Dejanos tu opinión, clic aquí.</p>
+          </a>
+        </div>
+      )
+    }
 }

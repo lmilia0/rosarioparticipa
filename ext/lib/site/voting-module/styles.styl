@@ -30,16 +30,28 @@
         background-color: #fff
 
   .voting-success
-    color: #fff
     display: flex
     flex-direction: row
     justify-content: center
     flex-wrap: wrap
     align-items: center
+    position: relative
+    color: #fff
     width: 100%
-    padding: 1.5em 0
+    padding: 1.5em 0 0
     text-align: center
     background-color: #294b68
+
+    .btn-close
+      position: absolute
+      top: 0
+      right: 0
+      padding: 1em
+      cursor: pointer
+      transition: background-color .3s
+
+      &:hover
+        background-color: rgba(#fff, .2)
 
     .social-links,
     .text
@@ -61,3 +73,14 @@
 
       &:hover
         background-color: rgba(#fff, .2)
+
+    .survey
+      display: block
+      margin: .7em 0 0
+      padding: .5em 0
+      width: 100%
+      font-size: 16px
+
+      p
+        margin: 0
+        font-size: 13px
