@@ -27,7 +27,7 @@ export default function TopicCard (props) {
           <div className='social-links'>
             <SharerFacebook
               className='fb'
-              params={{picture: topic.coverUrl, link: topic.url}} />
+              params={{picture: topic.coverUrl, link: topicUrl}} />
             <span
               onClick={handleLinkClick}
               target='_blank'

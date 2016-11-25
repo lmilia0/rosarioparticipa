@@ -72,8 +72,13 @@ export function SharerFacebook (args) {
     cursor: 'pointer'
   }, props.style)
 
+  function handleClick (evt) {
+    evt.preventDefault()
+    sharerFacebook(params)
+  }
+
   return (
-    <span {...props} onClick={sharerFacebook.bind(null, params)}>
+    <span {...props} onClick={handleClick}>
       <i className='icon-social-facebook' />
     </span>
   )
