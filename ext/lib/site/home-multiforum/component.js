@@ -2,25 +2,7 @@ import React from 'react'
 import {Link} from 'react-router'
 import config from 'lib/config'
 import TweetsFeed from '../tweets-feed/component'
-
-const videos = [
-  {
-    video: 'https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-01.mp4',
-    image: 'https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-01.jpg'
-  }, {
-    video: 'https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-02.mp4',
-    image: 'https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-02.jpg'
-  }, {
-    video: 'https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-03.mp4',
-    image: 'https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-03.jpg'
-  }, {
-    video: 'https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-04.mp4',
-    image: 'https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-04.jpg'
-  }, {
-    video: 'https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-05.mp4',
-    image: 'https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-05.jpg'
-  }
-]
+import videos from './videos.json'
 
 export default function HomeMultiforumOverride (props) {
   const video = videos[Math.floor(Math.random() * videos.length)]

@@ -1,0 +1,22 @@
+[
+  {
+    "video": "https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-01.mp4",
+    "image": "https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-01.jpg"
+  },
+  {
+    "video": "https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-02.mp4",
+    "image": "https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-02.jpg"
+  },
+  {
+    "video": "https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-03.mp4",
+    "image": "https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-03.jpg"
+  },
+  {
+    "video": "https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-04.mp4",
+    "image": "https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-04.jpg"
+  },
+  {
+    "video": "https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-05.mp4",
+    "image": "https://s3-sa-east-1.amazonaws.com/rosariociudad-democracyos/rosario-05.jpg"
+  }
+]
