@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router'
 import t from 't-component'
+import jump from 'jump.js'
 import forumStore from 'lib/stores/forum-store/forum-store'
 import topicStore from 'lib/stores/topic-store/topic-store'
 import user from 'lib/site/user/user'
 import userConnector from 'lib/site/connectors/user'
 import VotingModule from '../voting-module/component'
 import TopicCard from './topic-card/component'
-import jump from 'jump.js'
 
 const distritos = [
   {title: 'Centro', name: 'centro'},
