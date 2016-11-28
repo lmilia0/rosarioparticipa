@@ -3,6 +3,7 @@ import {browserHistory} from 'react-router'
 import user from 'lib/site/user/user'
 import userConnector from 'lib/site/connectors/user'
 import * as Layout from 'lib/site/layout/component'
+import VotingModule from '../voting-module/component'
 
 const LayoutOriginal = Layout.default
 
@@ -11,11 +12,19 @@ class LayoutOverride extends Component {
     super(props)
 
     this.state = {
-      askedCompleteProfile: props.location.pathname === '/signup/complete'
+      askedCompleteProfile: props.location.pathname === '/signup/complete',
+      props: null
     }
   }
 
-  componentWillMount () {
+  componentDidMount () {
+    const children = React.Children.toArray(this.props.children)
+    children.push(<VotingModule key='voting-module'/>)
+
+    this.setState({
+      props: Object.assign({}, this.props, {children})
+    })
+
     user.onChange(this.handleUserStateChange)
   }
 
@@ -39,6 +48,13 @@ class LayoutOverride extends Component {
     } else if (user.state.pending || user.state.rejected) {
       browserHistory.push('/')
     }
+
+    const children = React.Children.toArray(nextProps.children)
+    children.push(<VotingModule key='voting-module'/>)
+
+    this.setState({
+      props: Object.assign({}, nextProps, {children})
+    })
   }
 
   handleUserStateChange = () => {
@@ -50,7 +66,7 @@ class LayoutOverride extends Component {
   render () {
     if (this.props.user.state.pending) return null
 
-    return <LayoutOriginal {...this.props} />
+    return <LayoutOriginal {...this.state.props}/>
   }
 }
 

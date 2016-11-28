@@ -6,7 +6,6 @@ import forumStore from 'lib/stores/forum-store/forum-store'
 import topicStore from 'lib/stores/topic-store/topic-store'
 import user from 'lib/site/user/user'
 import userConnector from 'lib/site/connectors/user'
-import VotingModule from '../voting-module/component'
 import TopicCard from './topic-card/component'
 
 const distritos = [
@@ -144,7 +143,6 @@ class HomePresupuesto extends Component {
     // </a>
     return (
       <div className='ext-home-presupuesto'>
-        <VotingModule />
         <div className='cover'>
           <div className='container'>
             <h1>Votá los proyectos<br/>que querés para tu barrio</h1>

@@ -30,7 +30,17 @@ class VotingModule extends Component {
     }
   }
 
-  componentWillReceiveProps (props) {
+  componentDidMount () {
+    this.fetchVotingData()
+  }
+
+  componentWillReceiveProps () {
+    this.fetchVotingData()
+  }
+
+  fetchVotingData = () => {
+    const props = this.props
+    
     // return this.setState({
     //   loading: false,
     //   message: <VotingSuccess />
