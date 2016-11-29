@@ -4,6 +4,7 @@ import user from 'lib/site/user/user'
 import userConnector from 'lib/site/connectors/user'
 import {SharerFacebook} from 'ext/lib/site/sharer'
 import fetchStatus from './fetch-status'
+import moment from 'moment'
 
 /*
 
@@ -18,6 +19,8 @@ mensaje.estado.11 = Se encuentra en el período de votación.
 mensaje.estado.12 = El período de votación ha finalizado.
 
  */
+
+const closingDate = Date.parse('Tue, 29 Nov 2016 11:00:00 GMT-0300')
 
 class VotingModule extends Component {
   constructor (props) {
@@ -40,7 +43,11 @@ class VotingModule extends Component {
 
   fetchVotingData = () => {
     const props = this.props
-    
+
+    if (Date.now() >= closingDate) {
+      return this.setState({loading: true})
+    }
+
     // return this.setState({
     //   loading: false,
     //   message: <VotingSuccess />
