@@ -39,14 +39,15 @@ export default function HomeMultiforumOverride (props) {
         <div className='container'>
           <div className='row'>
             <div className='col-md-6'>
-              <p className='light-text'>Del 18 al 28 de noviembre podés elegir <strong>un proyecto para tu barrio y uno para tu distrito</strong>.</p>
-              <p className='light-text'>Si tenés menos de 18 años, podés votar <strong>tres proyectos</strong> en el <strong>Presupuesto Participativo Joven</strong>.</p>
-              <p className='light-text'>El presupuesto total es de 207 millones de pesos.</p>
-              <p className='light-text'>Los proyectos surgen de las reuniones de Consejos Barriales, fueron presentados por los consejeros electos y trabajados con los equipos del distrito.</p>
+              <h2 className='section-subtitle'>Últimas noticias</h2>
+              <p className='light-text'>Del 18 al 28 de noviembre votaste en el <strong>Presupuesto Participativo</strong>, un proyecto para tu barrio y otro para tu distrito. Los jóvenes pudieron elegir tres proyectos en el <strong>Presupuesto Participativo Joven</strong>.</p>
+              <p className='light-text'>Hoy a las 12 hs. comenzó el <strong>escrutinio</strong> y cuando se inicie la transmisión daremos a conocer los proyectos que resultaron más votados, los que <strong>vos elegiste para cambiar tu barrio</strong>.</p>
               <Link
-                to='/s/terminos-y-condiciones'
+                to='http://www.rosarionoticias.gob.ar/page/noticias/tag/Presupuesto%20Participativo'
+                target='_blank'
+                rel='noopener noreferrer'
                 className='btn btn-primary mas-info'>
-                Más información
+                Ver Noticias
               </Link>
             </div>
             <div className='col-md-6 video-container'>
@@ -63,7 +64,7 @@ export default function HomeMultiforumOverride (props) {
         <div className='container'>
           <div className='row'>
             <div className='col-md-6'>
-              <span className='en-curso'>En curso (votado en 2015)</span>
+              <h2 className='section-title'>En curso (votado en 2015)</h2>
               <h2>Presupuesto Participativo 2016</h2>
               <p>El año pasado, vecinos de todos los distritos priorizaron los proyectos para nuestra ciudad.</p>
               <ul className='proyectos-stats'>
