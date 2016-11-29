@@ -56,7 +56,7 @@ class VotingModule extends Component {
               target='_blank'
               className='btn btn-lg btn-outline-secondary'>
               <i className='icon-camrecorder'/>
-              Ver escrutinio en Vivo
+              Ver el anuncio de los ganadores en Vivo
             </Link>
           </div>
         )
