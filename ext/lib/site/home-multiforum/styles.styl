@@ -161,55 +161,65 @@
       color: #00adef
       font-weight: bold
       background: #f3f3f3
+
     .linea-tiempo
       display: flex
       justify-content: center
+
       ul
         padding: 0
         margin: 0
         list-style: none
-        li
-          border-left: 7px solid #fff
-          padding: 40px 17px 30px
-          position: relative
+
+      li
+        border-left: 7px solid #fff
+        padding: 40px 17px 30px
+        position: relative
+
+        &:last-child
+          border-left: none
+          margin-left: 7px
+
+        &::before
+          content: " "
+          width: 22px
+          height: 22px
+          background: #fff
+          position: absolute
+          border-radius: 50%
+          left: -15px
+          top: -1px
+
+        h4
+          background: #525252
+          display: inline
+          padding: 5px 10px
+          font-weight: 100
+          position: absolute
+          margin-left: 15px
+          top: -29px
+          left: 20px
+          font-size: 19px
+
           &::before
             content: " "
-            width: 22px
-            height: 22px
-            background: #fff
+            width: 0
+            height: 0
+            top: 6px
+            left: -6px
+            border-style: solid
             position: absolute
-            border-radius: 50%
-            left: -15px
-            top: -1px
-          h4
-            background: #525252
-            display: inline
-            padding: 5px 10px
-            font-weight: 100
-            position: absolute
-            margin-left: 15px
-            top: -29px;
-            left: 20px;
-            font-size: 19px
-            &::before
-              content: " "
-              width: 0
-              height: 0
-              top: 6px
-              left: -6px
-              border-style: solid
-              position: absolute
-              border-width: 7px 7px 7px 0
-              border-color: transparent #525252 transparent transparent
-          span
-            display: block
-          &:last-child
-            border-left: none
-            margin-left: 7px
-            h4
-              background: #f7941d
-              &::before
-                border-color: transparent #f7941d transparent transparent
+            border-width: 7px 7px 7px 0
+            border-color: transparent #525252 transparent transparent
+            
+        span
+          display: block
+
+      .highlighted
+        h4
+          background: #f7941d
+          &::before
+            border-color: transparent #f7941d transparent transparent
   footer
     background: #a5a7a9
     display: inline-block

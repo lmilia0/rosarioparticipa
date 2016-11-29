@@ -64,58 +64,57 @@ export default function HomeMultiforumOverride (props) {
         <div className='container'>
           <div className='row'>
             <div className='col-md-6'>
-              <h2 className='section-title'>En curso (votado en 2015)</h2>
-              <h2>Presupuesto Participativo 2016</h2>
-              <p>El año pasado, vecinos de todos los distritos priorizaron los proyectos para nuestra ciudad.</p>
+              <h2 className='section-title'>Votación actual 2016</h2>
+              <h2>Presupuesto Participativo 2017</h2>
+              <p>En las últimas semanas, vecinos de todos los distritos priorizaron los nuevos proyectos para mejorar nuestra ciudad.</p>
               <ul className='proyectos-stats'>
                 <li>
                   <span className='img'></span>
-                  <span className='num'>302</span>
+                  <span className='num'>134</span>
                   <p>Proyectos<br />presentados</p>
                 </li>
                 <li>
                   <span className='img'></span>
-                  <span className='num'>155 millones</span>
+                  <span className='num'>209 millones</span>
                   <p>Presupuesto<br />asignado</p>
                 </li>
+                {/*
                 <li>
                   <span className='img'></span>
                   <span className='num'>176</span>
                   <p>Proyectos<br />votados</p>
                 </li>
+                */}
               </ul>
               <Link
-                to='http://www.rosario.gob.ar/web/gobierno/presupuestos/presupuesto-participativo'
-                target='_blank'
-                rel='noopener noreferrer'
+                to='/presupuesto'
                 className='btn ver-mas'>
-                Ver más resultados
+                Ver proyectos
               </Link>
             </div>
             <div className='col-md-6 linea-tiempo'>
               <ul>
+                <li className='highlighted'>
+                  <h4>2016</h4>
+                  <span>- Ejecución del presupuesto votado en 2015</span>
+                </li>
                 <li>
-                  <h4>Marzo - Abril 2015</h4>
+                  <h4>Mayo - Junio 2016</h4>
                   <span>- Reuniones de vecinos en todos los barrios</span>
                   <span>- Elección de Consejeros</span>
                   <span>- Formación de los Consejos Participativos</span>
                 </li>
                 <li>
-                  <h4>Mayo - Octubre 2015</h4>
+                  <h4>Julio - Octubre 2016</h4>
                   <span>- Elaboración de proyectos en los Consejos Participativos</span>
                 </li>
                 <li>
-                  <h4>Noviembre 2015</h4>
+                  <h4>Noviembre 2016</h4>
                   <span>- Presentación y votación de los proyectos</span>
                 </li>
-                <li>
-                  <h4>Diciembre 2015</h4>
-                  <span>- Presentación de balance de ejecución de lo votado en 2014</span>
-                  <span>- Presentación de los proyectos elegidos por los vecinos</span>
-                </li>
-                <li>
-                  <h4>2016</h4>
-                  <span>- Ejecución del presupuesto</span>
+                <li className='highlighted'>
+                  <h4>2017</h4>
+                  <span>- Ejecución del presupuesto 2017</span>
                 </li>
               </ul>
             </div>
