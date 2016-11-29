@@ -45,7 +45,20 @@ class VotingModule extends Component {
     const props = this.props
 
     if (Date.now() >= closingDate) {
-      return this.setState({loading: true})
+      return this.setState({
+        loading: false,
+        error: null,
+        message: (
+          <div className='voting-action' role='alert'>
+            <p>Ya cerró la votación, al finalizar el escrutinio vas a poder conocer los proyectos ganadores.</p>
+            <Link
+              to='/presupuesto'
+              className='btn btn-lg btn-outline-secondary'>
+              Ver Proyectos
+            </Link>
+          </div>
+        )
+      })
     }
 
     // return this.setState({
