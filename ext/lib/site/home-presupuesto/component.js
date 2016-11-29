@@ -89,8 +89,8 @@ class HomePresupuesto extends Component {
       .then(([topics, topicsJoven]) => {
         this._fetchingTopics = false
 
-        topics = sortTopicsByExtraNumber(topics)
-        topicsJoven = sortTopicsByExtraNumber(topicsJoven)
+        topics = sortTopics(topics)
+        topicsJoven = sortTopics(topicsJoven)
 
         this.setState({
           loading: false,
@@ -221,7 +221,7 @@ function DistritoFilter (props) {
   )
 }
 
-function sortTopicsByExtraNumber (topics) {
+function sortTopics (topics) {
   return topics.sort((a, b) => {
     if (!(a.extra && a.extra.number)) return -1
     if (!(b.extra && b.extra.number)) return 1
@@ -230,5 +230,16 @@ function sortTopicsByExtraNumber (topics) {
       a.extra.number < b.extra.number ?
       -1 :
       0
+  }).sort((a, b) => {
+    if (a.extra && a.extra.winner && b.extra && b.extra.winner) {
+      return a.extra.votes > b.extra.votes ?
+        -1 :
+        a.extra.votes < b.extra.votes ?
+        1 :
+        0
+    }
+    if (a.extra && a.extra.winner) return -1
+    if (b.extra && b.extra.winner) return 1
+    return 0
   })
 }
