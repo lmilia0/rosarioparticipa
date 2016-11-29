@@ -50,11 +50,13 @@ class VotingModule extends Component {
         error: null,
         message: (
           <div className='voting-action' role='alert'>
-            <p>Ya cerró la votación, al finalizar el escrutinio vas a poder conocer los proyectos ganadores.</p>
             <Link
-              to='/presupuesto'
+              to='https://www.youtube.com/watch?v=1lyWZpitDuk'
+              rel='noopener noreferer'
+              target='_blank'
               className='btn btn-lg btn-outline-secondary'>
-              Ver Proyectos
+              <i className='icon-camrecorder'/>
+              Ver escrutinio en Vivo
             </Link>
           </div>
         )
