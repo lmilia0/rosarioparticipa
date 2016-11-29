@@ -145,8 +145,8 @@ class HomePresupuesto extends Component {
       <div className='ext-home-presupuesto'>
         <div className='cover'>
           <div className='container'>
-            <h1>Mirá los proyectos<br/>para tu barrio</h1>
-            <label>Elegí tu distrito para ver los proyectos</label>
+            <h1>Estos son los proyectos<br/>que van a cambiar tu barrio</h1>
+            <label>Elegí tu distrito</label>
             <DistritoFilter
               active={this.state.distrito}
               onChange={this.handleDistritoFilterChange} />
