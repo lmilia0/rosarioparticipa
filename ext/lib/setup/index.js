@@ -8,7 +8,9 @@ const topicExtraFields = [
   'extra.distrito',
   'extra.area',
   'extra.description',
-  'extra.monto'
+  'extra.monto',
+  'extra.votes',
+  'extra.winner'
 ]
 
 topicApi.topicListKeys.push.apply(topicApi.topicListKeys, topicExtraFields)
