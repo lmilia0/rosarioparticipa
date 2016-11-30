@@ -87,7 +87,7 @@ export default function HomeMultiforumOverride (props) {
                 </li>
                 <li>
                   <span className='img'></span>
-                  <span className='num'>54</span>
+                  <span className='num'>56</span>
                   <p>Proyectos<br />ganadores</p>
                 </li>
               </ul>
