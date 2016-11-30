@@ -2,6 +2,13 @@ import React from 'react'
 import padStart from 'string.prototype.padstart'
 import {Link} from 'react-router'
 import {SharerFacebook} from 'ext/lib/site/sharer'
+import distritosData from '../distritos.json'
+
+const distritos = (function () {
+  const c = {}
+  distritosData.forEach((d) => {c[d.name] = d.title})
+  return c
+})()
 
 export default function TopicCard (props) {
   const {topic} = props
@@ -37,6 +44,10 @@ export default function TopicCard (props) {
         </div>
       )}
       <div className='topic-info'>
+        <div className='topic-location'>
+          <i className='icon-location-pin'/>
+          <span>{topic.extra && topic.extra.area && topic.extra.area !== '0' ? `Área Barrial ${topic.extra.area}` : `Distrito ${distritos[topic.extra.distrito]}`}</span>
+        </div>
         <h1 className='title'>{topic.mediaTitle}</h1>
         {topic.extra && topic.extra.description && (
           <p className='description'>{topic.extra.description}</p>

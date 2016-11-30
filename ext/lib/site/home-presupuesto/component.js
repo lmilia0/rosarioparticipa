@@ -7,15 +7,7 @@ import topicStore from 'lib/stores/topic-store/topic-store'
 import user from 'lib/site/user/user'
 import userConnector from 'lib/site/connectors/user'
 import TopicCard from './topic-card/component'
-
-const distritos = [
-  {title: 'Centro', name: 'centro'},
-  {title: 'Noroeste', name: 'noroeste'},
-  {title: 'Norte', name: 'norte'},
-  {title: 'Oeste', name: 'oeste'},
-  {title: 'Sudoeste', name: 'sudoeste'},
-  {title: 'Sur', name: 'sur'}
-]
+import distritos from './distritos.json'
 
 let distritoCurrent = ''
 
