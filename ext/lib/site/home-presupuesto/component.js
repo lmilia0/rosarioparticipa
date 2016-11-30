@@ -222,6 +222,21 @@ function DistritoFilter (props) {
 }
 
 function sortTopics (topics) {
+  const winners = []
+  const losers = []
+
+  topics.forEach((topic) => {
+    if (topic.extra && topic.extra.winner) {
+      winners.push(topic)
+    } else {
+      losers.push(topic)
+    }
+  })
+
+  return sortTopicsByNumber(winners).concat(sortTopicsByNumber(losers))
+}
+
+function sortTopicsByNumber (topics) {
   return topics.sort((a, b) => {
     if (!(a.extra && a.extra.number)) return -1
     if (!(b.extra && b.extra.number)) return 1
@@ -230,16 +245,5 @@ function sortTopics (topics) {
       a.extra.number < b.extra.number ?
       -1 :
       0
-  }).sort((a, b) => {
-    if (a.extra && a.extra.winner && b.extra && b.extra.winner) {
-      return a.extra.votes > b.extra.votes ?
-        -1 :
-        a.extra.votes < b.extra.votes ?
-        1 :
-        0
-    }
-    if (a.extra && a.extra.winner) return -1
-    if (b.extra && b.extra.winner) return 1
-    return 0
   })
 }
