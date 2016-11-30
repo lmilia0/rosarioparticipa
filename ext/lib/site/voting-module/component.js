@@ -51,7 +51,7 @@ class VotingModule extends Component {
         message: (
           <div className='voting-action' role='alert'>
             <Link
-              to='https://www.youtube.com/watch?v=1lyWZpitDuk'
+              to='https://www.youtube.com/watch?v=l9zt2PgJPBE'
               rel='noopener noreferer'
               target='_blank'
               className='btn btn-lg btn-outline-secondary'>

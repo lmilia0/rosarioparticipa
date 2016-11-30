@@ -40,8 +40,15 @@ export default function HomeMultiforumOverride (props) {
           <div className='row'>
             <div className='col-md-6'>
               <h2 className='section-subtitle'>Últimas noticias</h2>
-              <p className='light-text'>Del 18 al 28 de noviembre votaste en el <strong>Presupuesto Participativo</strong>, un proyecto para tu barrio y otro para tu distrito. Los jóvenes pudieron elegir tres proyectos en el <strong>Presupuesto Participativo Joven</strong>.</p>
-              <p className='light-text'>Hoy a las 12 hs. comenzó el <strong>escrutinio</strong> y cuando se inicie la transmisión daremos a conocer los proyectos que resultaron más votados, los que <strong>vos elegiste para cambiar tu barrio</strong>.</p>
+              <p className='light-text'>Este año participaron del Presupuesto Participativo un total de <strong>93.300 rosarinos</strong>. Del 18 al 28 de noviembre votaron un proyecto para su barrio y otro para su distrito, <strong>66.718 ciudadanos</strong>.</p>
+
+              <p className='light-text'>En el Presupuesto Participativo Joven participaron 26.582 jóvenes y cada uno pudo elegir tres proyectos para su distrito.</p>
+
+              <p className='light-text'>El distrito que más votantes de Presupuesto Participativo registró, fue el Oeste con un total de 16.009 votantes y le siguieron Distrito Centro (13.557), Distrito Sudoeste (11.072), Distrito Norte (10.021), Distrito Noroeste (8.342) y Distrito Sur (7.717).</p>
+
+              <p className='light-text'>En este portal, recibimos 5035 votos y 609 comentarios a los proyectos y, en adelante, será el espacio donde podrás seguir el avance de los que resultaron ganadores.</p>
+
+              <p className='light-text'>Gracias por sumarte a cambiar tu lugar.</p>
               <Link
                 to='http://www.rosarionoticias.gob.ar/page/noticias/tag/Presupuesto%20Participativo'
                 target='_blank'
@@ -78,13 +85,11 @@ export default function HomeMultiforumOverride (props) {
                   <span className='num'>209 millones</span>
                   <p>Presupuesto<br />asignado</p>
                 </li>
-                {/*
                 <li>
                   <span className='img'></span>
-                  <span className='num'>176</span>
-                  <p>Proyectos<br />votados</p>
+                  <span className='num'>54</span>
+                  <p>Proyectos<br />ganadores</p>
                 </li>
-                */}
               </ul>
               <Link
                 to='/presupuesto'
