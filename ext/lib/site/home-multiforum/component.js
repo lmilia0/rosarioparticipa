@@ -40,7 +40,7 @@ export default function HomeMultiforumOverride (props) {
           <div className='row'>
             <div className='col-md-6'>
               <h2 className='section-subtitle'>Últimas noticias</h2>
-              <p className='light-text'>Este año participaron del Presupuesto Participativo un total de <strong>93.300 rosarinos</strong>. Del 18 al 28 de noviembre votaron un proyecto para su barrio y otro para su distrito, <strong>66.718 ciudadanos</strong>.</p>
+              <p className='light-text'>Este año participaron del Presupuesto Participativo un total de <strong>93.300 rosarinos</strong>. Del 18 al 28 de noviembre votaron un proyecto para su barrio y otro para su distrito, 66.718 ciudadanos.</p>
 
               <p className='light-text'>En el Presupuesto Participativo Joven participaron 26.582 jóvenes y cada uno pudo elegir tres proyectos para su distrito.</p>
 
@@ -48,7 +48,7 @@ export default function HomeMultiforumOverride (props) {
 
               <p className='light-text'>En este portal, recibimos 5035 votos y 609 comentarios a los proyectos y, en adelante, será el espacio donde podrás seguir el avance de los que resultaron ganadores.</p>
 
-              <p className='light-text'>Gracias por sumarte a cambiar tu lugar.</p>
+              <p className='light-text'><strong>Gracias por sumarte a cambiar tu lugar.</strong></p>
               <Link
                 to='http://www.rosarionoticias.gob.ar/page/noticias/tag/Presupuesto%20Participativo'
                 target='_blank'
