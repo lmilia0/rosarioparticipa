@@ -82,7 +82,7 @@ export default function HomeMultiforumOverride (props) {
                 </li>
                 <li>
                   <span className='img'></span>
-                  <span className='num'>209 millones</span>
+                  <span className='num'>207 millones</span>
                   <p>Presupuesto<br />asignado</p>
                 </li>
                 <li>
