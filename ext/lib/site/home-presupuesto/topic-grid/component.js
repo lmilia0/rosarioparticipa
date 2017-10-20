@@ -4,6 +4,37 @@ import TopicCard from '../topic-card/component'
 export default class TopicGrid extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      votacion: false,
+      selectedTopics: []
+    }
+  }
+
+  componentWillMount () {
+    let savedTopics = []
+    if (localStorage.length > 0) {
+      Object.keys(localStorage).forEach((k)=> {
+        const topicId = JSON.parse(localStorage.getItem(k)).id
+        savedTopics.push(topicId)
+      })
+      this.setState({
+        votacion: true,
+        selectedTopics: savedTopics
+      })
+    }
+  }
+
+  fadesTopics = (districtTopics, topic) => {
+    const ids = []
+    const savedTopics = this.state.selectedTopics
+    Object.values(districtTopics).forEach((v)=> {
+      ids.push(v.id)
+    })
+    savedTopics.forEach((t)=> {
+      if (ids.includes(t)){
+        console.log(t)
+      }
+    })
   }
 
   render () {
@@ -47,7 +78,7 @@ export default class TopicGrid extends Component {
                   </div>
                 </div>
               }
-              {district.topics.filter(topic => topic.attrs.area !== '0').length > 0 &&
+              { district.topics.filter(topic => topic.attrs.area !== '0').length > 0 &&
                 //Div Area Barrial
                 <div className='topics-section'>
                   <h2 className='topics-section-container topics-section-title topics-section-title-area'>
@@ -57,10 +88,11 @@ export default class TopicGrid extends Component {
                     { 
                       this.props.loading && <div className='loader' />}
                     {district.topics
-                      .filter((topic)=>{
+                      .filter((topic)=> {
                         return topic.attrs.area !== '0'
                       })
-                      .map((topic, i) => <TopicCard key={i} topic={topic} />
+                      .map((topic, i) => 
+                       <TopicCard key={i} topic={topic} fadeTopic={this.fadesTopics(district.topics, topic)} />
                     )}
                   </div>
                 </div>
