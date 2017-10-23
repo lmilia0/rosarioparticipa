@@ -69,7 +69,8 @@ export default class VoteModal extends Component {
           {/* Div Confirmación */
             this.state.etapa === 'confirmacion' &&
             <Confirmacion 
-              edad={this.state.edad}/>
+              edad={this.state.edad}
+              toggleVotesModal = {this.props.toggleVotesModal} />
           }
       </div>
     )
