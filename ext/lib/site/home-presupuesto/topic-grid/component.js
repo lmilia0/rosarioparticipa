@@ -25,16 +25,18 @@ export default class TopicGrid extends Component {
   }
 
   fadesTopics = (districtTopics, topic) => {
+    let isIncluded = false
     const ids = []
     const savedTopics = this.state.selectedTopics
     Object.values(districtTopics).forEach((v)=> {
       ids.push(v.id)
     })
     savedTopics.forEach((t)=> {
-      if (ids.includes(t)){
-        console.log(t)
+      if (this.state.votacion && ids.includes(t) && topic.id !== t) {
+        isIncluded =  true
       }
     })
+    return isIncluded
   }
 
   render () {
@@ -92,7 +94,7 @@ export default class TopicGrid extends Component {
                         return topic.attrs.area !== '0'
                       })
                       .map((topic, i) => 
-                       <TopicCard key={i} topic={topic} fadeTopic={this.fadesTopics(district.topics, topic)} />
+                       <TopicCard key={i} topic={topic} fadeTopic={this.fadesTopics(district.topics, topic)}/>
                     )}
                   </div>
                 </div>

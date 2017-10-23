@@ -10,7 +10,7 @@ const distritos = (function () {
   return c
 })()
 
-export default ({ topic }) => {
+export default ({ topic, fadeTopic }) => {
   const topicUrl = `${window.location.origin}${topic.url}`
 
   let state
@@ -48,6 +48,7 @@ export default ({ topic }) => {
   topic.url = `/presupuesto/topic/${topic.id}`
   return (
     <div className={classNames.join(' ')}>
+      <div className={fadeTopic ? 'topic-disabled' : ''}>
       {topic.coverUrl && (
         <Link
           to={topic.url}
@@ -94,6 +95,7 @@ export default ({ topic }) => {
             <p className='budget'>{prettyPrice(topic.attrs.budget)}</p>
           )}
         </div>
+      </div>
       </div>
     </div>
   )

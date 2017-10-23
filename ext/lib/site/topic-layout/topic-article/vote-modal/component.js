@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import TopicCard from 'ext/lib/site/home-presupuesto/topic-card/component'
+import FirstVote from './first-vote/component'
+import SecondVote from './second-vote/component'
+import VoteJoven from './vote-joven/component'
+import Confirmacion from './confirmacion/component'
 
 
 export default class VoteModal extends Component {
@@ -12,7 +15,11 @@ export default class VoteModal extends Component {
     } 
   }
 
-
+  componentWillMount () {
+    if (localStorage.length > 0 && this.state.edad === 'adulto') {
+      this.setState({etapa: 'segundo-voto'})
+    }
+  }
 
   saveTopic = () => {
     let topic = JSON.stringify(this.props.topic)
@@ -24,25 +31,49 @@ export default class VoteModal extends Component {
     if (this.state.etapa === 'primer-voto' && this.state.edad === 'adulto'){
       window.location.href='/presupuesto'
     }
+    if (this.state.etapa === 'segundo-voto' && this.state.edad === 'adulto'){
+      this.setState({etapa: 'confirmacion'})
+    }
+    if (this.state.etapa ==='primer-voto' && this.state.edad === 'joven') {
+      this.setState({etapa: 'confirmacion'})
+    }
   }
 
   render() {
     return (
       <div className='modal-wrapper'>
         <div className='overlay'></div>
-        {/*Div Primer Voto*/
-        this.state.edad === 'adulto' && this.state.etapa === 'primer-voto' &&
-          <div className='modal-dialog'>
-            <a className='close-modal' onClick={this.props.toggleVotesModal}>X</a>
-            <div className='form-component-wrapper'>
-              <h3>Paso 1 de 2 </h3>
-              <p>Una vez confirmado el voto de distrito, debés votar por un proyecto de Área Barrial del mismo. </p>
-              <TopicCard topic={this.props.topic} />
-              <button onClick={this.saveTopic} className='btn btn-active btn-pending'>Votar este proyecto</button>
-              <a onClick={this.props.toggleVotesModal}>Cancelar</a>
-            </div>  
-          </div>
-        }
+        <div className='modal-dialog'>
+          <a className='close-modal' onClick={this.props.toggleVotesModal}>X</a>
+          {/*Div Primer Voto Adulto*/
+            this.state.edad === 'adulto' && this.state.etapa === 'primer-voto' &&
+            <FirstVote
+              topic = {this.props.topic}
+              saveTopic = {this.saveTopic}
+              toggleVotesModal = {this.props.toggleVotesModal} />
+          }
+          {/*Div Segundo Voto Adulto*/
+             this.state.edad === 'adulto' && this.state.etapa === 'segundo-voto' &&
+            <SecondVote
+              savedTopic = {JSON.parse(localStorage.getItem(0))}
+              topic = {this.props.topic}
+              saveTopic = {this.saveTopic}
+              toggleVotesModal = {this.props.toggleVotesModal} />
+          }
+          {/*Div Voto Unico Joven*/
+            this.state.edad === 'joven' && this.state.etapa === 'primer-voto' &&
+            <VoteJoven 
+              topic = {this.props.topic}
+              saveTopic = {this.saveTopic}
+              toggleVotesModal = {this.props.toggleVotesModal}
+            />
+          }
+          {/* Div Confirmación */
+            this.state.etapa === 'confirmacion' &&
+            <Confirmacion 
+              edad={this.state.edad}/>
+          }
+        </div>
       </div>
     )
   }
