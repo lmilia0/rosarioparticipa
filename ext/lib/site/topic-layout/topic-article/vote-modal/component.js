@@ -43,8 +43,6 @@ export default class VoteModal extends Component {
     return (
       <div className='modal-wrapper'>
         <div className='overlay'></div>
-        <div className='modal-dialog'>
-          <a className='close-modal' onClick={this.props.toggleVotesModal}>X</a>
           {/*Div Primer Voto Adulto*/
             this.state.edad === 'adulto' && this.state.etapa === 'primer-voto' &&
             <FirstVote
@@ -73,7 +71,6 @@ export default class VoteModal extends Component {
             <Confirmacion 
               edad={this.state.edad}/>
           }
-        </div>
       </div>
     )
   }
