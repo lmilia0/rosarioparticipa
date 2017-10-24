@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TopicCard from 'ext/lib/site/home-presupuesto/topic-card/component'
 
 export default ({topic, saveTopic, savedTopic, toggleVotesModal}) => (
-	<div className='modal-dialog'>
+	<div className='modal-second-vote-dialog'>
         <a className='close-modal' onClick={toggleVotesModal}>X</a>
 		<div className='form-component-wrapper'>
         	<h3>Paso 2 de 2 </h3>

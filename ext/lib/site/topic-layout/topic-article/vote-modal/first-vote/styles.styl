@@ -1,7 +1,7 @@
-  .modal-dialog
+  .modal-vote-dialog
     margin-left: -300px
-    margin-top: -725px
-    padding: 10px 100px
+    margin-top: -720px
+    padding: 10px 50px
     position: absolute
     left: 50%
     top: 50%
@@ -13,6 +13,8 @@
     @media screen and (max-width: 550px)
       width: 340px
       margin-left: -170px
+      padding: 10px
+      margin-top: -620px
     
     .close-modal
       padding: 2px 8px
@@ -22,9 +24,11 @@
       text-align: center
       font-size: 18px
       font-weight: 400
-      margin-right: -90px
+      margin-right: -40px
       cursor: pointer 
       float: right
+      @media screen and (max-width: 550px)
+        margin-right: 10px
       &:hover
         color: #1daeec
         
@@ -45,11 +49,15 @@
         font-size: 36px
         color: #1daeec
         margin: 5px
+        @media screen and (max-width: 550px)
+          font-size: 24px
       p
         color: rgba(0,0,0,0.5)
         font-weight: 200
         margin: 10px 0
         text-align: center
+        @media screen and (max-width: 550px)
+          font-size: 0.8em
       .btn-pending
         color: #fff
         background-color: rgb(32,199,89)
@@ -59,6 +67,8 @@
         text-transform: uppercase
         font-weight: 700
         margin: 10px 0
+        @media screen and (max-width: 550px)
+          margin: 5px 0
       .cancel
         color: rgba(0,0,0,0.5)
         cursor: pointer
@@ -68,3 +78,5 @@
         text-align: center
         text-decoration: underline
         width: 100%
+        @media screen and (max-width: 550px)
+          margin-top: 5px
