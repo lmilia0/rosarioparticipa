@@ -20,6 +20,9 @@ export default function PresupuestoShare ({ topic, forum, user, toggleVotesModal
 
   const twitterText = twitText()
 
+  const hasVoted = JSON.parse(sessionStorage.getItem('hasVoted'))
+  const padron = sessionStorage.getItem('padron')
+
   function twitText() { 
     switch (topic.attrs.state) {
       case 'pendiente':
@@ -35,6 +38,7 @@ export default function PresupuestoShare ({ topic, forum, user, toggleVotesModal
 
   return (
     <div className='presupuesto-container'>
+      {console.log('///', hasVoted, padron)}
       {
         topic.attrs.state === 'pendiente' && (
         <aside className='presupuesto-share pendiente'>
@@ -47,18 +51,27 @@ export default function PresupuestoShare ({ topic, forum, user, toggleVotesModal
                 </div>
                 <div className='pending-body'>
                   {topic.attrs.budget && <span className='presu-proyecto'>{prettyPrice(topic.attrs.budget)}</span>}
-                  {
+                  { //User is not logged in
                     !user.state.value &&
                       <a href='/signin' className='btn btn-active btn-pending'>Votar este proyecto</a>
                   }
-                  {
-                    (user.state.value && user.profileIsComplete()) &&
-                      <a href='/ext/api/participatory-budget/vote' className='btn btn-active btn-pending'>Votar este proyecto</a>
+                  { //User logged in & hasVoted === true
+                    (user.state.value && hasVoted) &&
+                    <p>Ya vote</p>
                   }
-                  {
+                  { //User is logged in & Profile is not complete
                     (user.state.value && !user.profileIsComplete()) &&
                       <button onClick={completarDatos} className='btn btn-active btn-pending'>Votar este proyecto</button>
                   }
+                  { //User logged in, profile complete, not Voted and right padron
+                    (user.state.value && user.profileIsComplete() && !hasVoted && topic.attrs.edad === padron) &&
+                      <button onClick={toggleVotesModal} className='btn btn-active btn-pending'>Votar este proyecto</button>
+                  }
+                  { //User logged in, profile complete, not Voted and wrong padron
+                    (user.state.value && user.profileIsComplete() && !hasVoted && topic.attrs.edad !== padron) &&
+                      <p>No podes votar este padron</p>
+                  }
+                  
                 </div>
               </div>
           }
