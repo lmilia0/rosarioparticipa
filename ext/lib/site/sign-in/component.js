@@ -48,7 +48,7 @@ export class SignIn extends Component {
     })
     .then((res) => res.json())
     .then((res) => {
-      const hasVoted = !(Object.values(res.edad).includes(true))
+      const hasVoted = !Object.values(res.edad).includes(true)
       if (hasVoted === false) {
         Object.keys(res.edad).map((k)=> {
           if (res.edad[k] === true) {
