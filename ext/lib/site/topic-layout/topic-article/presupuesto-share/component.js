@@ -4,7 +4,6 @@ import padStart from 'string.prototype.padstart'
 import { SharerFacebook } from 'ext/lib/site/sharer'
 
 export default function PresupuestoShare ({ topic, forum, user, toggleVotesModal }) {
-
   const topicUrl = `${window.location.origin}${topic.url}`
 
   let state
@@ -38,7 +37,6 @@ export default function PresupuestoShare ({ topic, forum, user, toggleVotesModal
 
   return (
     <div className='presupuesto-container'>
-      {console.log('///', hasVoted, padron)}
       {
         topic.attrs.state === 'pendiente' && (
         <aside className='presupuesto-share pendiente'>

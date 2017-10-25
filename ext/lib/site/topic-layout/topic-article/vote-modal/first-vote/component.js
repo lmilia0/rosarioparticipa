@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import TopicCard from 'ext/lib/site/home-presupuesto/topic-card/component'
 
-export default ({topic, saveTopic, toggleVotesModal}) => (
+export default ({topic, saveTopic, toggleVotesModal}) => {
+
+    //El primer voto siempre tiene que ser de distrito?
+
+    return (
 	<div className='modal-vote-dialog modal-joven-dialog'>
         <a className='close-modal' onClick={toggleVotesModal}>X</a>
 		<div className='form-component-wrapper'>
@@ -13,3 +17,4 @@ export default ({topic, saveTopic, toggleVotesModal}) => (
         </div>
     </div>
 	)
+}

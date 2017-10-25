@@ -12,16 +12,14 @@ export default class TopicGrid extends Component {
 
   componentWillMount () {
     let savedTopics = []
-    if (localStorage.length > 0) {
-      Object.keys(localStorage).forEach((k)=> {
-        const topicId = JSON.parse(localStorage.getItem(k)).id
-        savedTopics.push(topicId)
-      })
+    /*if (sessionStorage.topics !== undefined && sessionStorage.topics.length > 0) {
+      const topicId = JSON.parse(sessionStorage.getItem('topic')).id
+      savedTopics.push(topicId)
       this.setState({
         votacion: true,
         selectedTopics: savedTopics
       })
-    }
+    }*/
   }
 
   fadesTopics = (districtTopics, topic) => {
