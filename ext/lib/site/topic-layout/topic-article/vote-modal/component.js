@@ -3,6 +3,7 @@ import FirstVote from './first-vote/component'
 import SecondVote from './second-vote/component'
 import VoteJoven from './vote-joven/component'
 import Confirmacion from './confirmacion/component'
+import ErrorModal from './error-modal/component'
 
 
 export default class VoteModal extends Component {
@@ -39,29 +40,32 @@ export default class VoteModal extends Component {
       const previousTopic = JSON.parse(sessionStorage.getItem('topics'))
       const allTopics = JSON.stringify(previousTopic.concat([this.props.topic]))
       sessionStorage.setItem('topics', allTopics)
-    } else if 
       //Votacion joven guarda topic
-      (this.state.etapa === 'primer-voto' && sessionStorage.topics === undefined) {
+    } else if (this.state.etapa === 'primer-voto' && sessionStorage.topics === undefined) {
       const topic = JSON.stringify([this.props.topic])
       sessionStorage.setItem('topics', topic)
     }
 
     let topicsNumbers = this.gettingTopicsNumbers()
     
-    window.fetch('ext/lib/api/votacion', {
-      credentials: 'include',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({ topicsNumbers })
+    fetch('/ext/api/votacion', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({numbers: topicsNumbers})
       })
-      .then((res) => res.json())
-      .then((res) => console.log(res))
-}
-
-
+      .then((res) => {
+        if (res.status === 200) {
+          sessionStorage.setItem('canVote', false)
+          this.setState({etapa: 'confirmacion'})
+        } else if (res.status=== 400) {
+          this.setState({etapa: 'error'})
+        }
+      })
+  }
 
   //Getting string of project numbers
   gettingTopicsNumbers = () => {
@@ -102,6 +106,11 @@ export default class VoteModal extends Component {
             <Confirmacion 
               edad={this.state.edad}
               toggleVotesModal = {this.props.toggleVotesModal} />
+          }
+          {/* Div Error */
+            this.state.etapa === 'error' &&
+            <ErrorModal 
+            toggleVotesModal = {this.props.toggleVotesModal}/>
           }
       </div>
     )

@@ -8,7 +8,14 @@ const app = module.exports = express()
 app.post('/',
 middlewares.users.restrict,
 function votacion (req, res) {
-	console.log(req.body)
+	const numbers = req.body.numbers
+	const reg = new RegExp(/^\s*[1-9]\d*(?:\s*,\s*[1-9]\d*)*$/)
+	
+	if (numbers === undefined || typeof(numbers) !== 'string' || !(reg.test(numbers))) {
+		res.status(400)
+		res.end()
+		return
+	}
 	res.status(200)
 	res.end()
 })
