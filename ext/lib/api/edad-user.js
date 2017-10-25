@@ -2,8 +2,6 @@ const express = require('express')
 const debug = require('debug')
 const middlewares = require('lib/api-v2/middlewares')
 
-const log = debug('rosario:api:edad:user')
-
 const app = module.exports = express()
 
 app.get('/',

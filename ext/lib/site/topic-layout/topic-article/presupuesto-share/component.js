@@ -19,8 +19,9 @@ export default function PresupuestoShare ({ topic, forum, user, toggleVotesModal
 
   const twitterText = twitText()
 
-  const hasVoted = JSON.parse(sessionStorage.getItem('hasVoted'))
+  const canVote = JSON.parse(sessionStorage.getItem('canVote'))
   const padron = sessionStorage.getItem('padron')
+  const message = topic.attrs.edad === 'joven' ? 'No estás habilitado a votar en Presupuesto Participativo Joven.' : 'Sólo estás habilitado a votar en Presupuesto Participativo Joven'
 
   function twitText() { 
     switch (topic.attrs.state) {
@@ -53,23 +54,22 @@ export default function PresupuestoShare ({ topic, forum, user, toggleVotesModal
                     !user.state.value &&
                       <a href='/signin' className='btn btn-active btn-pending'>Votar este proyecto</a>
                   }
-                  { //User logged in & hasVoted === true
-                    (user.state.value && hasVoted) &&
-                    <p>Ya vote</p>
+                  { //User logged in & can't vote === true
+                    (user.state.value && !canVote) &&
+                    <p>No estás habilitado para votar.</p>
                   }
                   { //User is logged in & Profile is not complete
                     (user.state.value && !user.profileIsComplete()) &&
                       <button onClick={completarDatos} className='btn btn-active btn-pending'>Votar este proyecto</button>
                   }
                   { //User logged in, profile complete, not Voted and right padron
-                    (user.state.value && user.profileIsComplete() && !hasVoted && topic.attrs.edad === padron) &&
+                    (user.state.value && user.profileIsComplete() && canVote && topic.attrs.edad === padron) &&
                       <button onClick={toggleVotesModal} className='btn btn-active btn-pending'>Votar este proyecto</button>
                   }
                   { //User logged in, profile complete, not Voted and wrong padron
-                    (user.state.value && user.profileIsComplete() && !hasVoted && topic.attrs.edad !== padron) &&
-                      <p>No podes votar este padron</p>
+                    (user.state.value && user.profileIsComplete() && canVote && topic.attrs.edad !== padron) &&
+                      <p>{message}</p>
                   }
-                  
                 </div>
               </div>
           }

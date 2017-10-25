@@ -48,8 +48,8 @@ export class SignIn extends Component {
     })
     .then((res) => res.json())
     .then((res) => {
-      const hasVoted = !Object.values(res.edad).includes(true)
-      if (hasVoted === false) {
+      let canVote = Object.values(res.edad).includes(true)
+      if (canVote === true) {
         Object.keys(res.edad).map((k)=> {
           if (res.edad[k] === true) {
             let v = ''
@@ -62,8 +62,7 @@ export class SignIn extends Component {
           }
         })
       }
-      sessionStorage.setItem('hasVoted', hasVoted)
-      console.log('sessionStorage', sessionStorage)
+      sessionStorage.setItem('canVote', canVote)
     })
   }
 

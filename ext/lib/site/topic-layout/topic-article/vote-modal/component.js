@@ -19,31 +19,55 @@ export default class VoteModal extends Component {
   componentWillMount () {
     this.setState({edad: this.props.topic.attrs.edad})
     if (sessionStorage.topics !== undefined && sessionStorage.topics.length > 0 && this.props.topic.attrs.edad === 'adulto') {
-      this.setState({etapa: 'segundo-voto'}, () => {console.log(this.state.etapa)})
+      this.setState({etapa: 'segundo-voto'})
     }
   }
-
+  //Save Topic Adulto in Session Storage
   saveTopic = () => {
     if (this.state.etapa === 'primer-voto' && sessionStorage.topics === undefined) {
       const topic = JSON.stringify([this.props.topic])
       sessionStorage.setItem('topics', topic)
-      sessionStorage.setItem('prueba', 'sarasa')
-    } else if (this.state.etapa === 'segundo-voto' && sessionStorage.topics.length > 0) {
-      const previousTopic = JSON.parse(sessionStorage.getItem('topics'))
-      const allTopics = JSON.stringify(previousTopic.concat([this.props.topic]))
-      console.log(allTopics)
-      sessionStorage.setItem('topics', allTopics)
-      sessionStorage.setItem('prueba', 'bb')
-    }
+    } 
     if (this.state.etapa === 'primer-voto' && this.state.edad === 'adulto'){
       window.location.href='/presupuesto'
     }
-    if (this.state.etapa === 'segundo-voto' && this.state.edad === 'adulto'){
-      this.setState({etapa: 'confirmacion'})
+  }
+  // Sent Topics to API
+  sendTopics = () => {
+    //Votacion adulta concatena los dos topics
+    if (this.state.etapa === 'segundo-voto' && sessionStorage.topics.length > 0) {
+      const previousTopic = JSON.parse(sessionStorage.getItem('topics'))
+      const allTopics = JSON.stringify(previousTopic.concat([this.props.topic]))
+      sessionStorage.setItem('topics', allTopics)
+    } else if 
+      //Votacion joven guarda topic
+      (this.state.etapa === 'primer-voto' && sessionStorage.topics === undefined) {
+      const topic = JSON.stringify([this.props.topic])
+      sessionStorage.setItem('topics', topic)
     }
-    if (this.state.etapa ==='primer-voto' && this.state.edad === 'joven') {
-      this.setState({etapa: 'confirmacion'})
-    }
+
+    let topicsNumbers = this.gettingTopicsNumbers()
+    
+    window.fetch('ext/lib/api/votacion', {
+      credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({ topicsNumbers })
+      })
+      .then((res) => res.json())
+      .then((res) => console.log(res))
+}
+
+
+
+  //Getting string of project numbers
+  gettingTopicsNumbers = () => {
+    let gettingTopics = JSON.parse(sessionStorage.getItem('topics'))
+    let topicsNumbers = (gettingTopics.map((t)=>{return (t.attrs.number)})).join(',')
+    return topicsNumbers
   }
 
   render() {
@@ -62,14 +86,14 @@ export default class VoteModal extends Component {
             <SecondVote
               /*savedTopic = {JSON.parse(localStorage.getItem(0))}*/
               topic = {this.props.topic}
-              saveTopic = {this.saveTopic}
+              saveTopic = {this.sendTopics}
               toggleVotesModal = {this.props.toggleVotesModal} />
           }
           {/*Div Voto Unico Joven*/
             this.state.edad === 'joven' && this.state.etapa === 'primer-voto' &&
             <VoteJoven 
               topic = {this.props.topic}
-              saveTopic = {this.saveTopic}
+              saveTopic = {this.sendTopics}
               toggleVotesModal = {this.props.toggleVotesModal}
             />
           }
