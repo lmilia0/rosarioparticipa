@@ -5,7 +5,7 @@ import urlBuilder from 'lib/url-builder'
 
 const stages = [
   {'name': 'votacion-abierta', 'title': 'Votación abierta'},
-  {'name': 'votacion-cerrada', 'title': 'Votación cerrada'},
+  {'name': 'votacion-cerrada', 'title': 'Resultados de votación'},
   {'name': 'seguimiento', 'title': 'Seguimiento' }
 ]
 
