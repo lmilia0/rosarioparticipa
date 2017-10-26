@@ -33,7 +33,7 @@ export default class TopicGrid extends Component {
               { district.topics.filter(topic => topic.attrs.area === '0').length > 0 &&
                 <div className='topics-section'>
                   <h2 className='topics-section-container topics-section-title'>
-                    Distrito {district.title}
+                    Proyectos para tu distrito
                   </h2>
                   <div className='topics-container'>
                     {this.props.loading && <div className='loader' />}
@@ -51,7 +51,7 @@ export default class TopicGrid extends Component {
                 //Div Area Barrial
                 <div className='topics-section'>
                   <h2 className='topics-section-container topics-section-title topics-section-title-area'>
-                    Área Barrial
+                    Proyectos para tu barrio
                   </h2>
                   <div className='topics-container topics-container-area'>
                     { 
@@ -73,7 +73,7 @@ export default class TopicGrid extends Component {
             districts.map((district, i) =>
             <div key={i} className='topics-section'>
               <h2 className='topics-section-container topics-section-title topics-section-title-joven'>
-                Distrito {district.title}
+                Proyectos para tu distrito
               </h2>
               <div className='topics-container'>
                 {this.props.loading && <div className='loader' />}
