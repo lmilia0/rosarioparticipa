@@ -38,8 +38,6 @@ export default class ProfileForm extends FormView {
         this.locales.value = user.locale || config.locale
         var selected = this.find(`option[value="${this.locales.value}"]`)
         selected.attr('selected', true)
-        console.log(Object.values(user.extra))
-        console.log(Object.values(user.extra).every((v) => v !== ''))
         if (Object.keys(user.extra).length > 0 && Object.values(user.extra).every((v) => v !== '')) {
             ReactRender(
             (<CompleteProfileRegistry
