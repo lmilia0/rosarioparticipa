@@ -36,7 +36,8 @@ app.get('/topics.csv',
           `"${escapeTxt(topic.attrs.area)}"`,
           `"${escapeTxt(topic.attrs.budget)}"`,
           `"${escapeTxt('DESCONOCIDO')}"`,
-          `"${escapeTxt(topic.attrs.description)}"`,
+          `"${escapeTxt(topic.attrs.edad.charAt(0).toUpperCase() +(topic.attrs.edad).slice(1).toLowerCase())}"`,
+          `"${topic.coverUrl}"`,
           topic.id
         ])
       }
