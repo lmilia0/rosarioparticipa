@@ -108,7 +108,7 @@ class FiltersNavbar extends Component {
           this.setState({
             appliedFilters: update (this.state.appliedFilters, {
               distrito: {
-                centro: { $set: false },
+                centro: { $set: true },
                 noroeste: { $set: false },
                 norte: { $set: false },
                 oeste: { $set: false },
