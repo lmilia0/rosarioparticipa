@@ -563,7 +563,7 @@ function DistritoFilter (props) {
       { stage === 'votacion-cerrada' && (
         <div className='stage-header'>
           <div className='pp-stage'>
-            Votación Cerrada
+            Resultados de votación
           </div>
           <p className='header-text header-text-cerrada'>Elegí tu distrito:</p>
         </div>
