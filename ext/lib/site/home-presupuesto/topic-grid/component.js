@@ -82,9 +82,9 @@ export default class TopicGrid extends Component {
             </div>
           )
         )}
-        { // Grid Stage Votación Cerrada
+        { // Grid Stage Votacion Cerrada 
           (this.props.stage === 'votacion-cerrada') && (
-                      districts.map((district, i) =>
+            districts.map((district, i) =>
             // Div Distrito
             <div key={i}>
               { district.topics.filter(topic => topic.attrs.area === '0').length > 0 &&
