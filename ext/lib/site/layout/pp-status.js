@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import userConnector from 'lib/site/connectors/user'
+import bus from 'bus'
 
 /*
 
@@ -21,37 +22,42 @@ export default function ppHOC(Layout) {
     componentWillReceiveProps (props) {
       if (!props.user.state.pending) {
         if (props.user.state.fulfilled) {
-          const vPp = JSON.parse(localStorage.getItem('vPp')) || {}
+          let ppStatus = JSON.parse(localStorage.getItem('ppStatus')) || {}
 
           if (
             !this._fetchingStatus &&
-            (vPp.id !== props.user.state.value.id ||
-              (vPp.createdAt && this.tokenExpired(vPp.createdAt)))
+            (ppStatus.id !== props.user.state.value.id ||
+              (ppStatus.createdAt && this.tokenExpired(ppStatus.createdAt)))
           ) {
             this._fetchingStatus = true
             this.getStatus()
               .then((status) => {
-                vPp.id = props.user.state.value.id
-                vPp.createdAt = new Date()
+                ppStatus = {}
+                ppStatus.id = props.user.state.value.id
+                ppStatus.createdAt = new Date()
                 if (!status.puede_votar || (!status.padron_adulto && !status.padron_joven)) {
-                  vPp.puede_votar = false
+                  ppStatus.puede_votar = false
+                  ppStatus.msj = status.mensaje_aclaratorio
+                  ppStatus.msj_code = status.codigo_mensaje
                 } else {
-                  vPp.puede_votar = true
-                  vPp.padron = status.padron_adulto ? 'adulto' : 'joven'
-                  vPp.msj = status.mensaje_aclaratorio
-                  vPp.msj_code = status.codigo_mensaje
+                  ppStatus.puede_votar = true
+                  ppStatus.padron = status.padron_adulto ? 'adulto' : 'joven'
+                  ppStatus.msj = status.mensaje_aclaratorio
+                  ppStatus.msj_code = status.codigo_mensaje
                 }
-                localStorage.setItem('vPp', JSON.stringify(vPp))
+                localStorage.setItem('ppStatus', JSON.stringify(ppStatus))
                 this._fetchingStatus = false
+                bus.emit('pp-status', ppStatus)
               })
               .catch((err) => {
-                console.log(err)
                 this._fetchingStatus = false
-                localStorage.removeItem('vPp')
+                bus.emit('pp-status', {})
+                localStorage.removeItem('ppStatus')
               })
           }
         } else {
-          localStorage.removeItem('vPp')
+          bus.emit('pp-status', {})
+          localStorage.removeItem('ppStatus')
         }
       }
     }
@@ -71,7 +77,7 @@ export default function ppHOC(Layout) {
         })
         .then((res) => res.json())
         .then((res) => {
-          return res
+          return res.results || {}
         })
     }
 
