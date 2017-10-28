@@ -82,9 +82,9 @@ class TopicArticle extends Component {
         <Header topic={topic} isIdea={forum.name === 'ideas'} />
         {this.state.showVoteModal && (
           <VoteModal
-          topic={topic}
-          forum={forum} 
-          toggleVotesModal={this.toggleVotesModal}/>
+            topic={topic}
+            forum={forum}
+            toggleVotesModal={this.toggleVotesModal} />
         )}
         <div className='proyecto-main container'>
           <div className='row'>
@@ -148,8 +148,8 @@ class TopicArticle extends Component {
                   ? <PresupuestoShare
                     user={user}
                     forum={forum}
-                    topic={topic} 
-                    toggleVotesModal={this.toggleVotesModal}/>
+                    topic={topic}
+                    toggleVotesModal={this.toggleVotesModal} />
                   : <CommonShare
                     topic={topic}
                     type={forum.name} />
@@ -187,8 +187,7 @@ const Header = ({ topic, isIdea }) => (
                 className='avatar'
                 style={{
                   backgroundImage: `url(${topic.owner.avatar})`
-                }}>
-              </div>
+                }} />
               <span>{topic.owner.fullName}</span>
             </div>
           )
