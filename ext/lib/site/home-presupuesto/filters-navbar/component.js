@@ -540,7 +540,7 @@ function DistritoFilter (props) {
           onClick={() => {changeStage('seguimiento')}}>
           {'< Ir a Seguimiento de Proyectos'}
         </a>
-        <div className='stage-header-votacion'>
+        <div className='stage-header'>
           <div className='pp-stage'>
             Votación Abierta
           </div>

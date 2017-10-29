@@ -47,6 +47,7 @@ export default class TopicGrid extends Component {
                 {this.props.loading && <div className='loader' />}
                 {district.topics.map((topic, i) => <TopicCard key={i} topic={topic} />)}
               </div>
+            </div>
             )
           )}
         { // Grid Stage Votacion Abierta Presupuesto Participativo Adulto
@@ -161,6 +162,7 @@ export default class TopicGrid extends Component {
             </div>
           )
         )}
+
         <div className='grid-bottom'>
           {
             !this.props.noMore && <button className='ver-mas' onClick={this.props.paginateFoward}>Ver más</button>
