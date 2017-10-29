@@ -1,11 +1,5 @@
 .modal-confirmation
-    margin-left: -21%
-    margin-top: -600px
     padding: 10px 10px 30px
-    width: 40%
-    position: absolute
-    left: 50%
-    top: 50%
     background-color: #fff
     z-index: 99
     -webkit-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.33)
@@ -29,38 +23,37 @@
         color: #1daeec
         
     .confirmation-wrapper
-        display: flex
-        flex-wrap: wrap
-        flex-direction: column
+      display: flex
+      flex-wrap: wrap
+      flex-direction: column
+      text-align: center
+      justify-content: center
+      align-items: center
+      padding: 0
+      margin-top: 50px
+      .vote-img
+        background-image: unquote("url('/ext/lib/site/topic-layout/topic-article/vote-modal/confirmacion/voto.svg')")
+        height: 150px
+        width: 180px
+        margin: 20px 0
+      .confirmation-title
+        color: #15cd6c
+        font-size: 36px
+        font-weight: 500
+        line-height: 1.1
+        margin: 0
+        @media screen and (max-width: 550px)
+          font-size: 24px
+      p
+        font-size: 1.2em
+        color: rgba(0,0,0,0.5)
+      .return
+        color: rgba(0,0,0,0.5)
+        cursor: pointer
+        display: block
+        font-weight: 200
+        margin: 10px 0
         text-align: center
-        justify-content: center
-        align-items: center
-        padding: 0
-        margin-top: 50px
-        .vote-img
-            background-image: unquote("url('/ext/lib/site/topic-layout/topic-article/vote-modal/confirmacion/voto.svg')")
-            height: 150px
-            width: 180px
-            margin: 20px 0
-        .confirmation-title
-            color: #15cd6c
-            font-size: 36px
-            font-weight: 500
-            line-height: 1.1
-            margin: 0
-            @media screen and (max-width: 550px)
-              font-size: 24px
-        p
-          font-size: 1.2em
-          color: rgba(0,0,0,0.5)
-        .return
-            color: rgba(0,0,0,0.5)
-            cursor: pointer
-            display: block
-            font-weight: 200
-            margin: 10px 0
-            text-align: center
-            text-decoration: underline
-            width: 100%
-            font-size: 0.9em
-            
+        text-decoration: underline
+        width: 100%
+        font-size: 0.9em

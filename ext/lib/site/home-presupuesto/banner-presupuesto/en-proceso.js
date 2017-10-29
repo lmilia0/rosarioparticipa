@@ -3,7 +3,6 @@ import { withRouter } from 'react-router'
 
 function cancelarVotacion (goTo) {
   return () => {
-    console.log('cancelar votacion')
     sessionStorage.removeItem('pp-proyectos')
     sessionStorage.removeItem('pp-etapa')
     goTo('/presupuesto')

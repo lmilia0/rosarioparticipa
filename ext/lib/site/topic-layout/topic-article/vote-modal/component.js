@@ -31,57 +31,68 @@ class VoteModal extends Component {
     this.props.router.push('/presupuesto')
   }
 
-  // // Sent Topics to API
-  // sendTopics = () => {
-  //   //Votacion adulta concatena los dos topics
-  //   if (this.state.etapa === 'segundo-voto' && sessionStorage.topics.length > 0) {
-  //     const previousTopic = JSON.parse(sessionStorage.getItem('topics'))
-  //     const allTopics = JSON.stringify(previousTopic.concat([this.props.topic]))
-  //     sessionStorage.setItem('topics', allTopics)
-  //     //Votacion joven guarda topic
-  //   } else if (this.state.etapa === 'primer-voto' && sessionStorage.topics === undefined) {
-  //     const topic = JSON.stringify([this.props.topic])
-  //     sessionStorage.setItem('topics', topic)
-  //   }
+  // Sent Topics to API
+  sendTopics = (proyectos) => () => {
+    let distritales = ''
+    let barriales = ''
+    const distrito = proyectos[0].attrs.district.toUpperCase()
+    const ppStatus = JSON.parse(localStorage.getItem('ppStatus'))
+    const edad = ppStatus.padron.toUpperCase()
 
-  //   let topicsNumbers = this.gettingTopicsNumbers()
-    
-  //   fetch('/ext/api/votacion', {
-  //     method: 'POST',
-  //     credentials: 'same-origin',
-  //     headers: {
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({numbers: topicsNumbers})
-  //     })
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         sessionStorage.setItem('canVote', false)
-  //         this.setState({etapa: 'confirmacion'})
-  //       } else if (res.status=== 400) {
-  //         this.setState({etapa: 'error'})
-  //       }
-  //     })
-  // }
+    if (edad === 'ADULTO') {
+      distritales = proyectos.find((p) => p.attrs.area === '0').attrs.number
+      barriales = proyectos.find((p) => p.attrs.area !== '0').attrs.number
+    } else {
+      distritales = proyectos.map((p) => p.attrs.number).join(',')
+    }
 
-  // //Getting string of project numbers
-  // gettingTopicsNumbers = () => {
-  //   // let gettingTopics = JSON.parse(sessionStorage.getItem('topics'))
-  //   // let topicsNumbers = (gettingTopics.map((t)=>{return (t.attrs.number)})).join(',')
-  //   // return topicsNumbers
-  // }
+    const data = {
+      modalidad: edad,
+      distrito: distrito,
+      proyectos_distritales: distritales,
+      proyectos_barriales: barriales
+    }
+
+    fetch(
+      '/ext/api/participatory-budget/vote',
+      {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          ppStatus.puede_votar = false
+          localStorage.setItem('ppStatus', JSON.stringify(ppStatus))
+          sessionStorage.removeItem('pp-proyectos')
+          sessionStorage.removeItem('pp-etapa')
+          this.setState({ etapa: 'confirmacion' })
+        } else if (res.status !== 400) {
+          this.setState({ etapa: 'error' })
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        this.setState({ etapa: 'error' })
+      })
+  }
 
   render () {
+    const proyectos = [...this.state.proyectos, this.props.topic]
     return (
       <div className='modal-wrapper'>
         <div className='overlay' />
         {/* Voto Joven */
           this.state.etapa === 'voto-joven' &&
           <VoteJoven
-            proyectos={this.state.proyectos}
-            topic={this.props.topic}
+            proyectos={proyectos}
             saveTopic={this.saveTopic}
+            sendTopics={this.sendTopics}
             toggleVotesModal={this.props.toggleVotesModal} />
         }
         {/* Primer Voto Adulto */
@@ -94,8 +105,7 @@ class VoteModal extends Component {
         {/* Segundo Voto Adulto */
           this.state.etapa === 'segundo-voto-adulto' &&
           <SecondVote
-            proyectos={this.state.proyectos}
-            topic={this.props.topic}
+            proyectos={proyectos}
             sendTopics={this.sendTopics}
             toggleVotesModal={this.props.toggleVotesModal} />
         }

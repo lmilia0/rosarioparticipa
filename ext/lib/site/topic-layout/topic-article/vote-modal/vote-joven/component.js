@@ -1,8 +1,8 @@
 import React from 'react'
 import TopicCard from 'ext/lib/site/home-presupuesto/topic-card/component'
 
-export default ({ topic, saveTopic, toggleVotesModal, proyectos }) => {
-  const paso = proyectos.length + 1
+export default ({ saveTopic, sendTopics, toggleVotesModal, proyectos }) => {
+  const paso = proyectos.length
   let mensaje
   switch (paso) {
     case 1:
@@ -22,9 +22,10 @@ export default ({ topic, saveTopic, toggleVotesModal, proyectos }) => {
         <h3>Paso { paso } de 3 </h3>
         <p>{ mensaje }</p>
         <div className='proyectos-container'>
-          {[...proyectos, topic].map((p) => <TopicCard topic={p} />)}
+          {proyectos.map((p, i) => <TopicCard key={i} topic={p} />)}
         </div>
-        <button onClick={saveTopic} className='btn btn-active btn-pending'>Votar este proyecto</button>
+        { paso === 3 && <button onClick={sendTopics(proyectos)} className='btn btn-active btn-pending'>Confirmar mi voto</button> }
+        { paso < 3 && <button onClick={saveTopic} className='btn btn-active btn-pending'>Votar este proyecto</button> }
         <a className='cancel' onClick={toggleVotesModal}>Cancelar</a>
       </div>
     </div>

@@ -29,6 +29,7 @@ export default class Pendiente extends Component {
     const canVote = ppStatus.puede_votar
     const padron = ppStatus.padron
     const message = ppStatus.msj
+    const statusFail = ppStatus.fetchFailed
     const profileIsComplete = user.profileIsComplete()
     const messagePadron = topic.attrs.edad === 'joven' ? 'No estás habilitado a votar en Presupuesto Participativo Joven.' : 'Sólo estás habilitado a votar en Presupuesto Participativo Joven'
 
@@ -47,8 +48,12 @@ export default class Pendiente extends Component {
                   !user.state.value &&
                     <a href='/signin' className='btn btn-active btn-pending'>Votar este proyecto</a>
                 }
+                { // User logged in & status failed, falling back to old system
+                  (user.state.value && profileIsComplete && statusFail) &&
+                    <a href='/ext/api/participatory-budget/vote-platform' className='btn btn-active btn-pending'>Votar este proyecto</a>
+                }
                 { // User logged in & can't vote === true
-                  (user.state.value && profileIsComplete && !canVote && !message) &&
+                  (user.state.value && profileIsComplete && !canVote && !message && !statusFail) &&
                     <p className='no-vote-msj'>No estás habilitado para votar.</p>
                 }
                 { // User logged in & can't vote === true

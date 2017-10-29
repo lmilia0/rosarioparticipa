@@ -35,6 +35,7 @@ export default function ppHOC(Layout) {
                 ppStatus = {}
                 ppStatus.id = props.user.state.value.id
                 ppStatus.createdAt = new Date()
+                if (status.failed) ppStatus.fetchFailed = true
                 if (!status.puede_votar || (!status.padron_adulto && !status.padron_joven)) {
                   ppStatus.puede_votar = false
                   ppStatus.msj = status.mensaje_aclaratorio
@@ -77,6 +78,9 @@ export default function ppHOC(Layout) {
         })
         .then((res) => res.json())
         .then((res) => {
+          if (res.status !== 200) {
+            return { failed: true }
+          }
           return res.results || {}
         })
     }
