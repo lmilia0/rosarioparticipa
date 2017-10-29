@@ -7,11 +7,11 @@ let texts = {
     btn: 'Explorá los proyectos y votá'
   },
   cerrada: {
-    title: 'Mirá los resultados de la votación de proyectos del Presupuesto Participativo 2018!',
+    title: '¡Mirá los resultados de la votación de proyectos del Presupuesto Participativo 2018!',
     btn: 'Ver proyectos'
   },
   seguimiento: {
-    title: 'También podés ver el estado de los proyectos ganadores de años anteriores!',
+    title: '¡También podés ver el estado de los proyectos ganadores de años anteriores!',
     btn: 'Seguimiento de proyectos anteriores'
   }
 }
