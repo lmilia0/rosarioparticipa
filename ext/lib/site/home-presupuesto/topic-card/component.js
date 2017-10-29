@@ -47,7 +47,7 @@ export default ({ topic }) => {
   if (topic.attrs.area === '0' && topic.attrs.edad !== 'joven') classNames.push('topic-distrito')
   topic.url = `/presupuesto/topic/${topic.id}`
   return (
-    <div className={classNames.join(' ')}>
+    <div onClick={() => handleTopicLink(topic.url)} className={classNames.join(' ')}>
       {topic.coverUrl && (
         <Link
           to={topic.url}
@@ -126,4 +126,8 @@ function handleLinkClick (evt) {
   const link = evt.currentTarget
   evt.preventDefault()
   window.open(link.getAttribute('href'), '_blank')
+}
+
+function handleTopicLink (url) {
+  window.location.href = url
 }
