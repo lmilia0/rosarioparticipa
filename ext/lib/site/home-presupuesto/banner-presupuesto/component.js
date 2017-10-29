@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import EnProceso from './en-proceso'
 
 let texts = {
   abierta: {
@@ -48,7 +49,9 @@ export default class BannerPresupuesto extends Component {
     this.setState({visibility: false})
   }
 
-  render() {
+  render () {
+    const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
+    const votacionEnProceso = proyectos.length > 0
     let key
     let nextStage
     switch (this.props.stage) {
@@ -60,16 +63,18 @@ export default class BannerPresupuesto extends Component {
           nextStage = 'votacion-cerrada'
           key = 'cerrada'
         }
-        break;
+        break
       case 'votacion-abierta':
         key = 'seguimiento'
         nextStage = 'seguimiento'
-        break;
+        break
       case 'votacion-cerrada':
         key = 'seguimiento'
         nextStage = 'seguimiento'
-        break;
+        break
     }
+
+    if (votacionEnProceso) return <EnProceso />
 
     return (
       this.state.visibility && (

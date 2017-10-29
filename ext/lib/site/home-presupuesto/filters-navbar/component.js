@@ -72,23 +72,28 @@ class FiltersNavbar extends Component {
     }
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps (props) {
     if (props.stage !== this.props.stage) {
       switch (props.stage) {
         case 'votacion-abierta':
+          const ppStatus = JSON.parse(localStorage.getItem('ppStatus')) || {}
+          const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
+          const votacionEnProceso = proyectos.length > 0
+          const padron = ppStatus.padron || 'adulto'
+          const distrito = votacionEnProceso ? proyectos[0].attrs.district : 'centro'
           this.setState({
-            appliedFilters: update (this.state.appliedFilters, {
+            appliedFilters: update(this.state.appliedFilters, {
               distrito: {
-                centro: { $set: true },
-                noroeste: { $set: false },
-                norte: { $set: false },
-                oeste: { $set: false },
-                sudoeste: { $set: false },
-                sur: { $set: false }
+                centro: { $set: votacionEnProceso ? distrito === 'centro' : true },
+                noroeste: { $set: votacionEnProceso ? distrito === 'noroeste' : false },
+                norte: { $set: votacionEnProceso ? distrito === 'norte' : false },
+                oeste: { $set: votacionEnProceso ? distrito === 'oeste' : false },
+                sudoeste: { $set: votacionEnProceso ? distrito === 'sudoeste' : false },
+                sur: { $set: votacionEnProceso ? distrito === 'sur' : false }
               },
               edad: {
-                adulto: { $set: true },
-                joven: { $set: false }
+                adulto: { $set: padron === 'adulto' },
+                joven: { $set: padron === 'joven' }
               },
               estado: {
                 proyectado: { $set: false },
@@ -101,7 +106,8 @@ class FiltersNavbar extends Component {
                 proyectos2017: { $set: false },
                 proyectos2018: { $set: true }
               }
-            })
+            }),
+            distrito
           }, this.exposeFilters)
           break
         case 'votacion-cerrada':
@@ -161,7 +167,6 @@ class FiltersNavbar extends Component {
   }
 
   // FUNCTIONS
-
   handleDistritoFilterChange = (distrito) => {
     distritoCurrent = distrito.name
     //resetea los filtros
@@ -275,7 +280,6 @@ class FiltersNavbar extends Component {
       this.props.updateFilters(exposedFilters)
   }
 
-
   calculateBadges = () => {
     let badges = Object.keys(this.state.appliedFilters)
       .map(f => [f, Object.values(this.state.appliedFilters[f]).filter(boolean => boolean).length])
@@ -317,12 +321,12 @@ class FiltersNavbar extends Component {
       <div>
       {(this.props.stage === 'votacion-abierta' || this.props.stage === 'votacion-cerrada') && (
         <DistritoFilter
-              active={this.state.distrito}
-              onChange={this.handleDistritoFilterChange}
-              changeEdad={this.handleEdadFilterChange}
-              changeStage={this.props.changeStage}
-              stage={this.props.stage} 
-              appliedFilters={this.state.appliedFilters}/>
+          active={this.state.distrito}
+          onChange={this.handleDistritoFilterChange}
+          changeEdad={this.handleEdadFilterChange}
+          changeStage={this.props.changeStage}
+          stage={this.props.stage} 
+          appliedFilters={this.state.appliedFilters}/>
       )}
       {this.props.stage === 'seguimiento' && (
         <header>
@@ -545,14 +549,17 @@ export default ReactOutsideEvent(FiltersNavbar)
 
 function DistritoFilter (props) {
   const { active, onChange, stage, appliedFilters, changeEdad, changeStage } = props
+  const ppStatus = JSON.parse(localStorage.getItem('ppStatus')) || {}
+  const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
+  const votacionEnProceso = proyectos.length > 0
   return (
     <header>
       { stage === 'votacion-abierta' && (
       <div>
         <a className='link-stage'
           onClick={() => {changeStage('seguimiento')}}>
-            {'< Ir a Seguimiento de Proyectos'}
-          </a>
+          {'< Ir a Seguimiento de Proyectos'}
+        </a>
         <div className='stage-header-votacion'>
           <div className='pp-stage'>
             Votación Abierta
@@ -561,15 +568,21 @@ function DistritoFilter (props) {
             <button
               type='button'
               data-name='adulto'
-              onClick={() => changeEdad('adulto')}
-              className={`btn btn-md btn-outline-primary ${appliedFilters.edad.adulto ? 'active' : ''}`}>
+              onClick={() => {
+                if (votacionEnProceso && ppStatus.padron === 'joven') return
+                changeEdad('adulto')
+              }}
+              className={`btn btn-md btn-outline-primary ${appliedFilters.edad.adulto ? 'active' : ''} ${(votacionEnProceso && ppStatus.padron === 'joven') ? 'disabled' : ''}`}>
               <span className='btn-content'><span className='btn-text'>Presupuesto Participativo</span></span>
             </button>
             <button
               type='button'
               data-name='joven'
-              onClick={() => changeEdad('joven')}
-              className={`btn btn-md btn-outline-primary ${appliedFilters.edad.joven ? 'active' : ''}`}>
+              onClick={() => {
+                if (votacionEnProceso && ppStatus.padron === 'adulto') return
+                changeEdad('joven')
+              }}
+              className={`btn btn-md btn-outline-primary ${appliedFilters.edad.joven ? 'active' : ''} ${(votacionEnProceso && ppStatus.padron === 'adulto') ? 'disabled' : ''}`}>
               <span className='btn-content'><span className='btn-text'>Presupuesto Participativo Joven</span></span>
             </button>
           </nav>
@@ -588,14 +601,17 @@ function DistritoFilter (props) {
       <nav>
         <div className='filter'>
           {distritos.map((d) => {
-            const isActive = d.name === active ? ' active' : ''
+            const isActive = d.name === active ? 'active' : ''
             return (
               <button
                 type='button'
                 key={d.name}
                 data-name={d.name}
-                onClick={() => onChange(d)}
-                className={`btn btn-md btn-outline-primary btn-votacion${isActive}`}>
+                onClick={() => {
+                  if (votacionEnProceso && proyectos[0].attrs.district !== d.name) return
+                  onChange(d)
+                }}
+                className={`btn btn-md btn-outline-primary btn-votacion ${isActive} ${votacionEnProceso && proyectos[0].attrs.district !== d.name ? 'disabled' : ''}`}>
                 <span className='btn-content'><span className='btn-text'>{d.title}</span></span>
               </button>
             )

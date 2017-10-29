@@ -1,7 +1,5 @@
 import React from 'react'
-import padStart from 'string.prototype.padstart'
 import { Link } from 'react-router'
-import { SharerFacebook } from 'ext/lib/site/sharer'
 import distritosData from '../distritos.json'
 
 const distritos = (function () {
@@ -11,29 +9,25 @@ const distritos = (function () {
 })()
 
 export default ({ topic, fadeTopic }) => {
-  const topicUrl = `${window.location.origin}${topic.url}`
-
   let state
   const estadosPP = [
-      {
-          "name" : "proyectado",
-          "title" : "Proyectado"
-      },
-      {
-          "name" : "ejecutandose",
-          "title" : "En Ejecución"
-      },
-      {
-          "name" : "terminado",
-          "title" : "Terminado"
-      }
+    {
+      'name': 'proyectado',
+      'title': 'Proyectado'
+    },
+    {
+      'name': 'ejecutandose',
+      'title': 'En Ejecución'
+    },
+    {
+      'name': 'terminado',
+      'title': 'Terminado'
+    }
   ]
 
   if (topic.attrs && topic.attrs.state && estadosPP.map(e => e.name).includes(topic.attrs.state)) {
     state = estadosPP.find((attr) => attr.name === topic.attrs.state).title
   }
-
-  const twitterDesc = encodeURIComponent(`Mirá el proyecto para mi barrio ${topicUrl} #RosarioParticipa`)
 
   const classNames = ['ext-topic-card', 'presupuesto-topic-card']
 
@@ -49,60 +43,56 @@ export default ({ topic, fadeTopic }) => {
   return (
     <div className={classNames.join(' ')}>
       <div className={fadeTopic ? 'topic-disabled' : ''}>
-      {topic.coverUrl && (
-        <Link
-          to={topic.url}
-          className='topic-card-cover'
-          style={{ backgroundImage: `url(${topic.coverUrl})` }} />
-      )}
-      {topic.extra && typeof topic.extra.votes === 'number' && (
-        <div className='topic-results'>
-          <h2>{prettyDecimals(topic.extra.votes)} Votos</h2>
-          <p>
-            Proyecto {topic.attrs && topic.attrs.winner ? 'ganador' : 'presentado'}
-          </p>
-        </div>
-      )}
-      <div className='topic-card-info'>
-        {topic.attrs && topic.attrs.state && estadosPP.map(e => e.name).includes(topic.attrs.state) && (
-          <div className='state'>{state}</div>
+        {topic.coverUrl && (
+          <Link
+            to={topic.url}
+            className='topic-card-cover'
+            style={{ backgroundImage: `url(${topic.coverUrl})` }} />
         )}
-        <div className='topic-location'>
-          <span>{topic.attrs && topic.attrs.area && topic.attrs.area !== '0' ? `Área Barrial ${topic.attrs.area}` : `Distrito ${distritos[topic.attrs.district]}`}</span>
-          {topic.attrs && topic.attrs.number && (
-            <span className='number'>
-              {topic.attrs.anio}
-            </span>
-          )}
-        </div>
-        <div className='topic-card-body'>
-          <h1 className='topic-card-title'>
-            <Link to={topic.url}>{topic.mediaTitle}</Link>
-          </h1>
-          {topic.attrs && topic.attrs.description && (
-            <p className='topic-card-description'>
-              <Link to={topic.url}>{topic.attrs.description}</Link>
+        {topic.extra && typeof topic.extra.votes === 'number' && (
+          <div className='topic-results'>
+            <h2>{prettyDecimals(topic.extra.votes)} Votos</h2>
+            <p>
+              Proyecto {topic.attrs && topic.attrs.winner ? 'ganador' : 'presentado'}
             </p>
-          )}
-        </div>
-        <div className='topic-card-footer'>
-          <div className='topic-card-category'>
-            <span>
-              {topic.attrs.edad === 'joven' ? `Joven` : topic.attrs && topic.attrs.area && topic.attrs.area !== '0' ? `Área Barrial` : `Distrito` }
-            </span>
           </div>
-          {topic.attrs && (
-            <p className='budget'>{prettyPrice(topic.attrs.budget)}</p>
+        )}
+        <div className='topic-card-info'>
+          {topic.attrs && topic.attrs.state && estadosPP.map((e) => e.name).includes(topic.attrs.state) && (
+            <div className='state'>{state}</div>
           )}
+          <div className='topic-location'>
+            <span>{topic.attrs && topic.attrs.area && topic.attrs.area !== '0' ? `Área Barrial ${topic.attrs.area}` : `Distrito ${distritos[topic.attrs.district]}`}</span>
+            {topic.attrs && topic.attrs.number && (
+              <span className='number'>
+                {topic.attrs.anio}
+              </span>
+            )}
+          </div>
+          <div className='topic-card-body'>
+            <h1 className='topic-card-title'>
+              <Link to={topic.url}>{topic.mediaTitle}</Link>
+            </h1>
+            {topic.attrs && topic.attrs.description && (
+              <p className='topic-card-description'>
+                <Link to={topic.url}>{topic.attrs.description}</Link>
+              </p>
+            )}
+          </div>
+          <div className='topic-card-footer'>
+            <div className='topic-card-category'>
+              <span>
+                {topic.attrs.edad === 'joven' ? `Joven` : topic.attrs && topic.attrs.area && topic.attrs.area !== '0' ? `Área Barrial` : `Distrito` }
+              </span>
+            </div>
+            {topic.attrs && (
+              <p className='budget'>{prettyPrice(topic.attrs.budget)}</p>
+            )}
+          </div>
         </div>
-      </div>
       </div>
     </div>
   )
-}
-
-function prettyNumber (number) {
-  return `#${padStart(number, 3, '0')}`
 }
 
 function prettyPrice (number) {
@@ -122,10 +112,4 @@ function prettyDecimals (number) {
     .split('')
     .reverse()
     .join('')
-}
-
-function handleLinkClick (evt) {
-  const link = evt.currentTarget
-  evt.preventDefault()
-  window.open(link.getAttribute('href'), '_blank')
 }

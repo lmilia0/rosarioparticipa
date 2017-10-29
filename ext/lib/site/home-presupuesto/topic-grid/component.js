@@ -11,15 +11,8 @@ export default class TopicGrid extends Component {
   }
 
   componentWillMount () {
-    let savedTopics = []
-    /*if (sessionStorage.topics !== undefined && sessionStorage.topics.length > 0) {
-      const topicId = JSON.parse(sessionStorage.getItem('topic')).id
-      savedTopics.push(topicId)
-      this.setState({
-        votacion: true,
-        selectedTopics: savedTopics
-      })
-    }*/
+    const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos'))
+    console.log('topics grid mount', proyectos)
   }
 
   fadesTopics = (districtTopics, topic) => {
