@@ -8,7 +8,7 @@ const distritos = (function () {
   return c
 })()
 
-export default ({ topic, fadeTopic }) => {
+export default ({ topic, fadeTopic, isSelected }) => {
   let state
   const estadosPP = [
     {
@@ -25,7 +25,7 @@ export default ({ topic, fadeTopic }) => {
     }
   ]
 
-  if (topic.attrs && topic.attrs.state && estadosPP.map(e => e.name).includes(topic.attrs.state)) {
+  if (topic.attrs && topic.attrs.state && estadosPP.map((e) => e.name).includes(topic.attrs.state)) {
     state = estadosPP.find((attr) => attr.name === topic.attrs.state).title
   }
 
@@ -42,53 +42,54 @@ export default ({ topic, fadeTopic }) => {
   topic.url = `/presupuesto/topic/${topic.id}`
   return (
     <div className={classNames.join(' ')}>
-      <div className={fadeTopic ? 'topic-disabled' : ''}>
-        {topic.coverUrl && (
-          <Link
-            to={topic.url}
-            className='topic-card-cover'
-            style={{ backgroundImage: `url(${topic.coverUrl})` }} />
+      {(fadeTopic || isSelected) && <div className='block-overlay' />}
+      {(fadeTopic && !isSelected) && <div className='topic-disabled' />}
+      { isSelected && <span className='icon-check proyecto-seleccionado' /> }
+      {topic.coverUrl && (
+        <Link
+          to={topic.url}
+          className='topic-card-cover'
+          style={{ backgroundImage: `url(${topic.coverUrl})` }} />
+      )}
+      {topic.extra && typeof topic.extra.votes === 'number' && (
+        <div className='topic-results'>
+          <h2>{prettyDecimals(topic.extra.votes)} Votos</h2>
+          <p>
+            Proyecto {topic.attrs && topic.attrs.winner ? 'ganador' : 'presentado'}
+          </p>
+        </div>
+      )}
+      <div className='topic-card-info'>
+        {topic.attrs && topic.attrs.state && estadosPP.map((e) => e.name).includes(topic.attrs.state) && (
+          <div className='state'>{state}</div>
         )}
-        {topic.extra && typeof topic.extra.votes === 'number' && (
-          <div className='topic-results'>
-            <h2>{prettyDecimals(topic.extra.votes)} Votos</h2>
-            <p>
-              Proyecto {topic.attrs && topic.attrs.winner ? 'ganador' : 'presentado'}
-            </p>
-          </div>
-        )}
-        <div className='topic-card-info'>
-          {topic.attrs && topic.attrs.state && estadosPP.map((e) => e.name).includes(topic.attrs.state) && (
-            <div className='state'>{state}</div>
+        <div className='topic-location'>
+          <span>{topic.attrs && topic.attrs.area && topic.attrs.area !== '0' ? `Área Barrial ${topic.attrs.area}` : `Distrito ${distritos[topic.attrs.district]}`}</span>
+          {topic.attrs && topic.attrs.number && (
+            <span className='number'>
+              {topic.attrs.anio}
+            </span>
           )}
-          <div className='topic-location'>
-            <span>{topic.attrs && topic.attrs.area && topic.attrs.area !== '0' ? `Área Barrial ${topic.attrs.area}` : `Distrito ${distritos[topic.attrs.district]}`}</span>
-            {topic.attrs && topic.attrs.number && (
-              <span className='number'>
-                {topic.attrs.anio}
-              </span>
-            )}
+        </div>
+        <div className='topic-card-body'>
+          <h1 className='topic-card-title'>
+            <Link to={topic.url}>{topic.mediaTitle}</Link>
+          </h1>
+          {topic.attrs && topic.attrs.description && (
+            <p className='topic-card-description'>
+              <Link to={topic.url}>{topic.attrs.description}</Link>
+            </p>
+          )}
+        </div>
+        <div className='topic-card-footer'>
+          <div className='topic-card-category'>
+            <span>
+              {topic.attrs.edad === 'joven' ? `Joven` : topic.attrs && topic.attrs.area && topic.attrs.area !== '0' ? `Área Barrial` : `Distrito` }
+            </span>
           </div>
-          <div className='topic-card-body'>
-            <h1 className='topic-card-title'>
-              <Link to={topic.url}>{topic.mediaTitle}</Link>
-            </h1>
-            {topic.attrs && topic.attrs.description && (
-              <p className='topic-card-description'>
-                <Link to={topic.url}>{topic.attrs.description}</Link>
-              </p>
-            )}
-          </div>
-          <div className='topic-card-footer'>
-            <div className='topic-card-category'>
-              <span>
-                {topic.attrs.edad === 'joven' ? `Joven` : topic.attrs && topic.attrs.area && topic.attrs.area !== '0' ? `Área Barrial` : `Distrito` }
-              </span>
-            </div>
-            {topic.attrs && (
-              <p className='budget'>{prettyPrice(topic.attrs.budget)}</p>
-            )}
-          </div>
+          {topic.attrs && (
+            <p className='budget'>{prettyPrice(topic.attrs.budget)}</p>
+          )}
         </div>
       </div>
     </div>

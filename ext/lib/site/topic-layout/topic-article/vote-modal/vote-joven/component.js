@@ -21,7 +21,9 @@ export default ({ topic, saveTopic, toggleVotesModal, proyectos }) => {
       <div className='form-component-wrapper'>
         <h3>Paso { paso } de 3 </h3>
         <p>{ mensaje }</p>
-        <TopicCard topic={topic} />
+        <div className='proyectos-container'>
+          {[...proyectos, topic].map((p) => <TopicCard topic={p} />)}
+        </div>
         <button onClick={saveTopic} className='btn btn-active btn-pending'>Votar este proyecto</button>
         <a className='cancel' onClick={toggleVotesModal}>Cancelar</a>
       </div>

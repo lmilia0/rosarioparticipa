@@ -13,7 +13,9 @@ export default ({ topic, saveTopic, toggleVotesModal }) => {
             ? <p>Una vez confirmado el voto de distrito, debés votar por un proyecto de Área Barrial del mismo.</p>
             : <p>Una vez confirmado el voto del barrio, debés votar por un proyecto del Distrito del mismo.</p>
         }
-        <TopicCard topic={topic} />
+        <div className='proyectos-container'>
+          <TopicCard topic={topic} />
+        </div>
         <button onClick={saveTopic} className='btn btn-active btn-pending'>Votar este proyecto</button>
         <a className='cancel' onClick={toggleVotesModal}>Cancelar</a>
       </div>

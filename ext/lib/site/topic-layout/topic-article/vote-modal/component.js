@@ -12,7 +12,7 @@ class VoteModal extends Component {
     const edad = JSON.parse(localStorage.getItem('ppStatus')).padron
     this.state = {
       etapa: (sessionStorage.getItem('pp-etapa') || (edad === 'joven' ? 'voto-joven' : 'primer-voto-adulto')),
-      proyectos: sessionStorage.getItem('pp-proyectos') || []
+      proyectos: JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
     }
   }
 
