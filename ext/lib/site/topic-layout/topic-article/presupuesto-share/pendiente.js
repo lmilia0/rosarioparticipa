@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import bus from 'bus'
 import { SharerFacebook } from 'ext/lib/site/sharer'
-import { prettyNumber, prettyPrice, twitText } from './utils.js'
+import { prettyPrice, twitText } from './utils.js'
 
 export default class Pendiente extends Component {
   constructor (props) {
@@ -40,7 +40,6 @@ export default class Pendiente extends Component {
             <div className='sharer-pending'>
               <div className='pending-header'>
                 <span className='presupuesto'>Presupuesto:</span>
-                {topic.attrs.number && <span className='numero-proyecto'>{`${prettyNumber(topic.attrs.number)}`}</span>}
               </div>
               <div className='pending-body'>
                 { topic.attrs.budget && <span className='presu-proyecto'>{prettyPrice(topic.attrs.budget)}</span>}

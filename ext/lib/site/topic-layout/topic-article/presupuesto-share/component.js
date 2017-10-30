@@ -1,5 +1,4 @@
 import React from 'react'
-import user from 'lib/site/user/user'
 import Pendiente from './pendiente'
 import Proyectado from './proyectado'
 
