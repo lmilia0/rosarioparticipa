@@ -12,8 +12,6 @@ app.use('/ext/api/feed', require('./feed'))
 app.use('/ext/api/pp-feed', require('./pp-feed'))
 app.use('/ext/api/noticias', require('./noticias'))
 app.use('/ext/api/change-stage', require('./change-stage'))
-app.use('/ext/api/edad-user', require('./edad-user'))
-app.use('/ext/api/votacion', require('./votacion'))
 app.use('/api/v2', require('./fixedOpenTopicMethod.js'))
 app.use('/api/v2', require('./customCsvExportUpdate.js'))
 
