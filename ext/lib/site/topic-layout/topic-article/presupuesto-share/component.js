@@ -1,7 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router'
 import user from 'lib/site/user/user'
 import padStart from 'string.prototype.padstart'
 import { SharerFacebook } from 'ext/lib/site/sharer'
+
 
 export default function PresupuestoShare ({ topic, forum, user }) {
 
@@ -49,7 +51,14 @@ export default function PresupuestoShare ({ topic, forum, user }) {
                   {topic.attrs.budget && <span className='presu-proyecto'>{prettyPrice(topic.attrs.budget)}</span>}
                   {
                     !user.state.value &&
-                      <a href='/signin' className='btn btn-active btn-pending'>Votar este proyecto</a>
+                      <Link 
+                        to={{
+                          pathname: '/signin',
+                          query:  { ref: window.location.pathname }
+                        }}
+                        className='btn btn-active btn-pending'>
+                        Votar este proyecto
+                      </Link>
                   }
                   {
                     (user.state.value && user.profileIsComplete()) &&
