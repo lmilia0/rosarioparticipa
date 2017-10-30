@@ -16,6 +16,10 @@ export default class BannerVotacion extends Component {
     this.checkDate()
   }
 
+  componentDidMount() {
+    this.state.visibility && localStorage.setItem('bannerRendered', true)
+  }
+
   checkFirstTime = () => {
     var alreadyRendered = localStorage.getItem('bannerRendered')
     alreadyRendered && this.setState({visibility: false}, () => {console.log('visibility: ', this.state.visibility)})
@@ -30,10 +34,6 @@ export default class BannerVotacion extends Component {
         visibility: false
       })
     }
-  }
-
-  componentDidMount (){
-    localStorage.setItem('bannerRendered', true);
   }
 
   closeBanner = (event) => {
