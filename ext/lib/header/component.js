@@ -21,7 +21,7 @@ class Header extends Component {
   componentWillMount() {
     // listener para que el hash #completar-datos togglee el modal
     window.addEventListener('hashchange', () => {
-      if (location.hash === '#completar-datos' && !this.props.user.profileIsComplete) { 
+      if (location.hash === '#completar-datos' && !this.props.user.profileIsComplete()) { 
         this.toggleUserModal()
       }
     }) 
