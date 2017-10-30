@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
+import bus from 'bus'
 import FirstVote from './first-vote/component'
 import SecondVote from './second-vote/component'
 import VoteJoven from './vote-joven/component'
@@ -68,7 +69,9 @@ class VoteModal extends Component {
       .then((res) => {
         if (res.status === 200) {
           ppStatus.puede_votar = false
+          ppStatus.msj = 'Ya participaste con este documento.'
           localStorage.setItem('ppStatus', JSON.stringify(ppStatus))
+          bus.emit('pp-status', ppStatus)
           sessionStorage.removeItem('pp-proyectos')
           sessionStorage.removeItem('pp-etapa')
           this.setState({ etapa: 'confirmacion' })
