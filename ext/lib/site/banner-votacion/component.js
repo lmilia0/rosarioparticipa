@@ -6,29 +6,34 @@ export default class BannerVotacion extends Component {
   constructor (props) {
     super(props)
     this.state={
-      visibility: false,
-      firstTime: true
+      visibility: true
     }
-    this.limit = window.innerHeight
-    this.didScroll = false
+  }
+
+  componentWillMount() {
+    // localStorage.removeItem('bannerRendered')
+    this.checkFirstTime()
+    this.checkDate()
+  }
+
+  checkFirstTime = () => {
+    var alreadyRendered = localStorage.getItem('bannerRendered')
+    alreadyRendered && this.setState({visibility: false}, () => {console.log('visibility: ', this.state.visibility)})
+  }
+
+  checkDate = () => {
+    var today = new Date()
+    var endDate = new Date(this.props.cierre)
+    if (Date.parse(endDate) - Date.parse(today) < 0) {
+      localStorage.removeItem('bannerRendered')
+      this.setState({
+        visibility: false
+      })
+    }
   }
 
   componentDidMount (){
-    window.addEventListener('scroll', this.checkScroll)
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('scroll', this.checkScroll)
-  }
-
-  checkScroll = () => {
-    if (document.body.scrollTop > this.limit) this.didScroll = true
-    if (document.body.scrollTop < this.limit && this.didScroll && this.state.firstTime){
-      this.setState({
-        visibility: true,
-        firstTime: false
-      })
-    }
+    localStorage.setItem('bannerRendered', true);
   }
 
   closeBanner = (event) => {
@@ -36,13 +41,16 @@ export default class BannerVotacion extends Component {
   }
 
   render() {
+    let cierre = new Date(this.props.cierre).toLocaleDateString()
     return (
       this.state.visibility && (
         <div className='container-banner'>
           <button className='closes' onClick={this.closeBanner}>x</button>
           <h3>
             ¡Ya está abierta la votación para el Presupuesto Participativo de este año!
-            Tenés tiempo hasta el XXX
+          </h3>
+          <h3>
+            Tenés tiempo hasta el {cierre}
           </h3>
         </div>
       )

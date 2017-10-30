@@ -147,9 +147,7 @@ class HomeDesafios extends Component {
   }
 
   render () {
-    const { forum, topics } = this.state
-    console.log('stage ', this.state.stageVotacion)
-    console.log('cierre ', this.state.cierreVotacion)
+    const { forum, topics, stageVotacion, cierreVotacion } = this.state
 
     return (
       <div className='ext-home-desafios'>
@@ -169,8 +167,9 @@ class HomeDesafios extends Component {
             </div>
           </div>
         )}
-        {topics && this.state.stageVotacion === 'votacion-abierta' &&
-          <BannerVotacion />
+        {topics && stageVotacion === 'votacion-abierta' &&
+          <BannerVotacion
+            cierre={cierreVotacion} />
         }
         {topics && <Footer />}
       </div>
