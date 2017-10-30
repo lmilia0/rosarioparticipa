@@ -93,8 +93,8 @@ function getParticipatoryBudgetVote (req, res, next) {
   const voteData = {
     modalidad: req.body.modalidad,
     distrito: req.body.distrito,
-    proyectos_distritales: req.body.proyectos_distritales,
-    proyectos_barriales: req.body.proyectos_barriales
+    proyectos_distritales: req.body.proyectos_distritales + '',
+    proyectos_barriales: req.body.proyectos_barriales + ''
   }
 
   try {
@@ -103,11 +103,14 @@ function getParticipatoryBudgetVote (req, res, next) {
     return next(err)
   }
 
+  console.log(`${config.ext.participatoryBudget.votingEndpoint}?accion=votar&token=${token}`)
+
   request
     .get(config.ext.participatoryBudget.votingEndpoint)
     .query({ token: token, accion: 'votar' })
     .end(function statusEndpointCall (err, response) {
       if (err || !response.ok) return next(err)
+      console.log(response.text)
       try {
         const body = JSON.parse(response.text)
         if (body.resultado === 'ERROR') {
@@ -155,7 +158,9 @@ function exposeProfile (user) {
 }
 
 function getUserStatusToken (user) {
-  return jwt.encode(exposeProfile(user), config.ext.participatoryBudget.secret)
+  let userProfile = exposeProfile(user)
+  userProfile.nro_doc = +userProfile.nro_doc
+  return jwt.encode(userProfile, config.ext.participatoryBudget.secret)
 }
 
 function getUserVotingToken (user, voteData) {
@@ -169,7 +174,7 @@ function getUserVotingToken (user, voteData) {
     lastName: userProfile.lastName,
     email: userProfile.email,
     cod_doc: userProfile.cod_doc,
-    nro_doc: userProfile.nro_doc,
+    nro_doc: +userProfile.nro_doc,
     sexo: userProfile.sexo
   }, config.ext.participatoryBudget.secret)
 }
