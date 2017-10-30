@@ -47,10 +47,9 @@ export default ({ topic }) => {
   if (topic.attrs.area === '0' && topic.attrs.edad !== 'joven') classNames.push('topic-distrito')
   topic.url = `/presupuesto/topic/${topic.id}`
   return (
-    <div onClick={() => handleTopicLink(topic.url)} className={classNames.join(' ')}>
+    <Link to={topic.url} className={classNames.join(' ')}>
       {topic.coverUrl && (
-        <Link
-          to={topic.url}
+        <div
           className='topic-card-cover'
           style={{ backgroundImage: `url(${topic.coverUrl})` }} />
       )}
@@ -95,7 +94,7 @@ export default ({ topic }) => {
           )}
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
@@ -120,14 +119,4 @@ function prettyDecimals (number) {
     .split('')
     .reverse()
     .join('')
-}
-
-function handleLinkClick (evt) {
-  const link = evt.currentTarget
-  evt.preventDefault()
-  window.open(link.getAttribute('href'), '_blank')
-}
-
-function handleTopicLink (url) {
-  window.location.href = url
 }
