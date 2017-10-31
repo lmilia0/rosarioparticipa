@@ -8,6 +8,7 @@ export default class BannerVotacion extends Component {
     this.state={
       visibility: true
     }
+    console.log('renderea BannerVotacion')
   }
 
   componentWillMount() {
