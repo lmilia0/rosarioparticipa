@@ -9,21 +9,20 @@ let stageVotacion = null
 //llamada a Forum Presupuesto
 forumStore.findOneByName('presupuesto')
 .then((forum) => {
-  let stageVotacion = forum.extra.stage
-  let cierreVotacion = forum.extra.cierre
+  const stageVotacion = forum.extra.stage
+  const cierreVotacion = forum.extra.cierre
+  console.log(stageVotacion)
 })
 .catch((err) => {
   console.log(err)
 })
 
-console.log('hola mundo')
-console.log(stageVotacion)
-
 const Layout = ({ children }) => (
   <div id='outer-layout'>
     <Header />
     {children}
-    {stageVotacion === 'votacion-abierta' &&
+    {console.log(stageVotacion, cierreVotacion)}
+    {stageVotacion === 'votacion-abierta' && console.log('renderearia') &&
       <BannerVotacion
         cierre={cierreVotacion} />
     }
