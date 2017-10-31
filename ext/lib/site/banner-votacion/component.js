@@ -20,11 +20,13 @@ export default class BannerVotacion extends Component {
     this.state.visibility && localStorage.setItem('bannerRendered', true)
   }
 
+  // se fija si es la primera vez que entraste
   checkFirstTime = () => {
     var alreadyRendered = localStorage.getItem('bannerRendered')
     alreadyRendered && this.setState({visibility: false}, () => {console.log('visibility: ', this.state.visibility)})
   }
 
+  // se fija la fecha
   checkDate = () => {
     var today = new Date()
     var endDate = new Date(this.props.cierre)

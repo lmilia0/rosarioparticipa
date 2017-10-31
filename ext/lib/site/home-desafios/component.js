@@ -167,7 +167,7 @@ class HomeDesafios extends Component {
             </div>
           </div>
         )}
-        {topics && stageVotacion === 'votacion-abierta' &&
+        {stageVotacion === 'votacion-abierta' &&
           <BannerVotacion
             cierre={cierreVotacion} />
         }
