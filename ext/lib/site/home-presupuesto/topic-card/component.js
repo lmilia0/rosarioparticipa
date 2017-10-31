@@ -13,29 +13,42 @@ const distritos = (function () {
 export default ({ topic }) => {
   const topicUrl = `${window.location.origin}${topic.url}`
 
+  const twitterDesc = twitText()
+
   let state
   const estadosPP = [
-      {
-          "name" : "proyectado",
-          "title" : "Proyectado"
-      },
-      {
-          "name" : "ejecutandose",
-          "title" : "En Ejecución"
-      },
-      {
-          "name" : "terminado",
-          "title" : "Terminado"
-      }
+    {
+      'name': 'proyectado',
+      'title': 'Proyectado'
+    },
+    {
+      'name': 'ejecutandose',
+      'title': 'En Ejecución'
+    },
+    {
+      'name': 'terminado',
+      'title': 'Terminado'
+    }
   ]
 
   if (topic.attrs && topic.attrs.state && estadosPP.map(e => e.name).includes(topic.attrs.state)) {
     state = estadosPP.find((attr) => attr.name === topic.attrs.state).title
   }
 
-  const twitterDesc = encodeURIComponent(`Mirá el proyecto para mi barrio ${topicUrl} #RosarioParticipa`)
-
   const classNames = ['ext-topic-card', 'presupuesto-topic-card']
+
+  function twitText () {
+    switch (topic.attrs.state) {
+      case 'pendiente':
+        return encodeURIComponent(`Mirá el proyecto que quiero para mi barrio #YoVotoPorMiBarrio `)
+      case 'perdedor':
+        return encodeURIComponent(topic.mediaTitle)
+      case 'proyectado':
+        return encodeURIComponent('Este proyecto se va a realizar gracias a la participación de los vecinos. ')
+      default:
+        return ''
+    }
+  }
 
   if (topic.extra && typeof topic.extra.votes === 'number') {
     classNames.push('has-votes')
@@ -62,7 +75,7 @@ export default ({ topic }) => {
         </div>
       )}
       <div className='topic-card-info'>
-        {topic.attrs && topic.attrs.state && estadosPP.map(e => e.name).includes(topic.attrs.state) && (
+        {topic.attrs && topic.attrs.state && estadosPP.map((e) => e.name).includes(topic.attrs.state) && (
           <div className='state'>{state}</div>
         )}
         <div className='topic-location'>
@@ -82,6 +95,15 @@ export default ({ topic }) => {
               <Link to={topic.url}>{topic.attrs.description}</Link>
             </p>
           )}
+        </div>
+        <div className='topic-card-links'>
+          <SharerFacebook
+            className='fb'
+            params={{
+              picture: topic.coverUrl,
+              link: window.location.href
+            }} />
+          <a target='_blank' href={`http://twitter.com/share?text=${twitterDesc}&url=${topicUrl}`} rel='noopener noreferrer' className='tw'> </a>
         </div>
         <div className='topic-card-footer'>
           <div className='topic-card-category'>

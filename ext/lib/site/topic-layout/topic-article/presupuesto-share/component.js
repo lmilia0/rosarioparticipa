@@ -4,7 +4,6 @@ import user from 'lib/site/user/user'
 import padStart from 'string.prototype.padstart'
 import { SharerFacebook } from 'ext/lib/site/sharer'
 
-
 export default function PresupuestoShare ({ topic, forum, user }) {
 
   const topicUrl = `${window.location.origin}${topic.url}`
@@ -50,7 +49,7 @@ export default function PresupuestoShare ({ topic, forum, user }) {
                   {topic.attrs.budget && <span className='presu-proyecto'>{prettyPrice(topic.attrs.budget)}</span>}
                   {
                     !user.state.value &&
-                      <Link 
+                      <Link
                         to={{
                           pathname: '/signin',
                           query:  { ref: window.location.pathname }
