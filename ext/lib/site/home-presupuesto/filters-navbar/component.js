@@ -325,10 +325,10 @@ class FiltersNavbar extends Component {
       )}
       {this.props.stage === 'seguimiento' && (
         <header>
-          { this.props.forumStage === 'votacion-abierta' && (
+            {(this.props.forumStage === 'votacion-abierta' || this.props.forumStage === 'votacion-cerrada') && (
               <a
                 className='link-stage'
-                onClick={() => {this.props.changeStage('votacion-abierta')}}>
+                onClick={() => { this.props.changeStage(this.props.forumStage) }}>
                   {'< Volver a Votación'}
               </a>
             )
@@ -530,9 +530,9 @@ function DistritoFilter (props) {
       { stage === 'votacion-abierta' && (
       <div>
         <a className='link-stage'
-          onClick={() => {changeStage('seguimiento')}}>
-            {'< Ir a Seguimiento de Proyectos'}
-          </a>
+          onClick={() => { changeStage('seguimiento') }}>
+          {'< Ir a Seguimiento de Proyectos'}
+        </a>
         <div className='stage-header'>
           <div className='pp-stage'>
             Votación Abierta
@@ -558,11 +558,17 @@ function DistritoFilter (props) {
       </div>
       )}
       { stage === 'votacion-cerrada' && (
-        <div className='stage-header'>
-          <div className='pp-stage'>
-            Resultados de votación
+        <div>
+          <a className='link-stage'
+            onClick={() => { changeStage('seguimiento') }}>
+            {'< Ir a Seguimiento de Proyectos'}
+          </a>
+          <div className='stage-header'>
+            <div className='pp-stage'>
+              Resultados de votación
+            </div>
+            <p className='header-text header-text-cerrada'>Elegí tu distrito:</p>
           </div>
-          <p className='header-text header-text-cerrada'>Elegí tu distrito:</p>
         </div>
       )}
       <nav>
