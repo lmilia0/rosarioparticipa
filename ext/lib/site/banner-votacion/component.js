@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import forumStore from 'lib/stores/forum-store/forum-store'
 
 
 export default class BannerVotacion extends Component {
@@ -6,13 +7,25 @@ export default class BannerVotacion extends Component {
   constructor (props) {
     super(props)
     this.state={
-      visibility: true
+      visibility: true,
+      stageVotacion: null,
+      cierreVotacion: null
     }
-    console.log('renderea BannerVotacion')
   }
 
   componentWillMount() {
-    // localStorage.removeItem('bannerRendered')
+    forumStore.findOneByName('presupuesto')
+    .then((forum) => {
+      this.setState({
+        stageVotacion: forum.extra.stage,
+        cierreVotacion: forum.extra.cierre
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    localStorage.removeItem('bannerRendered')
     this.checkFirstTime()
     this.checkDate()
   }
@@ -30,7 +43,7 @@ export default class BannerVotacion extends Component {
   // se fija la fecha
   checkDate = () => {
     var today = new Date()
-    var endDate = new Date(this.props.cierre)
+    var endDate = new Date(this.state.cierreVotacion)
     if (Date.parse(endDate) - Date.parse(today) < 0) {
       localStorage.removeItem('bannerRendered')
       this.setState({
@@ -45,18 +58,19 @@ export default class BannerVotacion extends Component {
 
   render() {
     let cierre = new Date(this.props.cierre).toLocaleDateString()
-    return (
-      this.state.visibility && (
-        <div className='container-banner'>
-          <button className='closes' onClick={this.closeBanner}>x</button>
-          <h3>
-            ¡Ya está abierta la votación para el Presupuesto Participativo de este año!
-          </h3>
-          <h3>
-            Tenés tiempo hasta el {cierre}
-          </h3>
-        </div>
-      )
-    )
+    if (this.state.stageVotacion === 'votacion-abierta') {
+      return (
+        this.state.visibility && (
+          <div className='container-banner'>
+            <button className='closes' onClick={this.closeBanner}>x</button>
+            <h3>
+              ¡Ya está abierta la votación para el Presupuesto Participativo de este año!
+            </h3>
+            <h3>
+              Tenés tiempo hasta el {this.state.cierreVotacion.toString()}
+            </h3>
+          </div>
+        )
+      )} else {return null}
+    }
   }
-}
