@@ -59,7 +59,7 @@ forms.String = ({
       className='form-control'
       type='text'
       name={`attrs.${name}`}
-      defaultValue={value}
+      defaultValue={name ==='anio' ? '2018' : value}
       minLength={min}
       maxLength={max}
       required={mandatory}
