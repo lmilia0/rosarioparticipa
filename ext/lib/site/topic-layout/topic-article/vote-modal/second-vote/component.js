@@ -8,7 +8,7 @@ export default ({ proyectos, sendTopics, toggleVotesModal }) => (
       <h3>Paso 2 de 2 </h3>
       <p>Hacé click en el botón más abajo para confirmar tus dos votos para Presupuesto Participativo.</p>
       <div className='proyectos-container'>
-        {proyectos.map((p, i) => <TopicCard key={i} topic={p} />)}
+        {proyectos.map((p, i) => <TopicCard key={i} topic={p} isBlocked />)}
       </div>
       <button onClick={sendTopics(proyectos)} className='btn btn-active btn-pending'>Confirmar mi voto</button>
       <a className='cancel' onClick={toggleVotesModal}>Cancelar</a>

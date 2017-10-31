@@ -8,7 +8,7 @@ const distritos = (function () {
   return c
 })()
 
-export default ({ topic, fadeTopic, isSelected }) => {
+export default ({ topic, fadeTopic, isSelected, isBlocked }) => {
   let state
   const estadosPP = [
     {
@@ -42,7 +42,7 @@ export default ({ topic, fadeTopic, isSelected }) => {
   topic.url = `/presupuesto/topic/${topic.id}`
   return (
     <Link to={topic.url} className={classNames.join(' ')}>
-      {(fadeTopic || isSelected) && <div className='block-overlay' />}
+      {(fadeTopic || isSelected || isBlocked) && <div className='block-overlay' />}
       {(fadeTopic && !isSelected) && <div className='topic-disabled' />}
       { isSelected && <span className='icon-check proyecto-seleccionado' /> }
       {topic.coverUrl && (

@@ -22,7 +22,7 @@ export default ({ saveTopic, sendTopics, toggleVotesModal, proyectos }) => {
         <h3>Paso { paso } de 3 </h3>
         <p>{ mensaje }</p>
         <div className='proyectos-container'>
-          {proyectos.map((p, i) => <TopicCard key={i} topic={p} />)}
+          {proyectos.map((p, i) => <TopicCard key={i} topic={p} isBlocked />)}
         </div>
         { paso === 3 && <button onClick={sendTopics(proyectos)} className='btn btn-active btn-pending'>Confirmar mi voto</button> }
         { paso < 3 && <button onClick={saveTopic} className='btn btn-active btn-pending'>Votar este proyecto</button> }
