@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import bus from 'bus'
 import { SharerFacebook } from 'ext/lib/site/sharer'
 import { prettyPrice, twitText } from './utils.js'
@@ -45,7 +46,14 @@ export default class Pendiente extends Component {
                 { topic.attrs.budget && <span className='presu-proyecto'>{prettyPrice(topic.attrs.budget)}</span>}
                 { // User is not logged in
                   !user.state.value &&
-                    <a href='/signin' className='btn btn-active btn-pending'>Votar este proyecto</a>
+                    <Link
+                      to={{
+                        pathname: '/signin',
+                        query: { ref: window.location.pathname }
+                      }}
+                      className='btn btn-active btn-pending'>
+                      Votar este proyecto
+                    </Link>
                 }
                 { // User logged in & status failed, falling back to old system
                   (user.state.value && profileIsComplete && statusFail) &&
