@@ -6,6 +6,7 @@ import userConnector from 'lib/site/connectors/user'
 import Footer from '../footer/component'
 import Cover from '../cover'
 import TopicCard from './topic-card/component'
+import BannerVotacion from '../banner-votacion/component'
 
 const filters = {
   new: {
@@ -42,7 +43,9 @@ class HomeDesafios extends Component {
       forum: null,
       topics: null,
       filter: 'open',
-      sort: 'pop'
+      sort: 'pop',
+      stageVotacion: null,
+      cierreVotacion: null
     }
   }
 
@@ -74,6 +77,19 @@ class HomeDesafios extends Component {
         bus.on('topic-store:update:all', this.fetchTopics)
       })
       .catch((err) => { throw err })
+
+
+    //llamada a Forum Presupuesto
+    forumStore.findOneByName('presupuesto')
+    .then((forum) => {
+      this.setState({
+        stageVotacion: forum.extra.stage,
+        cierreVotacion: forum.extra.cierre
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 
   getTopicCount (t) {
@@ -131,7 +147,7 @@ class HomeDesafios extends Component {
   }
 
   render () {
-    const { forum, topics } = this.state
+    const { forum, topics, stageVotacion, cierreVotacion } = this.state
 
     return (
       <div className='ext-home-desafios'>
@@ -151,6 +167,10 @@ class HomeDesafios extends Component {
             </div>
           </div>
         )}
+        {stageVotacion === 'votacion-abierta' &&
+          <BannerVotacion
+            cierre={cierreVotacion} />
+        }
         {topics && <Footer />}
       </div>
     )
