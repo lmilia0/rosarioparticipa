@@ -103,7 +103,7 @@ export default ({ topic }) => {
               picture: topic.coverUrl,
               link: window.location.href
             }} />
-          <a target='_blank' href={`http://twitter.com/share?text=${twitterDesc}&url=${topicUrl}`} rel='noopener noreferrer' className='tw'> </a>
+          <div className='tw'></div>
         </div>
         <div className='topic-card-footer'>
           <div className='topic-card-category'>
