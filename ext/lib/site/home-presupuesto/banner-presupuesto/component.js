@@ -12,7 +12,7 @@ let texts = {
   },
   seguimiento: {
     title: '¡También podés ver el estado de los proyectos ganadores de años anteriores!',
-    btn: 'Seguimiento de proyectos anteriores'
+    btn: 'Seguimiento de proyectos'
   }
 }
 export default class BannerPresupuesto extends Component {
