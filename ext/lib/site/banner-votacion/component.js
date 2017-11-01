@@ -27,10 +27,6 @@ export default class BannerVotacion extends Component {
     })
   }
 
-  componentWillUnmount() {
-    this.closeBanner()
-  }
-
   closeBanner = (event) => {
     sessionStorage.setItem('pp-17-banner', true)
     this.setState({ visibility: false })
