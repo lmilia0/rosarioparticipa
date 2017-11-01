@@ -15,6 +15,17 @@ function escapeTxt (text) {
   return text.replace(/"/g, '\'').replace(/\r/g, '').replace(/\n/g, '')
 }
 
+function sortTopics (a, b) {
+  if (a.attrs.edad === b.attrs.edad) {
+    if (a.attrs.district === b.attrs.district) {
+      return a.attrs.number > b.attrs.number ? 1 : -1
+    } else {
+      return a.attrs.district > b.attrs.district ? 1 : -1
+    }
+  } else {
+    return a.attrs.edad > b.attrs.edad ? 1 : -1
+  }
+}
 
 app.get('/topics.csv',
   middlewares.users.restrict,
@@ -23,8 +34,9 @@ app.get('/topics.csv',
   middlewares.forums.privileges.canChangeTopics,
   function getCsv (req, res, next) {
     const infoTopics = []
+    const topics = req.topics.sort(sortTopics)
 
-    req.topics.forEach((topic) => {
+    topics.forEach((topic) => {
       if (topic.attrs === undefined) {
         topic.attrs = {}
       }
@@ -36,8 +48,9 @@ app.get('/topics.csv',
           `"${escapeTxt(topic.attrs.area)}"`,
           `"${escapeTxt(topic.attrs.budget)}"`,
           `"${escapeTxt('DESCONOCIDO')}"`,
-          `"${escapeTxt(topic.attrs.edad.charAt(0).toUpperCase() +(topic.attrs.edad).slice(1).toLowerCase())}"`,
+          `"${escapeTxt(topic.attrs.description)}"`,
           `"${topic.coverUrl}"`,
+          `"${escapeTxt(topic.attrs.edad.charAt(0).toUpperCase() +(topic.attrs.edad).slice(1).toLowerCase())}"`,
           topic.id
         ])
       }
@@ -87,10 +100,10 @@ app.post('/topics.csv',
                 state: _topic[' incluido (SI/NO)'] === 'SI' ? 'proyectado' : 'perdedor'
               }
 
-              Object.keys(attrs).forEach((k)=>{
+              Object.keys(attrs).forEach((k) => {
                 topic.set(`attrs.${k}`, attrs[k])
               })
-              
+
               return topic.save()
             })
           )
