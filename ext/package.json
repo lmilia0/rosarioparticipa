@@ -16,7 +16,8 @@
     "rosariociudad-bootstrap": "^1.0.3",
     "string.prototype.padstart": "3.0.0",
     "twitter": "~1.4.0",
-    "immutability-helper": "2.4.0"
+    "immutability-helper": "2.4.0",
+    "superagent-proxy": "1.0.2"
   },
   "browser": {
     "lib/config": "lib/config/config"

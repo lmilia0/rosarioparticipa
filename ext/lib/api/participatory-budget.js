@@ -3,6 +3,7 @@ const express = require('express')
 const debug = require('debug')
 const jwt = require('jwt-simple')
 const request = require('superagent')
+const requestProxy = require('superagent-proxy')(request)
 const config = require('ext/lib/config')
 const utils = require('lib/utils')
 const middlewares = require('lib/api-v2/middlewares')
@@ -32,9 +33,10 @@ function getParticipatoryBudgetStatus (req, res, next) {
     return next(err)
   }
 
-  request
+  requestProxy
     .get(config.ext.participatoryBudget.statusEndpoint)
     .query({ token: token })
+    .proxy(process.env.FIXIE_URL)
     .end(function statusEndpointCall (err, response) {
       if (err || !response.ok) return next(err)
 
@@ -105,9 +107,10 @@ function getParticipatoryBudgetVote (req, res, next) {
 
   console.log(`${config.ext.participatoryBudget.votingEndpoint}?accion=votar&token=${token}`)
 
-  request
+  requestProxy
     .get(config.ext.participatoryBudget.votingEndpoint)
     .query({ token: token, accion: 'votar' })
+    .proxy(process.env.FIXIE_URL)
     .end(function statusEndpointCall (err, response) {
       if (err || !response.ok) return next(err)
       console.log(response.text)
