@@ -72,12 +72,12 @@ class FiltersNavbar extends Component {
     }
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps (props) {
     if (props.stage !== this.props.stage) {
       switch (props.stage) {
         case 'votacion-abierta':
           this.setState({
-            appliedFilters: update (this.state.appliedFilters, {
+            appliedFilters: update(this.state.appliedFilters, {
               distrito: {
                 centro: { $set: true },
                 noroeste: { $set: false },
@@ -106,7 +106,7 @@ class FiltersNavbar extends Component {
           break
         case 'votacion-cerrada':
           this.setState({
-            appliedFilters: update (this.state.appliedFilters, {
+            appliedFilters: update(this.state.appliedFilters, {
               distrito: {
                 centro: { $set: true },
                 noroeste: { $set: false },
@@ -131,7 +131,7 @@ class FiltersNavbar extends Component {
           break
         case 'seguimiento':
           this.setState({
-            appliedFilters: update (this.state.appliedFilters, {
+            appliedFilters: update(this.state.appliedFilters, {
               distrito: {
                 centro: { $set: false },
                 noroeste: { $set: false },
@@ -143,7 +143,9 @@ class FiltersNavbar extends Component {
               estado: {
                 proyectado: { $set: false },
                 ejecutandose: { $set: false },
-                finalizado: { $set: false }
+                finalizado: { $set: false },
+                pendiente: { $set: false },
+                perdedor: { $set: false }
               },
               anio: {
                 proyectos2017: { $set: false },
@@ -188,16 +190,16 @@ class FiltersNavbar extends Component {
   }
 
   handleEdadFilterChange = (edad) => {
-    //resetea el filtro edad
+    //  resetea el filtro edad
     let appliedFilters = update(this.state.appliedFilters, {
       edad: {
-        adulto: { $set: false},
+        adulto: { $set: false },
         joven: { $set: false}
       }
     })
-    //actualiza filtro edad con la opcion elegida
+    //  actualiza filtro edad con la opcion elegida
     appliedFilters.edad[edad] = true
-    //aplica los filtros actualizados
+    //  aplica los filtros actualizados
     this.setState({
       appliedFilters: appliedFilters
     }, () => {
@@ -206,9 +208,9 @@ class FiltersNavbar extends Component {
   }
 
   handleDropdown = (id) => (e) => {
-    // si se apreta el botón de un dropdown ya abierto, se cierra
+    //  si se apreta el botón de un dropdown ya abierto, se cierra
     if (this.state.activeDropdown == id) {
-      this.setState({activeDropdown: ''})
+      this.setState({ activeDropdown: '' })
     } else {
       // se actualiza selectFilters y se abre el dropdown
       this.setState({
@@ -221,7 +223,7 @@ class FiltersNavbar extends Component {
   // cerrar dropdown si hago click afuera
   onOutsideEvent = () => {
     if (!this.state.activeDropdown) return
-    this.setState({activeDropdown: ''})
+    this.setState({ activeDropdown: '' })
   }
 
   handleCheckboxChange = (select) => (e) => {
@@ -285,9 +287,9 @@ class FiltersNavbar extends Component {
   }
 
   filterCleanup = (filters) => {
-    let createTransformation = ob => {
+    let createTransformation = (ob) => {
       let transformation = {}
-      Object.keys(ob).forEach(k => {
+      Object.keys(ob).forEach((k) => {
         if (!(Object.values(ob[k]).includes(true))){
           transformation[k] = typeof ob[k] != "object" ? { $set: true } : createTransformation(ob[k])
         }
@@ -316,12 +318,12 @@ class FiltersNavbar extends Component {
       <div>
       {(this.props.stage === 'votacion-abierta' || this.props.stage === 'votacion-cerrada') && (
         <DistritoFilter
-              active={this.state.distrito}
-              onChange={this.handleDistritoFilterChange}
-              changeEdad={this.handleEdadFilterChange}
-              changeStage={this.props.changeStage}
-              stage={this.props.stage} 
-              appliedFilters={this.state.appliedFilters}/>
+          active={this.state.distrito}
+          onChange={this.handleDistritoFilterChange}
+          changeEdad={this.handleEdadFilterChange}
+          changeStage={this.props.changeStage}
+          stage={this.props.stage}
+          appliedFilters={this.state.appliedFilters} />
       )}
       {this.props.stage === 'seguimiento' && (
         <header>
