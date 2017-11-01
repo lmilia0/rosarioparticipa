@@ -10,8 +10,8 @@ export default ({ topic, saveTopic, toggleVotesModal }) => {
         <h3>Paso 1 de 2 </h3>
         {
           topic.attrs.area === '0'
-            ? <p>Una vez confirmado el voto de distrito, debés votar por un proyecto de Área Barrial del mismo.</p>
-            : <p>Una vez confirmado el voto del barrio, debés votar por un proyecto del Distrito del mismo.</p>
+            ? <p>Una vez confirmado el voto por un proyecto para tu distrito, debés votar un proyecto para tu barrio del mismo distrito.</p>
+            : <p>Una vez confirmado el voto por un proyecto para tu barrio, debés votar por un proyecto para tu distrito.</p>
         }
         <div className='proyectos-container'>
           <TopicCard topic={topic} isBlocked />
