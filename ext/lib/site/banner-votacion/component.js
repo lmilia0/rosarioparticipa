@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import forumStore from 'lib/stores/forum-store/forum-store'
+import { Link } from 'react-router'
 
 export default class BannerVotacion extends Component {
   constructor (props) {
@@ -26,6 +27,10 @@ export default class BannerVotacion extends Component {
     })
   }
 
+  componentWillUnmount() {
+    this.closeBanner()
+  }
+
   closeBanner = (event) => {
     sessionStorage.setItem('pp-17-banner', true)
     this.setState({ visibility: false })
@@ -41,8 +46,14 @@ export default class BannerVotacion extends Component {
           ¡Ya está abierta la votación para el Presupuesto Participativo de este año!
         </h3>
         <h3>
-          Tenés tiempo hasta el {cierreVotacion && `${cierreVotacion.getDate()}/${(cierreVotacion.getMonth() + 1)}`}
+          Tenés tiempo hasta el {cierreVotacion && cierreVotacion.toLocaleDateString()}
         </h3>
+        <Link 
+          to='/presupuesto'
+          onClick={this.closeBanner}
+          className='btn btn-primary btn-m banner-button'>
+          Participá
+        </Link>
       </div>
     )
   }
