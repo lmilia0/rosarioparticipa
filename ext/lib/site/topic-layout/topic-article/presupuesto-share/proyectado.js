@@ -21,6 +21,11 @@ export default ({ topic, forum }) => {
           <span>Proyecto ganador</span>
         </div>
       )}
+      {topic.attrs && topic.attrs.anio === '2017' && (
+        <div className='box-header-seguimiento'>
+          <span> {`${stateTitle}: ${state}`}</span>
+        </div>
+      )}
       <div className='box-content'>
         {
           topic.attrs && topic.attrs.anio === '2017' && (
