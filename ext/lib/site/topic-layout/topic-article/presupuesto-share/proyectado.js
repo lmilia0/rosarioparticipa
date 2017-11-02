@@ -25,8 +25,8 @@ export default ({ topic, forum }) => {
         {
           topic.attrs && (
             <div className='box-content-item'>
-              {topic.attrs.anio && <span className='anio-proyecto'>{`${anioTitle}: ${topic.attrs.anio}`}</span> }
-              {topic.attrs.budget && <span className='presu-proyecto'>{`Presupuesto: ${prettyPrice(topic.attrs.budget)}`}</span>}
+              {topic.attrs.anio && <span className='anio-proyecto'><span className='box-content-bold'>{`${anioTitle}:`}</span> {`${topic.attrs.anio}`}</span> }
+              {topic.attrs.budget && <span className='presu-proyecto'><span className='box-content-bold'>Presupuesto asignado:</span> {`${prettyPrice(topic.attrs.budget)}`}</span>}
             </div>
           )
         }
@@ -37,8 +37,8 @@ export default ({ topic, forum }) => {
       </div>
       <div className='box-footer'>
         <span className='hashtag'>#YoVotoPorMiBarrio</span>
-        <a target='_blank' href={`http://www.facebook.com/sharer.php?u=${topicUrl}`} rel='noopener noreferrer' className='fb'></a>
-        <a target='_blank' href={`http://twitter.com/share?text=${twitText()}&url=${topicUrl}`} rel='noopener noreferrer' className='tw'></a>
+        <a target='_blank' href={`http://www.facebook.com/sharer.php?u=${topicUrl}`} rel='noopener noreferrer' className='fb'> </a>
+        <a target='_blank' href={`http://twitter.com/share?text=${twitText()}&url=${topicUrl}`} rel='noopener noreferrer' className='tw'> </a>
       </div>
     </aside>
   )
