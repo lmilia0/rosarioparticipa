@@ -16,31 +16,17 @@ export default ({ topic, forum }) => {
 
   return (
     <aside className='presupuesto-share ganador'>
-      {topic.attrs && topic.attrs.anio === 2018 && (
+      {topic.attrs && (
         <div className='box-header'>
-          <span>Proyecto ganador</span>
-        </div>
-      )}
-      {topic.attrs && topic.attrs.anio === '2017' && (
-        <div className='box-header-seguimiento'>
           <span> {`${stateTitle}: ${state}`}</span>
         </div>
       )}
       <div className='box-content'>
         {
-          topic.attrs && topic.attrs.anio === '2017' && (
+          topic.attrs && (
             <div className='box-content-item'>
               {topic.attrs.anio && <span className='anio-proyecto'>{`${anioTitle}: ${topic.attrs.anio}`}</span> }
-              {topic.attrs.state && <span className='state-proyecto'>{`${stateTitle}: ${state}`}</span>}
               {topic.attrs.budget && <span className='presu-proyecto'>{`Presupuesto: ${prettyPrice(topic.attrs.budget)}`}</span>}
-            </div>
-          )
-        }
-        {
-          topic.attrs && topic.attrs.anio === '2018' && (
-            <div className='box-content-item'>
-              <span className='box-content-title'>Presupuesto asignado:</span>
-              <span className='box-content-info'>{prettyPrice(topic.attrs.budget)}</span>
             </div>
           )
         }
