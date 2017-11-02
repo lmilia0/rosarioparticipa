@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import EnProceso from './en-proceso'
 
 let texts = {
   cerrada: {
@@ -46,9 +45,6 @@ export default class BannerPresupuesto extends Component {
   }
 
   render () {
-    console.log(this.props)
-    const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
-    const votacionEnProceso = proyectos.length > 0
     let key
     let nextStage
     switch (this.props.stage) {
@@ -61,8 +57,6 @@ export default class BannerPresupuesto extends Component {
         nextStage = 'seguimiento'
         break
     }
-
-    if (votacionEnProceso) return <EnProceso />
 
     return (
       this.state.visibility && (
