@@ -1,5 +1,6 @@
 .presupuesto-topic-card
   width: 260px
+  overflow: visible
   cursor: pointer
         
   &.topic-joven
@@ -121,3 +122,29 @@
     font-weight: 900
     line-height: 1
     font-size: 24px
+  
+  .topic-disabled
+    position: absolute
+    width: 100%
+    height: 100%
+    background-color: #fff
+    opacity: .7
+    z-index: 75
+
+  .proyecto-seleccionado
+    background: #20c759 
+    color: white
+    position: absolute
+    right: -10px
+    top: -10px
+    z-index: 9
+    font-size: 50px
+    border-radius: 50%
+  
+  .block-overlay
+    position: absolute
+    width: 100%
+    height: 100%
+    z-index: 99
+    background: transparent
+    cursor: not-allowed

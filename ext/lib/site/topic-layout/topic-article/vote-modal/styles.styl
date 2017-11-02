@@ -1,0 +1,104 @@
+@import './confirmacion/styles'
+@import './vote-joven/styles'
+@import './second-vote/styles'
+@import '../../../../../lib/site/home-presupuesto/topic-card/styles'
+
+
+.modal-wrapper
+  position: fixed
+  width: 100%
+  height: 100%
+  z-index: 50
+  top: 0
+  display: flex
+  justify-content: center
+  align-items: center
+  
+  .overlay
+    height: 100%
+    width: 100%
+    background-color: #fff
+    opacity: .5
+    z-index: 75
+
+  .modal-vote-dialog
+    padding: 10px 50px
+    background-color: #fff
+    z-index: 99
+    -webkit-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.33)
+    -moz-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.33)
+    box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.33)
+    @media screen and (max-width: 550px)
+      width: 340px
+      // margin-left: -170px
+      padding: 10px
+      // margin-top: -620px
+    
+    .close-modal
+      padding: 2px 8px
+      color: #1daeec
+      border: 2px solid #1daeec
+      border-radius: 50px
+      text-align: center
+      font-size: 18px
+      font-weight: 400
+      margin-right: -40px
+      cursor: pointer 
+      float: right
+      @media screen and (max-width: 550px)
+        margin-right: 10px
+      &:hover
+        color: #1daeec
+        
+    .form-component-wrapper
+      display: flex
+      flex-direction: column
+      flex-wrap: wrap
+      justify-content: center
+      align-items: space-around
+      margin: 0 auto
+      clear: both
+      // max-width: 500px
+      // @media screen and (max-width: 550px)
+      //   max-width: 300px
+      h3 
+        text-align: center
+        font-weight: 500
+        font-size: 36px
+        color: #1daeec
+        margin: 5px
+        @media screen and (max-width: 550px)
+          font-size: 24px
+      p
+        color: rgba(0,0,0,0.5)
+        font-weight: 200
+        margin: 10px 0
+        text-align: center
+        @media screen and (max-width: 550px)
+          font-size: 0.8em
+      .btn-pending
+        color: #fff
+        background-color: rgb(32,199,89)
+        padding: 15px 20px
+        border: 1px solid rgb(32,199,89)
+        border-radius: 8px
+        text-transform: uppercase
+        font-weight: 700
+        margin: 10px 0
+        @media screen and (max-width: 550px)
+          margin: 5px 0
+      .cancel
+        color: rgba(0,0,0,0.5)
+        cursor: pointer
+        display: block
+        font-weight: 200
+        margin-top: 10px
+        text-align: center
+        text-decoration: underline
+        width: 100%
+        @media screen and (max-width: 550px)
+          margin-top: 5px
+        
+      .proyectos-container
+        display: flex
+        justify-content: center

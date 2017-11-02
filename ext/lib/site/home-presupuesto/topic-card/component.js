@@ -1,5 +1,4 @@
 import React from 'react'
-import padStart from 'string.prototype.padstart'
 import { Link, withRouter } from 'react-router'
 import { SharerFacebook } from 'ext/lib/site/sharer'
 import distritosData from '../distritos.json'
@@ -10,7 +9,7 @@ const distritos = (function () {
   return c
 })()
 
-export default withRouter(({ topic, router }) => {
+export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked }) => {
   const topicUrl = `${window.location.origin}${topic.url}`
 
   const twitterDesc = twitText()
@@ -53,7 +52,7 @@ export default withRouter(({ topic, router }) => {
   function chequearClick (goTo) {
     return (e) => {
       const targetClassName = e.target.className
-      if (!(targetClassName.includes('share'))) {
+      if (!targetClassName.includes('share') && !targetClassName.includes('block-overlay')) {
         goTo(topic.url)
       }
     }
@@ -70,6 +69,9 @@ export default withRouter(({ topic, router }) => {
   topic.url = `/presupuesto/topic/${topic.id}`
   return (
     <div onClick={chequearClick(router.push)} className={classNames.join(' ')}>
+      {(fadeTopic || isSelected || isBlocked) && <div className='block-overlay' />}
+      {(fadeTopic && !isSelected) && <div className='topic-disabled' />}
+      { isSelected && <span className='icon-check proyecto-seleccionado' /> }
       {topic.coverUrl && (
         <div
           className='topic-card-cover'
@@ -128,10 +130,6 @@ export default withRouter(({ topic, router }) => {
     </div>
   )
 })
-
-function prettyNumber (number) {
-  return `#${padStart(number, 3, '0')}`
-}
 
 function prettyPrice (number) {
   if (!number) number = 1

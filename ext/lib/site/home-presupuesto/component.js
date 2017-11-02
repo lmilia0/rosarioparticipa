@@ -207,7 +207,7 @@ class HomePresupuesto extends Component {
           stage={this.state.stage}
           noMore={this.state.noMore}
           paginateFoward={this.paginateFoward} />
-        {this.state.topics && this.state.forumStage !== 'seguimiento' &&
+        {this.state.topics && (this.state.forumStage !== 'seguimiento' || this.state.forumStage !== 'votacion-abierta') &&
           <BannerPresupuesto
             forumStage={this.state.forumStage}
             stage={this.state.stage}

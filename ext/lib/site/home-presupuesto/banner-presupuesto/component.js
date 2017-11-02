@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
+import EnProceso from './en-proceso'
 
 let texts = {
-  abierta: {
-    title: 'Votá los proyectos del Presupuesto Participativo 2018! Tenés tiempo hasta el xx/xx',
-    btn: 'Explorá los proyectos y votá'
-  },
   cerrada: {
     title: '¡Mirá los resultados de la votación de proyectos del Presupuesto Participativo 2018!',
     btn: 'Ver proyectos'
@@ -48,28 +45,23 @@ export default class BannerPresupuesto extends Component {
     this.setState({visibility: false})
   }
 
-  render() {
+  render () {
+    const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
+    const votacionEnProceso = proyectos.length > 0
     let key
     let nextStage
     switch (this.props.stage) {
       case 'seguimiento':
-        if (this.props.forumStage === 'votacion-abierta') {
-          nextStage = 'votacion-abierta'
-          key = 'abierta'
-        } else {
-          nextStage = 'votacion-cerrada'
-          key = 'cerrada'
-        }
-        break;
-      case 'votacion-abierta':
-        key = 'seguimiento'
-        nextStage = 'seguimiento'
-        break;
+        nextStage = 'votacion-cerrada'
+        key = 'cerrada'
+        break
       case 'votacion-cerrada':
         key = 'seguimiento'
         nextStage = 'seguimiento'
-        break;
+        break
     }
+
+    if (votacionEnProceso) return <EnProceso />
 
     return (
       this.state.visibility && (

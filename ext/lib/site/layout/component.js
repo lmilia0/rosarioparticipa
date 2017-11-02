@@ -1,8 +1,7 @@
 import React from 'react'
 import Header from 'lib/header/component'
-import forumStore from 'lib/stores/forum-store/forum-store'
 import BannerVotacion from '../banner-votacion/component'
-
+import PpStatus from './pp-status'
 
 const Layout = ({ children }) => (
   <div id='outer-layout'>
@@ -12,4 +11,4 @@ const Layout = ({ children }) => (
   </div>
 )
 
-export default Layout
+export default PpStatus(Layout)
