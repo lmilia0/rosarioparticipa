@@ -30,7 +30,7 @@ export default class Pendiente extends Component {
     const canVote = ppStatus.puede_votar
     const padron = ppStatus.padron
     const message = ppStatus.msj
-    const statusFail = ppStatus.fetchFailed
+    const statusFail = !Object.keys(ppStatus).length
     const profileIsComplete = user.profileIsComplete()
     const messagePadron = topic.attrs.edad === 'joven' ? 'No estás habilitado a votar en Presupuesto Participativo Joven.' : 'Sólo estás habilitado a votar en Presupuesto Participativo Joven'
 
@@ -55,28 +55,23 @@ export default class Pendiente extends Component {
                       Votar este proyecto
                     </Link>
                 }
+                { // User is logged in & Profile is not complete
+                  (user.state.value && !profileIsComplete) &&
+                  <button
+                    onClick={() => { location.hash = '#completar-datos' }}
+                    className='btn btn-active btn-pending'>
+                    Votar este proyecto
+                    </button>
+                }
                 { // User logged in & status failed, falling back to old system
                   (user.state.value && profileIsComplete && statusFail) &&
                     <a href='/ext/api/participatory-budget/vote-platform' className='btn btn-active btn-pending'>Votar este proyecto</a>
                 }
                 { // User logged in & can't vote === true
-                  (user.state.value && profileIsComplete && !canVote && !message && !statusFail) &&
-                    <p className='no-vote-msj'>No estás habilitado para votar.</p>
-                }
-                { // User logged in & can't vote === true
-                  (user.state.value && profileIsComplete && !canVote && message) &&
+                  (user.state.value && profileIsComplete && !statusFail && !canVote) &&
                     <p
                       className='no-vote-msj'
                       dangerouslySetInnerHTML={{ __html: message }} />
-                }
-                
-                { // User is logged in & Profile is not complete
-                  (user.state.value && !profileIsComplete) &&
-                    <button
-                      onClick={() => { location.hash = '#completar-datos' }}
-                      className='btn btn-active btn-pending'>
-                      Votar este proyecto
-                    </button>
                 }
                 { // User logged in, profile complete, not Voted and wrong padron
                   (user.state.value && profileIsComplete && canVote && (padron !== 'mixto' && topic.attrs.edad !== padron)) &&
