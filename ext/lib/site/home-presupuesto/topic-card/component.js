@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, withRouter } from 'react-router'
+import { SharerFacebook } from 'ext/lib/site/sharer'
 import distritosData from '../distritos.json'
 
 const distritos = (function () {
@@ -8,7 +9,11 @@ const distritos = (function () {
   return c
 })()
 
-export default ({ topic, fadeTopic, isSelected, isBlocked }) => {
+export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked }) => {
+  const topicUrl = `${window.location.origin}${topic.url}`
+
+  const twitterDesc = twitText()
+
   let state
   const estadosPP = [
     {
@@ -31,6 +36,28 @@ export default ({ topic, fadeTopic, isSelected, isBlocked }) => {
 
   const classNames = ['ext-topic-card', 'presupuesto-topic-card']
 
+  function twitText () {
+    switch (topic.attrs.state) {
+      case 'pendiente':
+        return encodeURIComponent(`Mirá el proyecto que quiero para mi barrio #YoVotoPorMiBarrio `)
+      case 'perdedor':
+        return encodeURIComponent(topic.mediaTitle)
+      case 'proyectado':
+        return encodeURIComponent('Este proyecto se va a realizar gracias a la participación de los vecinos. ')
+      default:
+        return ''
+    }
+  }
+
+  function chequearClick (goTo) {
+    return (e) => {
+      const targetClassName = e.target.className
+      if (!(targetClassName.includes('share'))) {
+        goTo(topic.url)
+      }
+    }
+  }
+
   if (topic.extra && typeof topic.extra.votes === 'number') {
     classNames.push('has-votes')
   }
@@ -41,7 +68,7 @@ export default ({ topic, fadeTopic, isSelected, isBlocked }) => {
   if (topic.attrs.area === '0' && topic.attrs.edad !== 'joven') classNames.push('topic-distrito')
   topic.url = `/presupuesto/topic/${topic.id}`
   return (
-    <Link to={topic.url} className={classNames.join(' ')}>
+    <div onClick={chequearClick(router.push)} className={classNames.join(' ')}>
       {(fadeTopic || isSelected || isBlocked) && <div className='block-overlay' />}
       {(fadeTopic && !isSelected) && <div className='topic-disabled' />}
       { isSelected && <span className='icon-check proyecto-seleccionado' /> }
@@ -80,6 +107,15 @@ export default ({ topic, fadeTopic, isSelected, isBlocked }) => {
             </p>
           )}
         </div>
+        <div className='topic-card-links'>
+          <SharerFacebook
+            className='fb share'
+            params={{
+              picture: topic.coverUrl,
+              link: window.location.href
+            }} />
+          <a target='_blank' href={`http://twitter.com/share?text=${twitterDesc}&url=${topicUrl}`} rel='noopener noreferrer' className='tw share'> </a>
+        </div>
         <div className='topic-card-footer'>
           <div className='topic-card-category'>
             <span>
@@ -91,9 +127,9 @@ export default ({ topic, fadeTopic, isSelected, isBlocked }) => {
           )}
         </div>
       </div>
-    </Link>
+    </div>
   )
-}
+})
 
 function prettyPrice (number) {
   if (!number) number = 1

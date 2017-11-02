@@ -33,7 +33,7 @@ class FiltersNavbar extends Component {
         estado: {
           proyectado: false,
           ejecutandose: false,
-          finalizado: false
+          terminado: false
         }
       },
 
@@ -57,7 +57,7 @@ class FiltersNavbar extends Component {
         estado: {
           proyectado: false,
           ejecutandose: false,
-          finalizado: false
+          terminado: false
         }
       },
 
@@ -98,7 +98,7 @@ class FiltersNavbar extends Component {
               estado: {
                 proyectado: { $set: false },
                 ejecutandose: { $set: false },
-                finalizado: { $set: false },
+                terminado: { $set: false },
                 pendiente: { $set: true },
                 perdedor: { $set: false }
               },
@@ -124,7 +124,7 @@ class FiltersNavbar extends Component {
               estado: {
                 proyectado: { $set: true },
                 ejecutandose: { $set: false },
-                finalizado: { $set: false },
+                terminado: { $set: false },
                 pendiente: { $set: false },
                 perdedor: { $set: true }
               },
@@ -149,7 +149,7 @@ class FiltersNavbar extends Component {
               estado: {
                 proyectado: { $set: false },
                 ejecutandose: { $set: false },
-                finalizado: { $set: false },
+                terminado: { $set: false },
                 pendiente: { $set: false },
                 perdedor: { $set: false }
               },
@@ -501,10 +501,10 @@ class FiltersNavbar extends Component {
                       </div>
                       <div className='option-container'>
                         <div className='check-container'>
-                          <input onChange={this.handleCheckboxChange('estado')} type='checkbox' id='finalizado' name='estado' checked={this.state.selectFilters.estado.finalizado} />
-                          <label htmlFor='finalizado'></label>
+                          <input onChange={this.handleCheckboxChange('estado')} type='checkbox' id='terminado' name='estado' checked={this.state.selectFilters.estado.terminado} />
+                          <label htmlFor='terminado'></label>
                         </div>
-                        <label htmlFor='finalizado'>Finalizados</label>
+                        <label htmlFor='terminado'>Terminados</label>
                       </div>
                     </div>
 

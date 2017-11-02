@@ -27,7 +27,7 @@ class HomePresupuesto extends Component {
       edad: ['joven', 'adulto'],
       distrito: ['centro', 'noroeste', 'norte', 'oeste', 'sudoeste', 'sur'],
       anio: ['2017', '2018'],
-      estado: ['proyectado', 'ejecutandose', 'finalizado']
+      estado: ['proyectado', 'ejecutandose', 'terminado']
     }
   }
 
