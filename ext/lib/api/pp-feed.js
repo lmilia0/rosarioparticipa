@@ -16,7 +16,7 @@ function getFeed (req, res, next) {
     edad: ['joven', 'adulto'],
     distrito: ['centro', 'noroeste', 'norte', 'oeste', 'sudoeste', 'sur'],
     anio: ['2017', '2018'],
-    estado: ['proyectado', 'ejecutandose', 'finalizado', 'pendiente', 'perdedor']
+    estado: ['proyectado', 'ejecutandose', 'terminado', 'pendiente', 'perdedor']
   }
 
   let isValid = Object.keys(filters)
