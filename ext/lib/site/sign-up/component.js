@@ -85,7 +85,7 @@ export default class SignUp extends Component {
 
   saveIdNumber (e) {
     const input = e.target.value.replace(/[^0-9]/g, '')
-    this.setState({nro_doc: input})
+    this.setState({ nro_doc: input })
   }
 
   savePass (e) {
@@ -110,8 +110,8 @@ export default class SignUp extends Component {
     const idNumber = parseInt(e.target.value)
     const expr = new RegExp('^[0-9]{7,8}$')
 
-    if(!expr.test(idNumber)) {
-    e.target.setCustomValidity('Ingresa un número de documento válido')
+    if (!expr.test(idNumber)) {
+      e.target.setCustomValidity('Ingresa un número de documento válido')
     } else {
       e.target.setCustomValidity('')
       return idNumber
@@ -121,6 +121,12 @@ export default class SignUp extends Component {
   onCaptchaChange (key) {
     this.setState({ captchaKey: key })
     this.refs.submitBtn.click()
+  }
+
+  avoidScroll () {
+    return (e) => {
+      e.target.blur()
+    }
   }
 
   onSubmitClick (e) {
@@ -204,8 +210,8 @@ export default class SignUp extends Component {
                 <div className='form-group'>
                   <label htmlFor=''>Sexo</label>
                   <span className='optional-field'>Este campo es opcional.</span>
-                  <select 
-                    className='form-control' 
+                  <select
+                    className='form-control'
                     defaultValue=''
                     onChange={this.saveSex}
                     name='extra.sexo'>
@@ -217,9 +223,9 @@ export default class SignUp extends Component {
                 <div className='form-group form-group-documento'>
                   <label htmlFor=''>Tu documento</label>
                   <span className='optional-field'>Este campo es opcional.</span>
-                  <select 
+                  <select
                     className='form-control'
-                    name='extra.cod_doc' 
+                    name='extra.cod_doc'
                     onChange={this.saveIdType}
                     defaultValue='' >
                     <option value='' disabled>Tipo</option>
@@ -227,7 +233,7 @@ export default class SignUp extends Component {
                     <option value='LC'>LC</option>
                     <option value='LE'>LE</option>
                   </select>
-                  <input 
+                  <input
                     type='number'
                     className='form-control'
                     id='nro_doc'
@@ -235,7 +241,8 @@ export default class SignUp extends Component {
                     maxLength='10'
                     placeholder='Número de documento'
                     onChange={this.saveIdNumber}
-                    onBlur={this.checkIdNumber}/>
+                    onWheel={this.avoidScroll()}
+                    onBlur={this.checkIdNumber} />
                 </div>
                 <div className='form-group'>
                   <label htmlFor=''>{t('password')}</label>
