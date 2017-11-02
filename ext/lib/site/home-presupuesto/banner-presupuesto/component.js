@@ -61,7 +61,7 @@ export default class BannerPresupuesto extends Component {
     return (
       this.state.visibility && (
         <div className='container-banner'>
-          <button className='closes' onClick={this.closeBanner}>x</button>
+          <button className='closes' onClick={this.closeBanner}>×</button>
           <h3>
             {texts[key].title}
           </h3>
