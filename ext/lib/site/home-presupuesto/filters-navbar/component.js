@@ -500,7 +500,7 @@ class FiltersNavbar extends Component {
                           <input onChange={this.handleCheckboxChange('estado')} type='checkbox' id='terminado' name='estado' checked={this.state.selectFilters.estado.terminado} />
                           <label htmlFor='terminado'></label>
                         </div>
-                        <label htmlFor='terminado'>Finalizados</label>
+                        <label htmlFor='terminado'>Terminados</label>
                       </div>
                     </div>
 
