@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 import EnProceso from './en-proceso'
 
 let texts = {
-  abierta: {
-    title: 'Votá los proyectos del Presupuesto Participativo 2018! Tenés tiempo hasta el xx/xx',
-    btn: 'Explorá los proyectos y votá'
-  },
   cerrada: {
     title: '¡Mirá los resultados de la votación de proyectos del Presupuesto Participativo 2018!',
     btn: 'Ver proyectos'
@@ -56,17 +52,8 @@ export default class BannerPresupuesto extends Component {
     let nextStage
     switch (this.props.stage) {
       case 'seguimiento':
-        if (this.props.forumStage === 'votacion-abierta') {
-          nextStage = 'votacion-abierta'
-          key = 'abierta'
-        } else {
-          nextStage = 'votacion-cerrada'
-          key = 'cerrada'
-        }
-        break
-      case 'votacion-abierta':
-        key = 'seguimiento'
-        nextStage = 'seguimiento'
+        nextStage = 'votacion-cerrada'
+        key = 'cerrada'
         break
       case 'votacion-cerrada':
         key = 'seguimiento'
