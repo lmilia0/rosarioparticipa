@@ -1,6 +1,6 @@
 import React from 'react'
 import padStart from 'string.prototype.padstart'
-import { Link } from 'react-router'
+import { Link, withRouter } from 'react-router'
 import { SharerFacebook } from 'ext/lib/site/sharer'
 import distritosData from '../distritos.json'
 
@@ -10,7 +10,7 @@ const distritos = (function () {
   return c
 })()
 
-export default ({ topic }) => {
+export default withRouter(({ topic, router }) => {
   const topicUrl = `${window.location.origin}${topic.url}`
 
   const twitterDesc = twitText()
@@ -31,7 +31,7 @@ export default ({ topic }) => {
     }
   ]
 
-  if (topic.attrs && topic.attrs.state && estadosPP.map(e => e.name).includes(topic.attrs.state)) {
+  if (topic.attrs && topic.attrs.state && estadosPP.map((e) => e.name).includes(topic.attrs.state)) {
     state = estadosPP.find((attr) => attr.name === topic.attrs.state).title
   }
 
@@ -50,6 +50,15 @@ export default ({ topic }) => {
     }
   }
 
+  function chequearClick (goTo) {
+    return (e) => {
+      const targetClassName = e.target.className
+      if (!(targetClassName.includes('share'))) {
+        goTo(topic.url)
+      }
+    }
+  }
+
   if (topic.extra && typeof topic.extra.votes === 'number') {
     classNames.push('has-votes')
   }
@@ -60,7 +69,7 @@ export default ({ topic }) => {
   if (topic.attrs.area === '0' && topic.attrs.edad !== 'joven') classNames.push('topic-distrito')
   topic.url = `/presupuesto/topic/${topic.id}`
   return (
-    <Link to={topic.url} className={classNames.join(' ')}>
+    <div onClick={chequearClick(router.push)} className={classNames.join(' ')}>
       {topic.coverUrl && (
         <div
           className='topic-card-cover'
@@ -98,12 +107,12 @@ export default ({ topic }) => {
         </div>
         <div className='topic-card-links'>
           <SharerFacebook
-            className='fb'
+            className='fb share'
             params={{
               picture: topic.coverUrl,
               link: window.location.href
             }} />
-          <div className='tw'></div>
+          <a target='_blank' href={`http://twitter.com/share?text=${twitterDesc}&url=${topicUrl}`} rel='noopener noreferrer' className='tw share'> </a>
         </div>
         <div className='topic-card-footer'>
           <div className='topic-card-category'>
@@ -116,9 +125,9 @@ export default ({ topic }) => {
           )}
         </div>
       </div>
-    </Link>
+    </div>
   )
-}
+})
 
 function prettyNumber (number) {
   return `#${padStart(number, 3, '0')}`
