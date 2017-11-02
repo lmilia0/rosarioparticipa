@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import forumStore from 'lib/stores/forum-store/forum-store'
-import topicStore from 'lib/stores/topic-store/topic-store'
 import userConnector from 'lib/site/connectors/user'
 import Footer from '../footer/component'
 import Cover from '../cover'
-import TopicCard from './topic-card/component'
 import TopicGrid from './topic-grid/component'
 import FiltersNavbar from './filters-navbar/component'
 import BannerPresupuesto from './banner-presupuesto/component'
+import BannerVotoEnProceso from './banner-en-proceso/component'
 import Countdown from './countdown/component'
 import distritos from './distritos.json'
-
-let distritoCurrent = ''
 
 class HomePresupuesto extends Component {
   constructor (props) {
@@ -62,16 +59,16 @@ class HomePresupuesto extends Component {
   fetchTopics (s) {
     const { edad, distrito, anio, estado } = this.state
     return window.fetch(`/ext/api/pp-feed`, {
-        credentials: 'include',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({ edad, distrito, anio, estado, s })
-      })
-      .then((res) => res.json())
-      .then((res) => res.error ? Promise.reject(res.error) : Promise.resolve(res.result))
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({ edad, distrito, anio, estado, s })
+    })
+    .then((res) => res.json())
+    .then((res) => res.error ? Promise.reject(res.error) : Promise.resolve(res.result))
   }
 
   paginateFoward = () => {
@@ -108,8 +105,8 @@ class HomePresupuesto extends Component {
               .sort(byEdad)
           : []
 
-      return distrito
-    })
+        return distrito
+      })
   }
 
   prepareFilters = (filtros) =>  {
@@ -127,7 +124,7 @@ class HomePresupuesto extends Component {
       })
 
     const estado = Object.keys(filtros.estado).filter(k => filtros.estado[k])
-    this.setState ({
+    this.setState({
       edad: edad,
       distrito: distritos,
       anio: anios,
@@ -152,7 +149,7 @@ class HomePresupuesto extends Component {
     })
   }
 
-  //Filter Functions
+  // Filter Functions
 
   filtroEdad = (topic) => {
     return topic.attrs && topic.attrs.edad && this.state.edad.includes(topic.attrs.edad)
@@ -175,18 +172,17 @@ class HomePresupuesto extends Component {
   }
 
   changeStage = (stage) => {
-    this.setState({stage: stage})
+    this.setState({ stage })
   }
 
   render () {
     return (
       <div className='ext-home-presupuesto'>
         {
-          this.state.cierre && this.state.stage === 'votacion-abierta' ?
-            <Countdown
-              cierre={this.state.cierre} />
-          :
-            <Cover
+          this.state.cierre && this.state.stage === 'votacion-abierta'
+          ? <Countdown
+            cierre={this.state.cierre} />
+          : <Cover
             background='/ext/lib/site/boot/presupuesto-participativo.jpg'
             logo='/ext/lib/site/home-multiforum/presupuesto-icono.png'
             title='Presupuesto Participativo'
@@ -197,8 +193,7 @@ class HomePresupuesto extends Component {
             stage={this.state.stage}
             updateFilters={this.prepareFilters}
             changeStage={this.changeStage}
-            forumStage={this.state.forumStage}
-            />
+            forumStage={this.state.forumStage} />
         </div>
         <TopicGrid
           loading={this.state.loading}
@@ -207,11 +202,17 @@ class HomePresupuesto extends Component {
           stage={this.state.stage}
           noMore={this.state.noMore}
           paginateFoward={this.paginateFoward} />
-        {this.state.topics && (this.state.forumStage !== 'seguimiento' || this.state.forumStage !== 'votacion-abierta') &&
+        {this.state.topics && (this.state.forumStage !== 'seguimiento' && this.state.forumStage !== 'votacion-abierta') &&
           <BannerPresupuesto
             forumStage={this.state.forumStage}
             stage={this.state.stage}
-            changeStage={this.changeStage}/>
+            changeStage={this.changeStage} />
+        }
+        {this.state.topics && this.state.forumStage === 'votacion-abierta' &&
+          <BannerVotoEnProceso
+            forumStage={this.state.forumStage}
+            stage={this.state.stage}
+            changeStage={this.changeStage} />
         }
         {this.state.topics &&
           <Footer />

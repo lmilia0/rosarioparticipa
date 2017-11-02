@@ -46,6 +46,7 @@ export default class BannerPresupuesto extends Component {
   }
 
   render () {
+    console.log(this.props)
     const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
     const votacionEnProceso = proyectos.length > 0
     let key

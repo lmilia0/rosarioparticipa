@@ -52,7 +52,7 @@ export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked }) 
   function chequearClick (goTo) {
     return (e) => {
       const targetClassName = e.target.className
-      if (!targetClassName.includes('share') && !targetClassName.includes('block-overlay')) {
+      if (!targetClassName.includes('share') && !targetClassName.includes('block-overlay') && !targetClassName.includes('proyecto-seleccionado')) {
         goTo(topic.url)
       }
     }

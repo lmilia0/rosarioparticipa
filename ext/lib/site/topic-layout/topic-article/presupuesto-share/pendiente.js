@@ -69,10 +69,7 @@ export default class Pendiente extends Component {
                       className='no-vote-msj'
                       dangerouslySetInnerHTML={{ __html: message }} />
                 }
-                { // User logged in, profile complete, not Voted and wrong padron
-                  (user.state.value && profileIsComplete && canVote && topic.attrs.edad !== padron) &&
-                    <p className='no-vote-msj'>{messagePadron}</p>
-                }
+                
                 { // User is logged in & Profile is not complete
                   (user.state.value && !profileIsComplete) &&
                     <button
@@ -81,8 +78,12 @@ export default class Pendiente extends Component {
                       Votar este proyecto
                     </button>
                 }
+                { // User logged in, profile complete, not Voted and wrong padron
+                  (user.state.value && profileIsComplete && canVote && (padron !== 'mixto' && topic.attrs.edad !== padron)) &&
+                  <p className='no-vote-msj'>{messagePadron}</p>
+                }
                 { // User logged in, profile complete, not Voted and right padron
-                  (user.state.value && profileIsComplete && canVote && topic.attrs.edad === padron) &&
+                  (user.state.value && profileIsComplete && canVote && (padron === 'mixto' || topic.attrs.edad === padron)) &&
                     <button onClick={toggleVotesModal} className='btn btn-active btn-pending'>Votar este proyecto</button>
                 }
               </div>

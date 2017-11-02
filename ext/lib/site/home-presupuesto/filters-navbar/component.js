@@ -79,7 +79,7 @@ class FiltersNavbar extends Component {
           const ppStatus = JSON.parse(localStorage.getItem('ppStatus')) || {}
           const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
           const votacionEnProceso = proyectos.length > 0
-          const padron = ppStatus.padron || 'adulto'
+          const padron = ppStatus.padron === 'mixto' ? sessionStorage.getItem('pp-padron') : ppStatus.padron
           const distrito = votacionEnProceso ? proyectos[0].attrs.district : 'centro'
           this.setState({
             appliedFilters: update(this.state.appliedFilters, {
