@@ -1,5 +1,6 @@
 .presupuesto-topic-card
   width: 260px
+  overflow: visible
   cursor: pointer
         
   &.topic-joven
@@ -76,7 +77,30 @@
 
   .topic-card-body
     flex: 1
-
+  
+  .topic-card-links
+    display: flex
+    justify-content: flex-end
+    align-items: baseline
+    padding-bottom: 15px
+    .fb
+      width: 30px
+      height: 20px
+      background-size: auto 20px
+      background-repeat: no-repeat
+      background-position: center
+      display: inline-block
+      background-image: unquote("url('/ext/lib/site/home-presupuesto/topic-card/fb-icon.svg')")
+    .tw
+      width: 30px
+      height: 20px
+      background-size: auto 20px
+      background-repeat: no-repeat
+      background-position: center
+      display: inline-block
+      background-image: unquote("url('/ext/lib/site/home-presupuesto/topic-card/tw-icon.svg')")
+      margin-bottom: 1px
+      
   .topic-card-footer
     align-self: flex-end
     width: 100%
@@ -98,5 +122,29 @@
     font-weight: 900
     line-height: 1
     font-size: 24px
+  
+  .topic-disabled
+    position: absolute
+    width: 100%
+    height: 100%
+    background-color: #fff
+    opacity: .7
+    z-index: 75
 
-
+  .proyecto-seleccionado
+    background: #20c759 
+    color: white
+    position: absolute
+    right: -10px
+    top: -10px
+    z-index: 9
+    font-size: 50px
+    border-radius: 50%
+  
+  .block-overlay
+    position: absolute
+    width: 100%
+    height: 100%
+    z-index: 99
+    background: transparent
+    cursor: not-allowed

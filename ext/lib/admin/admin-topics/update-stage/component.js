@@ -98,7 +98,7 @@ export default class UpdateStage extends Component {
               })}
             </select>
           </div>
-          <button className='btn btn-primary pull-right boton' onClick={this.changeStage} disabled={this.state.disabled}>
+          <button className='btn btn-primary boton' onClick={this.changeStage} disabled={this.state.disabled}>
             Confirmar
           </button>
         </div>

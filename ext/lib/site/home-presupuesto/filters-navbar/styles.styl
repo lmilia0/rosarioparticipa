@@ -11,12 +11,12 @@ header
     margin-top: 5px 
    
   .link-stage
-      color: #FF8700
+      color: #00adef
       font-weight: 400
       margin-left: 20px
       cursor: pointer
       &:hover
-        color: #FF8700
+        color: #00adef
         
   .stage-header
     display: flex
@@ -55,6 +55,16 @@ header
         border-color: #f59231
         color: #fff
         background-color: #f59231
+      .disabled
+        background-color: #ccc
+        color: #333
+        border-color: #676767
+        &:hover,
+        &:focus
+          border-color: #676767
+          background-color: #ccc
+          color: #333
+
     .header-text
       font-size: 1.5rem
       color: #4f5353
@@ -132,6 +142,15 @@ header
         &:hover,
         &:focus
           color: #fff
+      .disabled
+        background-color: #ccc
+        color: #333
+        border-color: #676767
+        &:hover,
+        &:focus
+          border-color: #676767
+          background-color: #ccc
+          color: #333
       .applied-filter
         color: #f59231
         &:hover,

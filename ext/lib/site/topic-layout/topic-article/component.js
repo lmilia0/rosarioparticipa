@@ -10,6 +10,7 @@ import Poll from 'lib/site/topic-layout/topic-article/poll/component'
 import Cause from 'lib/site/topic-layout/topic-article/cause/component'
 import PresupuestoShare from './presupuesto-share/component'
 import CommonShare from './common-share/component'
+import VoteModal from './vote-modal/component'
 
 class TopicArticle extends Component {
   constructor (props) {
@@ -17,7 +18,8 @@ class TopicArticle extends Component {
 
     this.state = {
       showSidebar: false,
-      closedSuccess: false
+      closedSuccess: false,
+      showVoteModal: false
     }
   }
 
@@ -64,6 +66,12 @@ class TopicArticle extends Component {
     PopupCenter(url, topic.mediaTitle, 900, 500)
   }
 
+  toggleVotesModal = () => {
+    this.setState({
+      showVoteModal: !this.state.showVoteModal
+    })
+  }
+
   render () {
     const { topic, forum, user } = this.props
     return (
@@ -72,6 +80,10 @@ class TopicArticle extends Component {
           <div onClick={hideSidebar} className='topic-overlay' />
         )}
         <Header topic={topic} isIdea={forum.name === 'ideas'} />
+        <VoteModal
+          topic={topic}
+          forum={forum}
+          show={this.state.showVoteModal} />
         <div className='proyecto-main container'>
           <div className='row'>
             <div className='proyecto-content col-lg-8'>
@@ -134,7 +146,8 @@ class TopicArticle extends Component {
                   ? <PresupuestoShare
                     user={user}
                     forum={forum}
-                    topic={topic} />
+                    topic={topic}
+                    toggleVotesModal={this.toggleVotesModal} />
                   : <CommonShare
                     topic={topic}
                     type={forum.name} />
@@ -172,8 +185,7 @@ const Header = ({ topic, isIdea }) => (
                 className='avatar'
                 style={{
                   backgroundImage: `url(${topic.owner.avatar})`
-                }}>
-              </div>
+                }} />
               <span>{topic.owner.fullName}</span>
             </div>
           )

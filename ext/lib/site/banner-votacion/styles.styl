@@ -5,10 +5,9 @@
     bottom: 0
     width: 100%
     display: flex
-    flex-wrap: wrap
     flex-direction: column
     align-items: center
-    justify-content: space-around
+    justify-content: center
     padding: 20px
     animation-name: bounce
     animation-duration: 1s
@@ -18,7 +17,6 @@
       background-color: #f59231
       border-style: none
       color: #fff
-      align-self: flex-end
       font-size: 20px
       border: 1px solid transparent
       cursor: pointer
@@ -33,31 +31,14 @@
     h3
       color: #FFFFFF
       text-align: center
+      margin: 10px 0
       @media (max-width: 425px)
           font-size: 1em
-
+        
     .banner-button
-        margin: 10px
-        border-radius: 5px
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)
-
-.container-banner-votacion
-    background-color: #F59231
-    position: fixed
-    bottom: 0
-    width: 100%
-    display: flex
-    flex-wrap: wrap
-    flex-direction: row
-    align-items: center
-    justify-content: space-around
-    height: 60px
-    z-index: 1000
-    p
-      margin: 0
-      font-size: 25px
-      color: #fff
-      text-transform: uppercase
+      margin: 10px 0
+      border-radius: 5px
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)
 
 @css {
   @-webkit-keyframes bounce {

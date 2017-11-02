@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 
 let texts = {
-  abierta: {
-    title: 'Votá los proyectos del Presupuesto Participativo 2018! Tenés tiempo hasta el xx/xx',
-    btn: 'Explorá los proyectos y votá'
-  },
   cerrada: {
     title: '¡Mirá los resultados de la votación de proyectos del Presupuesto Participativo 2018!',
     btn: 'Ver proyectos'
   },
   seguimiento: {
     title: '¡También podés ver el estado de los proyectos ganadores de años anteriores!',
-    btn: 'Seguimiento de proyectos anteriores'
+    btn: 'Seguimiento de proyectos'
   }
 }
 export default class BannerPresupuesto extends Component {
@@ -48,27 +44,18 @@ export default class BannerPresupuesto extends Component {
     this.setState({visibility: false})
   }
 
-  render() {
+  render () {
     let key
     let nextStage
     switch (this.props.stage) {
       case 'seguimiento':
-        if (this.props.forumStage === 'votacion-abierta') {
-          nextStage = 'votacion-abierta'
-          key = 'abierta'
-        } else {
-          nextStage = 'votacion-cerrada'
-          key = 'cerrada'
-        }
-        break;
-      case 'votacion-abierta':
-        key = 'seguimiento'
-        nextStage = 'seguimiento'
-        break;
+        nextStage = 'votacion-cerrada'
+        key = 'cerrada'
+        break
       case 'votacion-cerrada':
         key = 'seguimiento'
         nextStage = 'seguimiento'
-        break;
+        break
     }
 
     return (
