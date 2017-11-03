@@ -14,17 +14,17 @@ export default class BannerVotacion extends Component {
 
   componentWillMount () {
     forumStore.findOneByName('presupuesto')
-    .then((forum) => {
-      this.setState({
-        stageVotacion: forum.extra.stage,
-        cierreVotacion: new Date(forum.extra.cierre)
+      .then((forum) => {
+        this.setState({
+          stageVotacion: forum.extra.stage,
+          cierreVotacion: new Date(forum.extra.cierre)
+        })
       })
-    })
-    .catch(() => {
-      this.setState({
-        visibility: false
+      .catch(() => {
+        this.setState({
+          visibility: false
+        })
       })
-    })
   }
 
   closeBanner = (event) => {
@@ -32,8 +32,15 @@ export default class BannerVotacion extends Component {
     this.setState({ visibility: false })
   }
 
+  checkLocation = () => {
+    if (window.location.pathname === '/signup' || window.location.pathname === '/signin') {
+      return true
+    }
+    return false
+  }
+
   render () {
-    if (this.state.stageVotacion !== 'votacion-abierta') return null
+    if (this.state.stageVotacion !== 'votacion-abierta' || this.checkLocation()) return null
     const { cierreVotacion } = this.state
     return this.state.visibility && (
       <div className='container-banner'>
@@ -44,7 +51,7 @@ export default class BannerVotacion extends Component {
         <h3>
           Tenés tiempo hasta el {cierreVotacion && cierreVotacion.toLocaleDateString()}
         </h3>
-        <Link 
+        <Link
           to='/presupuesto'
           onClick={this.closeBanner}
           className='btn btn-primary btn-m banner-button'>
