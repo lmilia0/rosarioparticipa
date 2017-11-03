@@ -10,22 +10,25 @@ import ErrorModal from './error-modal/component'
 class VoteModal extends Component {
   constructor (props) {
     super(props)
-    const edad = JSON.parse(localStorage.getItem('ppStatus')).padron
     this.state = {
-      etapa: (sessionStorage.getItem('pp-etapa') || (edad === 'joven' ? 'voto-joven' : 'primer-voto-adulto')),
+      show: false,
+      etapa: sessionStorage.getItem('pp-etapa'),
       proyectos: JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
     }
   }
 
+  componentWillMount () {
+    const { topic } = this.props
+    sessionStorage.setItem('pp-padron', topic.attrs.edad)
+    this.setState({ etapa: (sessionStorage.getItem('pp-etapa') || (topic.attrs.edad === 'joven' ? 'voto-joven' : 'primer-voto-adulto')) })
+  }
+
+  componentWillReceiveProps ({ show }) { this.setState({ show }) }
+
   // Save Topic Adulto in Session Storage
   saveTopic = () => {
     const proyectos = JSON.stringify([...this.state.proyectos, this.props.topic])
-    if (this.state.etapa === 'voto-joven') {
-      if (proyectos.length === 3) {
-        console.log('guardar proyectos')
-        return
-      }
-    } else {
+    if (this.state.etapa === 'primer-voto-adulto') {
       sessionStorage.setItem('pp-etapa', 'segundo-voto-adulto')
     }
     sessionStorage.setItem('pp-proyectos', proyectos)
@@ -38,7 +41,7 @@ class VoteModal extends Component {
     let barriales = ''
     const distrito = proyectos[0].attrs.district.toUpperCase()
     const ppStatus = JSON.parse(localStorage.getItem('ppStatus'))
-    const edad = ppStatus.padron.toUpperCase()
+    const edad = sessionStorage.getItem('pp-padron').toUpperCase()
 
     if (edad === 'ADULTO') {
       distritales = proyectos.find((p) => p.attrs.area === '0').attrs.number
@@ -68,12 +71,12 @@ class VoteModal extends Component {
       .then((res) => res.json())
       .then((res) => {
         if (res.status === 200) {
-          ppStatus.puede_votar = false
-          ppStatus.msj = 'Ya participaste con este documento.'
+          ppStatus.createdAt = false
           localStorage.setItem('ppStatus', JSON.stringify(ppStatus))
-          bus.emit('pp-status', ppStatus)
+          bus.emit('refresh-status', ppStatus)
           sessionStorage.removeItem('pp-proyectos')
           sessionStorage.removeItem('pp-etapa')
+          sessionStorage.removeItem('pp-padron')
           this.setState({ etapa: 'confirmacion' })
         } else if (res.status !== 400) {
           this.setState({ etapa: 'error' })
@@ -85,7 +88,14 @@ class VoteModal extends Component {
       })
   }
 
+  toggleVotesModal = () => {
+    this.setState({
+      show: !this.state.show
+    })
+  }
+
   render () {
+    if (!this.state.show) return null
     const proyectos = [...this.state.proyectos, this.props.topic]
     return (
       <div className='modal-wrapper'>
@@ -96,31 +106,31 @@ class VoteModal extends Component {
             proyectos={proyectos}
             saveTopic={this.saveTopic}
             sendTopics={this.sendTopics}
-            toggleVotesModal={this.props.toggleVotesModal} />
+            toggleVotesModal={this.toggleVotesModal} />
         }
         {/* Primer Voto Adulto */
           this.state.etapa === 'primer-voto-adulto' &&
           <FirstVote
             topic={this.props.topic}
             saveTopic={this.saveTopic}
-            toggleVotesModal={this.props.toggleVotesModal} />
+            toggleVotesModal={this.toggleVotesModal} />
         }
         {/* Segundo Voto Adulto */
           this.state.etapa === 'segundo-voto-adulto' &&
           <SecondVote
             proyectos={proyectos}
             sendTopics={this.sendTopics}
-            toggleVotesModal={this.props.toggleVotesModal} />
+            toggleVotesModal={this.toggleVotesModal} />
         }
         {/* Confirmación */
           this.state.etapa === 'confirmacion' &&
           <Confirmacion
-            toggleVotesModal={this.props.toggleVotesModal} />
+            toggleVotesModal={this.toggleVotesModal} />
         }
         {/* Error */
           this.state.etapa === 'error' &&
           <ErrorModal
-            toggleVotesModal={this.props.toggleVotesModal} />
+            toggleVotesModal={this.toggleVotesModal} />
         }
       </div>
     )

@@ -19,57 +19,61 @@ mensaje.estado.12 = El período de votación ha finalizado.
 export default function ppHOC(Layout) {
   class PPStatus extends Component {
     _fetchingStatus = false
-    componentWillReceiveProps (props) {
-      if (!props.user.state.pending) {
-        if (props.user.state.fulfilled) {
-          let ppStatus = JSON.parse(localStorage.getItem('ppStatus')) || {}
+    componentWillReceiveProps ({ user: { state } }) {
+      this.manageStatus(state)
+    }
 
-          if (
-            !this._fetchingStatus &&
-            (ppStatus.id !== props.user.state.value.id ||
-              (ppStatus.createdAt && this.tokenExpired(ppStatus.createdAt)))
-          ) {
-            this._fetchingStatus = true
-            this.getStatus()
-              .then((status) => {
-                ppStatus = {}
-                ppStatus.id = props.user.state.value.id
-                ppStatus.createdAt = new Date()
-                if (status.failed) ppStatus.fetchFailed = true
-                if (!status.puede_votar || (!status.padron_adulto && !status.padron_joven)) {
-                  ppStatus.puede_votar = false
-                  ppStatus.msj = status.mensaje_aclaratorio
-                  ppStatus.msj_code = status.codigo_mensaje
-                } else {
-                  ppStatus.puede_votar = true
-                  ppStatus.padron = status.padron_adulto ? 'adulto' : 'joven'
-                  ppStatus.msj = status.mensaje_aclaratorio
-                  ppStatus.msj_code = status.codigo_mensaje
-                }
-                localStorage.setItem('ppStatus', JSON.stringify(ppStatus))
-                this._fetchingStatus = false
-                bus.emit('pp-status', ppStatus)
-              })
-              .catch((err) => {
-                this._fetchingStatus = false
-                bus.emit('pp-status', {})
-                localStorage.removeItem('ppStatus')
-              })
-          }
-        } else {
-          bus.emit('pp-status', {})
-          localStorage.removeItem('ppStatus')
-        }
-      }
+    componentWillMount () {
+      const { user: { state } } = this.props
+      bus.on('refresh-status', () => this.manageStatus(state))
     }
 
     tokenExpired (tokenDate) {
+      if (!tokenDate) return true
       const unaHora = 60 * 60 * 1000
       const delta = ((new Date()) - new Date(tokenDate))
       return delta > unaHora
     }
 
-    getStatus () {
+    manageStatus (userState) {
+      if (userState.pending) return
+
+      if (userState.fulfilled) {
+        let ppStatus = JSON.parse(localStorage.getItem('ppStatus')) || {}
+        let cambioUser = false
+        if (ppStatus.id !== userState.value.id) {
+          bus.emit('pp-status', {})
+          localStorage.removeItem('ppStatus')
+          cambioUser = true
+        }
+
+        if (!this._fetchingStatus && (this.tokenExpired(ppStatus.createdAt) || cambioUser)) {
+          this._fetchingStatus = true
+
+          this.makeStatus(userState.value.id)
+            .then((status) => {
+              this._fetchingStatus = false
+              if (status.failed) {
+                bus.emit('pp-status', {})
+                localStorage.removeItem('ppStatus')
+              } else {
+                localStorage.setItem('ppStatus', JSON.stringify(status))
+                bus.emit('pp-status', status)
+              }
+            })
+            .catch((err) => {
+              this._fetchingStatus = false
+              bus.emit('pp-status', {})
+              localStorage.removeItem('ppStatus')
+            })
+        }
+      } else {
+        bus.emit('pp-status', {})
+        localStorage.removeItem('ppStatus')
+      }
+    }
+
+    makeStatus (id) {
       return fetch(
         '/ext/api/participatory-budget/status',
         {
@@ -78,10 +82,26 @@ export default function ppHOC(Layout) {
         })
         .then((res) => res.json())
         .then((res) => {
-          if (res.status !== 200) {
+          if (res.status !== 200 || !res.results) {
             return { failed: true }
           }
-          return res.results || {}
+          return res.results
+        })
+        .then((status) => {
+          if (status.failed) return status
+          let ppStatus = {}
+          
+          ppStatus.id = id
+          ppStatus.createdAt = new Date()
+          ppStatus.puede_votar = status.puede_votar
+          ppStatus.msj = status.mensaje_aclaratorio
+          ppStatus.padron = status.padron_adulto && status.padron_joven ? 'mixto' : status.padron_adulto ? 'adulto' : status.padron_joven ? 'joven' : ''
+
+          return ppStatus
+        })
+        .catch((err) => {
+          console.log(err)
+          return { failed: true }
         })
     }
 

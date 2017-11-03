@@ -1,18 +1,13 @@
 import React, { Component } from 'react'
-import EnProceso from './en-proceso'
 
 let texts = {
-  abierta: {
-    title: 'Votá los proyectos del Presupuesto Participativo 2018! Tenés tiempo hasta el xx/xx',
-    btn: 'Explorá los proyectos y votá'
-  },
   cerrada: {
     title: '¡Mirá los resultados de la votación de proyectos del Presupuesto Participativo 2018!',
     btn: 'Ver proyectos'
   },
   seguimiento: {
     title: '¡También podés ver el estado de los proyectos ganadores de años anteriores!',
-    btn: 'Seguimiento de proyectos anteriores'
+    btn: 'Seguimiento de proyectos'
   }
 }
 export default class BannerPresupuesto extends Component {
@@ -50,23 +45,12 @@ export default class BannerPresupuesto extends Component {
   }
 
   render () {
-    const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
-    const votacionEnProceso = proyectos.length > 0
     let key
     let nextStage
     switch (this.props.stage) {
       case 'seguimiento':
-        if (this.props.forumStage === 'votacion-abierta') {
-          nextStage = 'votacion-abierta'
-          key = 'abierta'
-        } else {
-          nextStage = 'votacion-cerrada'
-          key = 'cerrada'
-        }
-        break
-      case 'votacion-abierta':
-        key = 'seguimiento'
-        nextStage = 'seguimiento'
+        nextStage = 'votacion-cerrada'
+        key = 'cerrada'
         break
       case 'votacion-cerrada':
         key = 'seguimiento'
@@ -74,12 +58,10 @@ export default class BannerPresupuesto extends Component {
         break
     }
 
-    if (votacionEnProceso) return <EnProceso />
-
     return (
       this.state.visibility && (
         <div className='container-banner'>
-          <button className='closes' onClick={this.closeBanner}>x</button>
+          <button className='closes' onClick={this.closeBanner}>×</button>
           <h3>
             {texts[key].title}
           </h3>

@@ -148,7 +148,7 @@ class HomeIdeas extends Component {
       })
     }
 
-    topicStore.support(id).then((res) => {
+    topicStore.vote(id, 'apoyo-idea').then((res) => {
       let topics = this.state.topics
       let index = topics.findIndex((t) => t.id === id)
       topics[index] = res
