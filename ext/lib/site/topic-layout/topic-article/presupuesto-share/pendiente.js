@@ -45,44 +45,44 @@ export default class Pendiente extends Component {
               <div className='pending-body'>
                 { topic.attrs.budget && <span className='presu-proyecto'>{prettyPrice(topic.attrs.budget)}</span>}
                 { // User is not logged in
-                //   !user.state.value &&
-                //     <Link
-                //       to={{
-                //         pathname: '/signin',
-                //         query: { ref: window.location.pathname }
-                //       }}
-                //       className='btn btn-active btn-pending'>
-                //       Votar este proyecto
-                //     </Link>
-                // }
-                // { // User logged in & status failed, falling back to old system
-                //   (user.state.value && profileIsComplete && statusFail) &&
-                //     <a href='/ext/api/participatory-budget/vote-platform' className='btn btn-active btn-pending'>Votar este proyecto</a>
-                // }
-                // { // User logged in & can't vote === true
-                //   (user.state.value && profileIsComplete && !canVote && !message && !statusFail) &&
-                //     <p className='no-vote-msj'>No estás habilitado para votar.</p>
-                // }
-                // { // User logged in & can't vote === true
-                //   (user.state.value && profileIsComplete && !canVote && message) &&
-                //     <p
-                //       className='no-vote-msj'
-                //       dangerouslySetInnerHTML={{ __html: message }} />
-                // }
-                // { // User logged in, profile complete, not Voted and wrong padron
-                //   (user.state.value && profileIsComplete && canVote && topic.attrs.edad !== padron) &&
-                //     <p className='no-vote-msj'>{messagePadron}</p>
-                // }
-                // { // User is logged in & Profile is not complete
-                //   (user.state.value && !profileIsComplete) &&
-                //     <button
-                //       onClick={() => { location.hash = '#completar-datos' }}
-                //       className='btn btn-active btn-pending'>
-                //       Votar este proyecto
-                //     </button>
-                // }
-                // { // User logged in, profile complete, not Voted and right padron
-                //   (user.state.value && profileIsComplete && canVote && topic.attrs.edad === padron) &&
+                  !user.state.value &&
+                    <Link
+                      to={{
+                        pathname: '/signin',
+                        query: { ref: window.location.pathname }
+                      }}
+                      className='btn btn-active btn-pending'>
+                      Votar este proyecto
+                    </Link>
+                }
+                { // User logged in & status failed, falling back to old system
+                  (user.state.value && profileIsComplete && statusFail) &&
+                    <a href='/ext/api/participatory-budget/vote-platform' className='btn btn-active btn-pending'>Votar este proyecto</a>
+                }
+                { // User logged in & can't vote === true
+                  (user.state.value && profileIsComplete && !canVote && !message && !statusFail) &&
+                    <p className='no-vote-msj'>No estás habilitado para votar.</p>
+                }
+                { // User logged in & can't vote === true
+                  (user.state.value && profileIsComplete && !canVote && message) &&
+                    <p
+                      className='no-vote-msj'
+                      dangerouslySetInnerHTML={{ __html: message }} />
+                }
+                { // User logged in, profile complete, not Voted and wrong padron
+                  (user.state.value && profileIsComplete && canVote && topic.attrs.edad !== padron) &&
+                    <p className='no-vote-msj'>{messagePadron}</p>
+                }
+                { // User is logged in & Profile is not complete
+                  (user.state.value && !profileIsComplete) &&
+                    <button
+                      onClick={() => { location.hash = '#completar-datos' }}
+                      className='btn btn-active btn-pending'>
+                      Votar este proyecto
+                    </button>
+                }
+                { // User logged in, profile complete, not Voted and right padron
+                  (user.state.value && profileIsComplete && canVote && topic.attrs.edad === padron) &&
                     <button onClick={toggleVotesModal} className='btn btn-active btn-pending'>Votar este proyecto</button>
                 }
               </div>
