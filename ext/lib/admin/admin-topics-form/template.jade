@@ -31,7 +31,7 @@
           label= t('admin-topics-form.label.mediaTitle')
           - if (te('admin-topics-form.description.mediaTitle'))
             span.help-text= t('admin-topics-form.description.mediaTitle')
-          input.form-control(type='text', maxlength='53', id='mediaTitle', name='mediaTitle', placeholder=t('admin-topics-form.label.mediaTitle'), value=topic.mediaTitle, validate='required')
+          input.form-control(type='text', maxlength='200', id='mediaTitle', name='mediaTitle', placeholder=t('admin-topics-form.label.mediaTitle'), value=topic.mediaTitle, validate='required')
         
         - if (forum.name !== 'presupuesto')
           .form-group
