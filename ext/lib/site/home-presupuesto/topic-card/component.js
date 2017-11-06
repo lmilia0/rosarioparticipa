@@ -99,7 +99,7 @@ export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked }) 
         </div>
         <div className='topic-card-body'>
           <h1 className='topic-card-title'>
-            <Link to={topic.url}>{topic.mediaTitle}</Link>
+            <Link title={topic.mediaTitle} to={topic.url}>{topic.mediaTitle}</Link>
           </h1>
           {topic.attrs && topic.attrs.description && (
             <p className='topic-card-description'>
