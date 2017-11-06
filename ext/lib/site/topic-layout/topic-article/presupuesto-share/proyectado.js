@@ -1,5 +1,5 @@
 import React from 'react'
-import { prettyPrice, twitText } from './utils.js'
+import { prettyPrice, twitText, prettyNumber } from './utils.js'
 
 export default ({ topic, forum }) => {
   const topicUrl = `${window.location.origin}${topic.url}`
@@ -25,6 +25,7 @@ export default ({ topic, forum }) => {
         {
           topic.attrs && (
             <div className='box-content-item'>
+              {topic.attrs.number && <span className='numero-proyecto'>{`${prettyNumber(topic.attrs.number)}`}</span>}
               {topic.attrs.anio && <span className='anio-proyecto'><span className='box-content-bold'>{`${anioTitle}:`}</span> {`${topic.attrs.anio}`}</span> }
               {topic.attrs.budget && <span className='presu-proyecto'><span className='box-content-bold'>Presupuesto asignado:</span> {`${prettyPrice(topic.attrs.budget)}`}</span>}
             </div>
