@@ -22,13 +22,20 @@
     z-index: 75
 
   .modal-vote-dialog
-    padding: 10px 50px
+    pointer-events: auto
+    width: 60vw
+    max-height: 90vh
+    margin: 0 20px
+    padding: 10px 30px
     background-color: #fff
     z-index: 99
+    overflow: auto
+    position: relative
     -webkit-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.33)
     -moz-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.33)
     box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.33)
     @media screen and (max-width: 550px)
+      margin: 0
       width: 340px
       // margin-left: -170px
       padding: 10px
@@ -44,9 +51,11 @@
       font-weight: 400
       margin-right: -40px
       cursor: pointer 
-      float: right
+      position: absolute
+      right: 50px
       @media screen and (max-width: 550px)
         margin-right: 10px
+        right: 0
       &:hover
         color: #1daeec
         
@@ -55,7 +64,7 @@
       flex-direction: column
       flex-wrap: wrap
       justify-content: center
-      align-items: space-around
+      // align-items: space-around
       margin: 0 auto
       clear: both
       // max-width: 500px
@@ -64,18 +73,22 @@
       h3 
         text-align: center
         font-weight: 500
-        font-size: 36px
+        font-size: 1.8em
         color: #1daeec
-        margin: 5px
+        margin: 15px 5px 5px
         @media screen and (max-width: 550px)
           font-size: 24px
+      .error-title
+        margin-top: 30px
       p
+        font-size: 0.9em
         color: rgba(0,0,0,0.5)
-        font-weight: 200
+        font-weight: 400
         margin: 10px 0
         text-align: center
-        @media screen and (max-width: 550px)
-          font-size: 0.8em
+      p.reminder
+        margin-bottom: 0
+        
       .btn-pending
         color: #fff
         background-color: rgb(32,199,89)
@@ -102,3 +115,8 @@
       .proyectos-container
         display: flex
         justify-content: center
+        flex-wrap: wrap
+        
+        .presupuesto-topic-card
+          width: 240px
+          overflow: auto
