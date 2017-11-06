@@ -28,15 +28,11 @@ export default class TopicGrid extends Component {
     const currentPadron = sessionStorage.getItem('pp-padron')
     if (selectedTopics.length <= 0) return
     if (currentPadron === 'joven') {
-      console.log('padron joven va a distrito')
       Anchor.goTo('distrito')
     } else {
-      console.log('es padron adulto')
       if (selectedTopics[0].attrs.area === '0') {
-        console.log('padron adulto va a distrito')
         Anchor.goTo('barrio')
       } else {
-        console.log('padron adulto va a barrio')
         Anchor.goTo('distrito')
       }
     }
