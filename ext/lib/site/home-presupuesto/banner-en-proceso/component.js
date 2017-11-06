@@ -5,6 +5,7 @@ function cancelarVotacion (goTo) {
   return () => {
     sessionStorage.removeItem('pp-proyectos')
     sessionStorage.removeItem('pp-etapa')
+    sessionStorage.removeItem('pp-padron')
     goTo('/presupuesto')
   }
 }

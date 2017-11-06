@@ -338,7 +338,7 @@ class FiltersNavbar extends Component {
               <a
                 className='link-stage'
                 onClick={() => { this.props.changeStage(this.props.forumStage) }}>
-                  {'< Volver a Votación'}
+                  Volver a Votación
               </a>
             )
           }
@@ -543,7 +543,7 @@ function DistritoFilter (props) {
       <div>
         <a className='link-stage'
           onClick={() => { changeStage('seguimiento') }}>
-          {'< Ir a Seguimiento de Proyectos'}
+          Ir a Seguimiento de Proyectos
         </a>
         <div className='stage-header'>
           <div className='pp-stage'>
@@ -579,7 +579,7 @@ function DistritoFilter (props) {
         <div>
           <a className='link-stage'
             onClick={() => { changeStage('seguimiento') }}>
-            {'< Ir a Seguimiento de Proyectos'}
+            Ir a Seguimiento de Proyectos
           </a>
           <div className='stage-header'>
             <div className='pp-stage'>

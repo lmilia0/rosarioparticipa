@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import TopicCard from '../topic-card/component'
+import Anchor from '../../anchor'
 
 export default class TopicGrid extends Component {
   constructor (props) {
@@ -9,9 +10,36 @@ export default class TopicGrid extends Component {
     }
   }
 
-  componentWillReceiveProps () {
+  componentWillReceiveProps (props) {
     const selectedTopics = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
-    if (selectedTopics.lenght !== this.state.selectedTopics.length) this.setState({ selectedTopics })
+    if (selectedTopics.length !== this.state.selectedTopics.length) {
+      this.setState({ selectedTopics })
+    }
+  }
+
+  componentDidUpdate (props) {
+    const topics = props.districts.reduce((agg, district) => agg.concat(district.topics), [])
+    console.log('did update', topics)
+    if (topics.length > 0) this.setScroll()
+  }
+
+  setScroll () {
+    const selectedTopics = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
+    const currentPadron = sessionStorage.getItem('pp-padron')
+    if (selectedTopics.length <= 0) return
+    if (currentPadron === 'joven') {
+      console.log('padron joven va a distrito')
+      Anchor.goTo('distrito')
+    } else {
+      console.log('es padron adulto')
+      if (selectedTopics[0].attrs.area === '0') {
+        console.log('padron adulto va a distrito')
+        Anchor.goTo('barrio')
+      } else {
+        console.log('padron adulto va a barrio')
+        Anchor.goTo('distrito')
+      }
+    }
   }
 
   isSelected = (topic) => {
@@ -32,6 +60,7 @@ export default class TopicGrid extends Component {
   }
 
   render () {
+    console.log('render')
     if (!this.props.districts && !this.props.districts.length) return null
     let districts = this.props.districts.filter((d) => d.topics.length > 0)
     return (
@@ -57,41 +86,45 @@ export default class TopicGrid extends Component {
               <div key={i}>
                 {district.topics.filter((topic) => topic.attrs.area === '0').length > 0 &&
                   <div className='topics-section'>
-                    <h2 className='topics-section-container topics-section-title'>
-                      Proyectos para tu distrito
-                    </h2>
-                    <div className='topics-container'>
-                      {this.props.loading && <div className='loader' />}
-                      {district.topics
-                        .filter((topic) => topic.attrs.area === '0')
-                        .map((topic, i) =>
-                          <TopicCard
-                            key={i}
-                            topic={topic}
-                            isSelected={this.isSelected(topic)}
-                            fadeTopic={!this.isAvailable(topic)} />
-                        )}
-                    </div>
+                    <Anchor id='distrito'>
+                      <h2 className='topics-section-container topics-section-title'>
+                        Proyectos para tu distrito
+                      </h2>
+                      <div className='topics-container'>
+                        {this.props.loading && <div className='loader' />}
+                        {district.topics
+                          .filter((topic) => topic.attrs.area === '0')
+                          .map((topic, i) =>
+                            <TopicCard
+                              key={i}
+                              topic={topic}
+                              isSelected={this.isSelected(topic)}
+                              fadeTopic={!this.isAvailable(topic)} />
+                          )}
+                      </div>
+                    </Anchor>
                   </div>
                 }
                 {district.topics.filter((topic) => topic.attrs.area !== '0').length > 0 &&
                   // Div Area Barrial
                   <div className='topics-section'>
-                    <h2 className='topics-section-container topics-section-title topics-section-title-area'>
-                      Proyectos para tu barrio
-                    </h2>
-                    <div className='topics-container topics-container-area'>
-                      {this.props.loading && <div className='loader' />}
-                      {district.topics
-                        .filter((topic) => topic.attrs.area !== '0')
-                        .map((topic, i) =>
-                          <TopicCard
-                            key={i}
-                            topic={topic}
-                            isSelected={this.isSelected(topic)}
-                            fadeTopic={!this.isAvailable(topic)} />
-                        )}
-                    </div>
+                    <Anchor id='barrio'>
+                      <h2 className='topics-section-container topics-section-title topics-section-title-area'>
+                        Proyectos para tu barrio
+                      </h2>
+                      <div className='topics-container topics-container-area'>
+                        {this.props.loading && <div className='loader' />}
+                        {district.topics
+                          .filter((topic) => topic.attrs.area !== '0')
+                          .map((topic, i) =>
+                            <TopicCard
+                              key={i}
+                              topic={topic}
+                              isSelected={this.isSelected(topic)}
+                              fadeTopic={!this.isAvailable(topic)} />
+                          )}
+                      </div>
+                    </Anchor>
                   </div>
                 }
               </div>
@@ -101,20 +134,22 @@ export default class TopicGrid extends Component {
           (this.props.stage === 'votacion-abierta' && this.props.age.includes('joven')) && (
             districts.map((district, i) =>
               <div key={i} className='topics-section'>
-                <h2 className='topics-section-container topics-section-title topics-section-title-joven'>
-                  Proyectos para tu distrito
-                </h2>
-                <div className='topics-container'>
-                  {this.props.loading && <div className='loader' />}
-                  {district.topics
-                    .map((topic, i) =>
-                      <TopicCard
-                        key={i}
-                        topic={topic}
-                        isSelected={this.isSelected(topic)}
-                        fadeTopic={!this.isAvailable(topic)} />
-                    )}
-                </div>
+                <Anchor id='distrito'>
+                  <h2 className='topics-section-container topics-section-title topics-section-title-joven'>
+                    Proyectos para tu distrito
+                  </h2>
+                  <div className='topics-container'>
+                    {this.props.loading && <div className='loader' />}
+                    {district.topics
+                      .map((topic, i) =>
+                        <TopicCard
+                          key={i}
+                          topic={topic}
+                          isSelected={this.isSelected(topic)}
+                          fadeTopic={!this.isAvailable(topic)} />
+                      )}
+                  </div>
+                </Anchor>
               </div>
             )
           )}
