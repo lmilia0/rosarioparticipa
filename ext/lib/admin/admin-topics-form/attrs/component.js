@@ -10,7 +10,8 @@ export default ({ forum, topic }) => {
         if (topic && topic.attrs && topic.attrs.hasOwnProperty(attr.name)) {
           val = topic.attrs[attr.name]
         }
-          return <FormInput key={attr.name} {...attr} value={val}/>      
+        console.log(attr.name, val)
+        return <FormInput key={attr.name} {...attr} value={val} />
       })}
     </div>
   )
@@ -39,7 +40,7 @@ forms.Number = ({
       max={max}
       required={mandatory}
       validate={mandatory && 'required'}
-      disabled={name === 'votes' ? true : false} />
+      disabled={name === 'votes'} />
   </div>
 )
 
@@ -59,7 +60,7 @@ forms.String = ({
       className='form-control'
       type='text'
       name={`attrs.${name}`}
-      defaultValue={name ==='anio' ? '2018' : value}
+      defaultValue={name === 'anio' ? (value || '2018') : value}
       minLength={min}
       maxLength={max}
       required={mandatory}
