@@ -19,8 +19,9 @@ class VoteModal extends Component {
 
   componentWillMount () {
     const { topic } = this.props
+    const etapaDefault = ((topic.attrs && topic.attrs.edad === 'joven') ? 'voto-joven' : 'primer-voto-adulto')
     sessionStorage.setItem('pp-padron', topic.attrs.edad)
-    this.setState({ etapa: (sessionStorage.getItem('pp-etapa') || (topic.attrs.edad === 'joven' ? 'voto-joven' : 'primer-voto-adulto')) })
+    this.setState({ etapa: (sessionStorage.getItem('pp-etapa') || etapaDefault) })
   }
 
   componentWillReceiveProps ({ show }) { this.setState({ show }) }

@@ -74,7 +74,7 @@ export default class TopicGrid extends Component {
             )
           )}
         { // Grid Stage Votacion Abierta Presupuesto Participativo Adulto
-          (this.props.stage === 'votacion-abierta' && this.props.age.includes('adulto')) && (
+          (this.props.stage === 'votacion-abierta' && this.props.age === 'adulto') && (
             districts.map((district, i) =>
               // Div Distrito
               <div key={i}>
@@ -125,7 +125,7 @@ export default class TopicGrid extends Component {
             )
           )}
         { // Grid Stage Votacion Abierta Presupuesto Participativo Joven
-          (this.props.stage === 'votacion-abierta' && this.props.age.includes('joven')) && (
+          (this.props.stage === 'votacion-abierta' && this.props.age === 'joven') && (
             districts.map((district, i) =>
               <div key={i} className='topics-section'>
                 <Anchor id='distrito'>
