@@ -160,7 +160,7 @@ class HomePresupuesto extends Component {
   }
 
   filtroDistritoCategoria = (distrito) => {
-    return this.state.distrito.includes(distrito.name)
+    return ~this.state.distrito.indexOf(distrito.name)
   }
 
   filtroAnio = (topic) => {
