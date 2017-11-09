@@ -16,5 +16,5 @@ ENV LOCALE=es \
   SOCIALSHARE_IMAGE=https://cldup.com/quswAMk9Ns.png \
   SOCIALSHARE_SITE_NAME='Rosario Participa' \
   SOCIALSHARE_TWITTER_USERNAME='@RParticipa' \
-  SOCIALSHARE_SITE_DESCRIPTION='Plataforma de participión de la Municipalidad de Rosario' \
+  SOCIALSHARE_SITE_DESCRIPTION='Plataforma de participación de la ciudad de Rosario' \
   BLACK_LIST_EMAILS=pokemail.net,grr.la,yopmail.com,sharklasers.com
