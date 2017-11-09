@@ -112,7 +112,7 @@ export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked }) 
             className='fb share'
             params={{
               picture: topic.coverUrl,
-              link: window.location.href
+              link: topicUrl
             }} />
           <a target='_blank' href={`http://twitter.com/share?text=${twitterDesc}&url=${topicUrl}`} rel='noopener noreferrer' className='tw share'> </a>
         </div>
