@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, browserHistory } from 'react-router'
+import { Link } from 'react-router'
 import user from 'lib/site/user/user'
 
 export default class SignupComplete extends Component {
@@ -18,10 +18,9 @@ export default class SignupComplete extends Component {
       data: {
         cod_doc: extra.cod_doc || '',
         sexo: extra.sexo || '',
-        nro_doc: extra.nro_doc || null
+        nro_doc: extra.nro_doc || ''
       }
     }
-    
   }
 
   handleForm = (evt) => {
@@ -78,16 +77,13 @@ export default class SignupComplete extends Component {
 
   handleInputNumberChange = (evt) => {
     const input = evt.target
-    const name = input.getAttribute('name')
-    const value = input.value.replace(/[^0-9]/g, '')
-
-    const data = Object.assign({}, this.state.data, {
-      [name]: value
+    const value = prettyNumber(input.value.replace(/[^0-9]/g, ''))
+    const data = Object.assign({}, this.state.data, { nro_doc: value })
+    this.setState({ data }, () => {
+      // arregla movimiento del cursor mientras se escribe, en android
+      setTimeout(() => input.setSelectionRange(value.length, value.length), 0)
     })
-
-    this.setState({ data })
   }
-
 
   render () {
     return (
@@ -149,7 +145,7 @@ export default class SignupComplete extends Component {
                 id='nro_doc'
                 maxLength='10'
                 onChange={this.handleInputNumberChange}
-                value={prettyNumber(this.state.data.nro_doc) || ''}
+                value={this.state.data.nro_doc}
                 disabled={this.state.loading || this.state.nro_doc_disabled}
                 placeholder='Número de documento'
                 required />
