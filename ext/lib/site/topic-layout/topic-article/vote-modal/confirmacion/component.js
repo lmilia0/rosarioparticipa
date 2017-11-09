@@ -1,7 +1,7 @@
 import React from 'react'
 import { SharerFacebook } from 'ext/lib/site/sharer'
 
-export default ({ topic, edad, toggleVotesModal }) => (
+export default ({ edad, toggleVotesModal }) => (
   <div className='modal-confirmation'>
     <a className='close-modal' onClick={toggleVotesModal}>X</a>
     <div className='confirmation-wrapper'>
@@ -12,10 +12,9 @@ export default ({ topic, edad, toggleVotesModal }) => (
         <SharerFacebook
           className='fb'
           params={{
-            picture: topic.coverUrl,
-            link: window.location.origin + topic.url
+            link: window.location.origin + '/presupuesto'
           }} />
-        <a target='_blank' href={`http://twitter.com/share?text=${encodeURIComponent(`Mirá el proyecto que quiero para mi barrio #YoVotoPorMiBarrio `)}&url=${window.location.origin}${topic.url}`} rel='noopener noreferrer' className='tw'></a>
+        <a target='_blank' href={`http://twitter.com/share?text=${encodeURIComponent(`Ya voté en el Presupuesto Participativo 2018 de Rosario. Participá entrando aquí! #YoVotoPorMiBarrio`)}&url=${window.location.origin}/presupuesto`} rel='noopener noreferrer' className='tw'></a>
       </div>
       <a className='return' href='/presupuesto'>Volver a los proyectos</a>
     </div>
