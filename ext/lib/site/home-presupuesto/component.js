@@ -103,6 +103,7 @@ class HomePresupuesto extends Component {
               .filter(this.filtroDistrito(distrito.name))
               .sort(byState)
               .sort(byEdad)
+              .sort(byArea)
           : []
 
         return distrito
@@ -224,16 +225,6 @@ class HomePresupuesto extends Component {
 
 export default userConnector(HomePresupuesto)
 
-function byNumber (a, b) {
-  if (!(a.attrs && a.attrs.number)) return -1
-  if (!(b.attrs && b.attrs.number)) return 1
-  return a.attrs.number > b.attrs.number
-    ? 1
-    : a.attrs.number < b.attrs.number
-    ? -1
-    : 0
-}
-
 function estadoNum (e) {
   switch (e) {
     case 'terminado':
@@ -259,4 +250,12 @@ function byState (a, b) {
 
 function byEdad (a, b) {
   return a.attrs.edad === 'joven' ? 1 : -1
+}
+
+function byArea (a, b) {
+  let ae = a.attrs ? a.attrs.area : ''
+  let be = b.attrs ? b.attrs.area : ''
+  return ae > be
+    ? 1
+    : -1
 }

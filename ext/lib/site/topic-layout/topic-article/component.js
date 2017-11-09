@@ -80,10 +80,11 @@ class TopicArticle extends Component {
           <div onClick={hideSidebar} className='topic-overlay' />
         )}
         <Header topic={topic} isIdea={forum.name === 'ideas'} />
-        <VoteModal
-          topic={topic}
-          forum={forum}
-          show={this.state.showVoteModal} />
+        {forum.name === 'presupuesto' &&
+          <VoteModal
+            topic={topic}
+            forum={forum}
+            show={this.state.showVoteModal} />}
         <div className='proyecto-main container'>
           <div className='row'>
             <div className='proyecto-content col-lg-8'>

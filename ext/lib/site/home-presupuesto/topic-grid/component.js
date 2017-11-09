@@ -19,7 +19,6 @@ export default class TopicGrid extends Component {
 
   componentDidUpdate (props) {
     const topics = props.districts.reduce((agg, district) => agg.concat(district.topics), [])
-    console.log('did update', topics)
     if (topics.length > 0) this.setScroll()
   }
 
@@ -56,7 +55,6 @@ export default class TopicGrid extends Component {
   }
 
   render () {
-    console.log('render')
     if (!this.props.districts && !this.props.districts.length) return null
     let districts = this.props.districts.filter((d) => d.topics.length > 0)
     return (

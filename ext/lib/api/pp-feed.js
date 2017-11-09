@@ -31,7 +31,7 @@ function getFeed (req, res, next) {
   Forum.find({ name: 'presupuesto' })
     .then((forum) => {
       Topic.aggregate([
-        { $sort: { 'attrs.district': 1 } },
+        { $sort: { 'attrs.district': 1, 'attrs.area': 1 } },
         { $match: {
             forum: forum[0]._id,
             deletedAt: null,
