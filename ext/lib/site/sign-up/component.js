@@ -18,9 +18,10 @@ export default class SignUp extends Component {
       email: '',
       cod_doc: '',
       sexo: '',
-      nro_doc: null,
+      nro_doc: '',
       pass: '',
-      captchaKey: ''
+      captchaKey: '',
+      docValido: false
     }
     this.onSuccess = this.onSuccess.bind(this)
     this.onFail = this.onFail.bind(this)
@@ -60,6 +61,10 @@ export default class SignUp extends Component {
   }
 
   onFail (err) {
+    console.log(err)
+    if (err[0].code === 'DUPLICATED_VOTING_DATA') {
+      err = [`El número de documento ingresado se encuentra utilizado por una cuenta con la dirección de correo ${err[0].docOwner}, si esa dirección no te pertenece o notas algún problema comunicate a participa@rosario.gob.ar`]
+    }
     this.setState({ loading: false, errors: err, captchaKey: '' })
   }
 
@@ -119,8 +124,9 @@ export default class SignUp extends Component {
   }
 
   onCaptchaChange (key) {
-    this.setState({ captchaKey: key })
-    this.refs.submitBtn.click()
+    this.setState({ captchaKey: key }, () => {
+      this.refs.submitBtn.click()
+    })
   }
 
   avoidScroll () {
@@ -133,7 +139,9 @@ export default class SignUp extends Component {
     if (config.recaptchaSite && !this.state.captchaKey) {
       this.captcha.execute()
       e.preventDefault()
+      return
     }
+    console.log('submit cliked')
   }
 
   render () {
