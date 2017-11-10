@@ -77,11 +77,12 @@ export default class SignupComplete extends Component {
 
   handleInputNumberChange = (evt) => {
     const input = evt.target
-    const value = prettyNumber(input.value.replace(/[^0-9]/g, ''))
+    const value = input.value.replace(/[^0-9]/g, '')
     const data = Object.assign({}, this.state.data, { nro_doc: value })
     this.setState({ data }, () => {
       // arregla movimiento del cursor mientras se escribe, en android
-      setTimeout(() => input.setSelectionRange(value.length, value.length), 0)
+      const displayValue = prettyNumber(value)
+      setTimeout(() => input.setSelectionRange(displayValue.length, displayValue.length), 0)
     })
   }
 
@@ -145,13 +146,13 @@ export default class SignupComplete extends Component {
                 id='nro_doc'
                 maxLength='10'
                 onChange={this.handleInputNumberChange}
-                value={this.state.data.nro_doc}
+                value={prettyNumber(this.state.data.nro_doc)}
                 disabled={this.state.loading || this.state.nro_doc_disabled}
                 placeholder='Número de documento'
                 required />
             </div>
           </div>
-          
+
           <div className='form-actions'>
             {!user.profileIsComplete() && (
               <button
