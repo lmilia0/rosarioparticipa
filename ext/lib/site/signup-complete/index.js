@@ -59,19 +59,19 @@ function postSignupCompleteParseData (req, res, next) {
 },
 function postSignupCompleteCheckDocDuplication (req, res, next) {
   User
-    .find(Object.assign({
-      _id: { $ne: req.user._id }
-    }, req.extraData))
-    .count()
+    .find({ 'extra.nro_doc': req.extraData['extra.nro_doc'] })
     .exec()
-    .then(function (count) {
-      if (count === 0) return next()
+    .then(function (users) {
+      if (users.length === 0) return next()
+      let ofuscatedEmail = users[0].email.split('@')
+      ofuscatedEmail[0] = ofuscatedEmail[0].split('')[0] + '******'
+      ofuscatedEmail = ofuscatedEmail.join('@')
 
       res.json(400, {
         status: 400,
         error: {
           code: 'DUPLICATED_VOTING_DATA',
-          message: 'Ya hay otra persona registrada con los mismos datos.'
+          docOwner: ofuscatedEmail
         }
       })
     })
