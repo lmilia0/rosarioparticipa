@@ -49,7 +49,7 @@ export default class SignupComplete extends Component {
 
         if (body.error && body.error.code === 'DUPLICATED_VOTING_DATA') {
           this.setState({
-            error: 'Ya hay otra persona registrada con los mismos datos. Si cree que es un inconveniente comuníquese con nosotros a participa@rosario.gob.ar',
+            error: `El número de documento ingresado se encuentra utilizado por una cuenta con la dirección de correo ${body.error.docOwner}, si esa dirección no te pertenece o notas algún problema comunicate a participa@rosario.gob.ar`,
             loading: false
           })
         } else {
