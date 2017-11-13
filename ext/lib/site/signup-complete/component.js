@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, browserHistory } from 'react-router'
+import { Link } from 'react-router'
 import user from 'lib/site/user/user'
 
 export default class SignupComplete extends Component {
@@ -18,10 +18,9 @@ export default class SignupComplete extends Component {
       data: {
         cod_doc: extra.cod_doc || '',
         sexo: extra.sexo || '',
-        nro_doc: extra.nro_doc || null
+        nro_doc: extra.nro_doc || ''
       }
     }
-    
   }
 
   handleForm = (evt) => {
@@ -50,7 +49,7 @@ export default class SignupComplete extends Component {
 
         if (body.error && body.error.code === 'DUPLICATED_VOTING_DATA') {
           this.setState({
-            error: 'Ya hay otra persona registrada con los mismos datos. Si cree que es un inconveniente comuníquese con nosotros a participa@rosario.gob.ar',
+            error: `El número de documento ingresado se encuentra utilizado por una cuenta con la dirección de correo ${body.error.docOwner}, si esa dirección no te pertenece o notas algún problema comunicate a participa@rosario.gob.ar`,
             loading: false
           })
         } else {
@@ -78,16 +77,14 @@ export default class SignupComplete extends Component {
 
   handleInputNumberChange = (evt) => {
     const input = evt.target
-    const name = input.getAttribute('name')
     const value = input.value.replace(/[^0-9]/g, '')
-
-    const data = Object.assign({}, this.state.data, {
-      [name]: value
+    const data = Object.assign({}, this.state.data, { nro_doc: value })
+    this.setState({ data }, () => {
+      // arregla movimiento del cursor mientras se escribe, en android
+      const displayValue = prettyNumber(value)
+      setTimeout(() => input.setSelectionRange(displayValue.length, displayValue.length), 0)
     })
-
-    this.setState({ data })
   }
-
 
   render () {
     return (
@@ -149,13 +146,13 @@ export default class SignupComplete extends Component {
                 id='nro_doc'
                 maxLength='10'
                 onChange={this.handleInputNumberChange}
-                value={prettyNumber(this.state.data.nro_doc) || ''}
+                value={prettyNumber(this.state.data.nro_doc)}
                 disabled={this.state.loading || this.state.nro_doc_disabled}
                 placeholder='Número de documento'
                 required />
             </div>
           </div>
-          
+
           <div className='form-actions'>
             {!user.profileIsComplete() && (
               <button

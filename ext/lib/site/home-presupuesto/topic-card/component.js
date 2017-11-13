@@ -10,6 +10,7 @@ const distritos = (function () {
 })()
 
 export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked }) => {
+  topic.url = `/presupuesto/topic/${topic.id}`
   const topicUrl = `${window.location.origin}${topic.url}`
 
   const twitterDesc = twitText()
@@ -66,7 +67,6 @@ export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked }) 
   if (topic.attrs.edad === 'joven') classNames.push('topic-joven')
   if (topic.attrs.area !== '0' && topic.attrs.edad !== 'joven') classNames.push('topic-area')
   if (topic.attrs.area === '0' && topic.attrs.edad !== 'joven') classNames.push('topic-distrito')
-  topic.url = `/presupuesto/topic/${topic.id}`
   return (
     <div onClick={chequearClick(router.push)} className={classNames.join(' ')}>
       {(fadeTopic || isSelected || isBlocked) && <div className='block-overlay' />}
@@ -112,7 +112,7 @@ export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked }) 
             className='fb share'
             params={{
               picture: topic.coverUrl,
-              link: window.location.href
+              link: topicUrl
             }} />
           <a target='_blank' href={`http://twitter.com/share?text=${twitterDesc}&url=${topicUrl}`} rel='noopener noreferrer' className='tw share'> </a>
         </div>

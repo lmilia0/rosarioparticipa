@@ -61,7 +61,6 @@ import {SharerFacebook} from 'ext/lib/site/sharer'
   }} />
 */
 export function SharerFacebook (args) {
-
   if (!config.ext.facebookClientID) return null
 
   const params = args.params

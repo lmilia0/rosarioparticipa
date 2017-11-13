@@ -126,7 +126,7 @@ class VoteModal extends Component {
         {/* Confirmación */
           this.state.etapa === 'confirmacion' &&
           <Confirmacion
-            toggleVotesModal={this.toggleVotesModal} />
+             toggleVotesModal={this.toggleVotesModal} />
         }
         {/* Error */
           this.state.etapa === 'error' &&
