@@ -47,7 +47,7 @@ export default class Pendiente extends Component {
                 { topic.attrs.budget && <span className='presu-proyecto'>{prettyPrice(topic.attrs.budget)}</span>}
                 { // User is not logged in
                   !user.state.value &&
-                  <div='not-logged-body'>
+                  <div className='not-logged-body'>
                     <Link
                       to={{
                         pathname: '/signin',
