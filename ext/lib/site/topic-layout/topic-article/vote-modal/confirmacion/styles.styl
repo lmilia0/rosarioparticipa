@@ -29,8 +29,10 @@
       text-align: center
       justify-content: center
       align-items: center
-      padding: 0
+      padding: 0 40px
       margin-top: 50px
+      @media screen and (max-width: 768px)
+        padding: 0 0
       .vote-img
         background-image: unquote("url('/ext/lib/site/topic-layout/topic-article/vote-modal/confirmacion/voto.svg')")
         height: 150px
@@ -41,12 +43,15 @@
         font-size: 36px
         font-weight: 500
         line-height: 1.1
-        margin: 0
+        margin: 0 0 16px
         @media screen and (max-width: 550px)
           font-size: 24px
       p
         font-size: 1.2em
         color: rgba(0,0,0,0.5)
+      .sharing-text
+        color: #1daeec
+        font-size: 1.4rem
       .return
         color: rgba(0,0,0,0.5)
         cursor: pointer
@@ -60,19 +65,21 @@
       .social-sharing
         margin-bottom: 10px
         .fb
-          width: 30px
-          height: 20px
+          width: 35px
+          height: 30px
           margin-right: 5px
-          background-size: auto 20px
+          background-size: auto 25px
           background-repeat: no-repeat
           background-position: center
           display: inline-block
-          background-image: url(/ext/lib/site/home-presupuesto/topic-card/fb-icon.svg)
+          background-image: url(/ext/lib/site/topic-layout/topic-article/vote-modal/confirmacion/fb-icon.svg)
+          cursor: pointer
         .tw
           width: 35px
-          height: 20px
-          background-size: auto 20px
+          height: 30px
+          background-size: auto 25px
           background-repeat: no-repeat
           background-position: center
           display: inline-block
-          background-image: url(/ext/lib/site/home-presupuesto/topic-card/tw-icon.svg)
+          background-image: url(/ext/lib/site/topic-layout/topic-article/vote-modal/confirmacion/tw-icon.svg)
+          cursor: pointer
