@@ -47,6 +47,7 @@ export default class Pendiente extends Component {
                 { topic.attrs.budget && <span className='presu-proyecto'>{prettyPrice(topic.attrs.budget)}</span>}
                 { // User is not logged in
                   !user.state.value &&
+                  <div='not-logged-body'>
                     <Link
                       to={{
                         pathname: '/signin',
@@ -55,6 +56,8 @@ export default class Pendiente extends Component {
                       className='btn btn-active btn-pending'>
                       Votar este proyecto
                     </Link>
+                    <p className='register-text'> Debés estar registrado para votar </p>
+                  </div>
                 }
                 { // User is logged in & Profile is not complete
                   (user.state.value && !profileIsComplete) &&

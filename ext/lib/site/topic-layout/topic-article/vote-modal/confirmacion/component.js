@@ -8,6 +8,7 @@ export default ({ edad, toggleVotesModal }) => (
       <div className='vote-img' />
       <h3 className='confirmation-title'>¡Tu voto fue enviado!</h3>
       <p>Gracias por participar</p>
+      <p className='sharing-text'>¡Invitá a otros a votar!</p>
       <div className='social-sharing'>
         <SharerFacebook
           className='fb'
