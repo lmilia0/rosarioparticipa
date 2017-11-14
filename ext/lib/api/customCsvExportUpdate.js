@@ -50,8 +50,7 @@ app.get('/topics.csv',
           `"${escapeTxt('DESCONOCIDO')}"`,
           `"${escapeTxt(topic.attrs.description)}"`,
           `"${topic.coverUrl}"`,
-          `"${escapeTxt(topic.attrs.edad.charAt(0).toUpperCase() +(topic.attrs.edad).slice(1).toLowerCase())}"`,
-          topic.id
+          `"${escapeTxt(topic.attrs.edad.charAt(0).toUpperCase() + (topic.attrs.edad).slice(1).toLowerCase())}"`
         ])
       }
     })
@@ -77,44 +76,47 @@ app.post('/topics.csv',
   middlewares.forums.privileges.canChangeTopics,
   function postCsv (req, res) {
     const body = req.body.csv
-    csv2json(body, function (err, json) {
+    csv2json(body, function (err, csvTopics) {
       if (err) {
         log('get csv: array to csv error', err)
         return res.status(500).end()
       }
 
-      Topic.find({ _id: { $in: json.map((t) => t['Topic Id']) } })
-        .then((topics) => {
-          return Promise.all(
-            topics.map((topic) => {
-              const _topic = json.find((t) => {
-                return t['Topic Id'] === getIdString(topic._id)
-              })
-
-              const attrs = {
-                district: _topic['Nombre Distrito'].replace(/"/g, '').toLowerCase(),
-                area: _topic[' Area Barrial Numero'].replace(/"/g, ''),
-                budget: Number(_topic[' Area Barrial Presupuesto'].replace(/"/g, '')),
-                number: Number(_topic[' Numero Proyecto'].replace(/"/g, '')),
-                votes: Number(_topic[' Cantidad Votos'].replace(/"/g, '')),
-                state: _topic[' incluido (SI/NO)'] === 'SI' ? 'proyectado' : 'perdedor'
-              }
-
-              Object.keys(attrs).forEach((k) => {
-                topic.set(`attrs.${k}`, attrs[k])
-              })
-
-              return topic.save()
-            })
-          )
-        }
-        )
-        .then((topics) => {
-          res.status(200).end()
+      Promise.all(csvTopics.map((csvTopic) => {
+        if (!~csvTopic['Jornada'].indexOf('2018')) return Promise.resolve()
+        const anio = '2018'
+        const distrito = csvTopic['Nombre Distrito'].toLowerCase()
+        const numero = +csvTopic[' Numero Proyecto']
+        const jornada = csvTopic['Jornada'] || ''
+        const edad = ~jornada.toLowerCase().indexOf('joven')
+          ? 'joven'
+          : ~jornada.toLowerCase().indexOf('adulto')
+            ? 'adulto'
+            : null
+        return Topic.findOne({
+          'attrs.anio': anio,
+          'attrs.district': distrito,
+          'attrs.number': numero,
+          'attrs.edad': edad
         })
-        .catch((err) => {
-          log('post csv: find topics error', err)
-          res.status(500).end()
+        .then((topic) => {
+          if (!topic) return
+          const state = csvTopic[' incluido (SI/NO)\r'] === 'SI,'
+            ? 'proyectado'
+            : csvTopic[' incluido (SI/NO)\r'] === 'NO,'
+              ? 'perdedor'
+              : null
+          topic.set('attrs.votes', +csvTopic[' Cantidad Votos'])
+          topic.set('attrs.state', state)
+          return topic.save()
         })
+      }))
+      .then((topics) => {
+        res.status(200).end()
+      })
+      .catch((err) => {
+        log('post csv: find and modify topic from csv error', err)
+        res.status(500).end()
+      })
     }, { delimiter: { wrap: '"' } })
   })
