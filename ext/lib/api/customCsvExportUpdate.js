@@ -101,9 +101,9 @@ app.post('/topics.csv',
         })
         .then((topic) => {
           if (!topic) return
-          const state = csvTopic[' incluido (SI/NO)\r'] === 'SI,'
+          const state = ~csvTopic[' incluido (SI/NO)\r'].indexOf('SI')
             ? 'proyectado'
-            : csvTopic[' incluido (SI/NO)\r'] === 'NO,'
+            : ~csvTopic[' incluido (SI/NO)\r'].indexOf('NO')
               ? 'perdedor'
               : null
           topic.set('attrs.votes', +csvTopic[' Cantidad Votos'])
