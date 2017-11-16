@@ -20,6 +20,7 @@ var app = module.exports = express()
 
 app.post('/signup',
 function postSignupCompleteCheckDocDuplication (req, res, next) {
+  if (!req.body.extra.nro_doc) return next()
   req.body.extra.nro_doc = Number(req.body.extra.nro_doc)
   if (typeof req.body.extra.nro_doc !== 'number') {
     return res.json(500, {
