@@ -112,9 +112,9 @@ export default class SignUp extends Component {
   }
 
   checkIdNumber (e) {
+    if (!e.target.value) return
     const idNumber = parseInt(e.target.value)
     const expr = new RegExp('^[0-9]{7,8}$')
-
     if (!expr.test(idNumber)) {
       e.target.setCustomValidity('Ingresa un número de documento válido')
     } else {
@@ -141,7 +141,6 @@ export default class SignUp extends Component {
       e.preventDefault()
       return
     }
-    console.log('submit cliked')
   }
 
   render () {
