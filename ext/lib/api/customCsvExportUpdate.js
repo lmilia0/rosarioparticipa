@@ -3,7 +3,6 @@ const debug = require('debug')
 const json2csv = require('json-2-csv').json2csv
 const csv2json = require('json-2-csv').csv2json
 const Topic = require('lib/models').Topic
-const getIdString = require('lib/utils').getIdString
 const middlewares = require('lib/api-v2/middlewares')
 
 const log = debug('democracyos:api:topic:csv')
@@ -84,6 +83,11 @@ app.post('/topics.csv',
 
       Promise.all(csvTopics.map((csvTopic) => {
         if (!~csvTopic['Jornada'].indexOf('2018')) return Promise.resolve()
+        Object.keys(csvTopic).forEach((csvKey) => {
+          if (csvKey.indexOf('/r')) {
+            csvTopic[csvKey.replace(/\r/g, '')] = csvTopic[csvKey]
+          }
+        })
         const anio = '2018'
         const distrito = csvTopic['Nombre Distrito'].toLowerCase()
         const numero = +csvTopic[' Numero Proyecto']
@@ -101,9 +105,9 @@ app.post('/topics.csv',
         })
         .then((topic) => {
           if (!topic) return
-          const state = ~csvTopic[' incluido (SI/NO)\r'].indexOf('SI')
+          const state = ~csvTopic[' incluido (SI/NO)'].indexOf('SI')
             ? 'proyectado'
-            : ~csvTopic[' incluido (SI/NO)\r'].indexOf('NO')
+            : ~csvTopic[' incluido (SI/NO)'].indexOf('NO')
               ? 'perdedor'
               : null
           topic.set('attrs.votes', +csvTopic[' Cantidad Votos'])
