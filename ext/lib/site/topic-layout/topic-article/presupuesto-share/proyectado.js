@@ -16,7 +16,7 @@ export default ({ topic, forum }) => {
 
   return (
     <aside className='presupuesto-share ganador'>
-      {topic.attrs && (
+      {state && (state !== 'Perdedor') && (
         <div className='box-header'>
           <span> {`${stateTitle}: ${state}`}</span>
         </div>
