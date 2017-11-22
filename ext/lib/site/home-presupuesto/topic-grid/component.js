@@ -165,7 +165,7 @@ export default class TopicGrid extends Component {
                         return topic.attrs.area === '0'
                       })
                       .map((topic, i) => 
-                      <TopicCard key={i} topic={topic} />
+                        <TopicCard key={i} topic={topic} stage={this.props.stage} />
                     )}
                   </div>
                 </div>
@@ -183,7 +183,7 @@ export default class TopicGrid extends Component {
                       .filter((topic)=>{
                         return topic.attrs.area !== '0'
                       })
-                      .map((topic, i) => <TopicCard key={i} topic={topic} />
+                      .map((topic, i) => <TopicCard key={i} topic={topic} stage={this.props.stage} />
                     )}
                   </div>
                 </div>
