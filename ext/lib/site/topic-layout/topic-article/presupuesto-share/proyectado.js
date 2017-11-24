@@ -14,6 +14,10 @@ export default ({ topic, forum }) => {
       .title
   }
 
+  if (topic.attrs && topic.attrs.state && topic.attrs.state === 'proyectado' && forum.extra.stage === 'votacion-cerrada') {
+    state = 'Ganador'
+  }
+
   return (
     <aside className='presupuesto-share ganador'>
       {state && (state !== 'Perdedor') && (
