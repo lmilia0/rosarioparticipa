@@ -3,181 +3,113 @@ import ReactOutsideEvent from 'react-outside-event'
 import update from 'immutability-helper'
 import distritos from '../distritos.json'
 
-let distritoCurrent = ''
-
 class FiltersNavbar extends Component {
   constructor (props) {
     super(props)
 
+    const defaultFilters = {
+      distrito: {
+        centro: false,
+        noroeste: false,
+        norte: false,
+        oeste: false,
+        sudoeste: false,
+        sur: false
+      },
+      edad: {
+        adulto: false,
+        joven: false
+      },
+      anio: {
+        proyectos2017: false,
+        proyectos2018: false
+      },
+      estado: {
+        proyectado: false,
+        ejecutandose: false,
+        terminado: false
+      }
+    }
+
     this.state = {
-
-      distrito: 'centro',
-
-      appliedFilters: {
-        distrito: {
-          centro: false,
-          noroeste: false,
-          norte: false,
-          oeste: false,
-          sudoeste: false,
-          sur: false
-        },
-        edad: {
-          adulto: false,
-          joven: false
-        },
-        anio: {
-          proyectos2017: false,
-          proyectos2018: false
-        },
-        estado: {
-          proyectado: false,
-          ejecutandose: false,
-          terminado: false
-        }
-      },
-
-      selectFilters: {
-        distrito: {
-          centro: false,
-          noroeste: false,
-          norte: false,
-          oeste: false,
-          sudoeste: false,
-          sur: false
-        },
-        edad: {
-          adulto: false,
-          joven: false
-        },
-        anio: {
-          proyectos2017: false,
-          proyectos2018: false
-        },
-        estado: {
-          proyectado: false,
-          ejecutandose: false,
-          terminado: false
-        }
-      },
-
+      appliedFilters: defaultFilters,
+      selectFilters: defaultFilters,
       badges: {
         distrito: 0,
         edad: 0,
         anio: 0,
         estado: 0
       },
-
       activeDropdown: ''
     }
+    this.filtersCache = null
   }
 
   componentWillReceiveProps (props) {
+    let stageType = props.stage === 'seguimiento' ? 'seguimiento' : 'votacion'
+    let memFilters = JSON.parse(sessionStorage.getItem(`filtros-${stageType}`))
+    const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
+    const votacionEnProceso = proyectos.length > 0
+    if (!votacionEnProceso && memFilters) {
+      this.setState({ appliedFilters: memFilters }, this.exposeFilters)
+      return
+    }
     if (props.stage !== this.props.stage) {
+      let nextFilters = {
+        distrito: {
+          centro: false,
+          noroeste: false,
+          norte: false,
+          oeste: false,
+          sudoeste: false,
+          sur: false
+        },
+        edad: {
+          adulto: false,
+          joven: false
+        },
+        anio: {
+          proyectos2017: false,
+          proyectos2018: false
+        },
+        estado: {
+          proyectado: false,
+          ejecutandose: false,
+          terminado: false
+        }
+      }
+
       switch (props.stage) {
         case 'votacion-abierta':
           const ppStatus = JSON.parse(localStorage.getItem('ppStatus')) || {}
-          const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
-          const votacionEnProceso = proyectos.length > 0
           const distrito = votacionEnProceso ? proyectos[0].attrs.district : 'centro'
           const padron = ppStatus.padron === 'mixto'
             ? sessionStorage.getItem('pp-padron') || 'adulto'
             : ppStatus.padron || 'adulto'
 
-          this.setState({
-            appliedFilters: update(this.state.appliedFilters, {
-              distrito: {
-                centro: { $set: votacionEnProceso ? distrito === 'centro' : true },
-                noroeste: { $set: votacionEnProceso ? distrito === 'noroeste' : false },
-                norte: { $set: votacionEnProceso ? distrito === 'norte' : false },
-                oeste: { $set: votacionEnProceso ? distrito === 'oeste' : false },
-                sudoeste: { $set: votacionEnProceso ? distrito === 'sudoeste' : false },
-                sur: { $set: votacionEnProceso ? distrito === 'sur' : false }
-              },
-              edad: {
-                adulto: { $set: padron === 'adulto' },
-                joven: { $set: padron === 'joven' }
-              },
-              estado: {
-                proyectado: { $set: false },
-                ejecutandose: { $set: false },
-                terminado: { $set: false },
-                pendiente: { $set: true },
-                perdedor: { $set: false }
-              },
-              anio: {
-                proyectos2017: { $set: false },
-                proyectos2018: { $set: true }
-              }
-            }),
-            distrito
-          }, this.exposeFilters)
+          nextFilters.estado.pendiente = true
+          nextFilters.anio.proyectos2018 = true
+          nextFilters.edad[padron] = true
+          nextFilters.distrito[distrito] = true
           break
         case 'votacion-cerrada':
-          this.setState({
-            appliedFilters: update(this.state.appliedFilters, {
-              distrito: {
-                centro: { $set: true },
-                noroeste: { $set: false },
-                norte: { $set: false },
-                oeste: { $set: false },
-                sudoeste: { $set: false },
-                sur: { $set: false }
-              },
-              edad: {
-                adulto: { $set: true },
-                joven: { $set: false }
-              },
-              estado: {
-                proyectado: { $set: true },
-                ejecutandose: { $set: false },
-                terminado: { $set: false },
-                pendiente: { $set: false },
-                perdedor: { $set: true }
-              },
-              anio: {
-                proyectos2017: { $set: false },
-                proyectos2018: { $set: true }
-              }
-            })
-          }, this.exposeFilters)
+          nextFilters.estado.proyectado = true
+          nextFilters.estado.perdedor = true
+          nextFilters.anio.proyectos2017 = true
+          nextFilters.edad.adulto = true
+          nextFilters.distrito.centro = true
           break
         case 'seguimiento':
-          this.setState({
-            appliedFilters: update(this.state.appliedFilters, {
-              distrito: {
-                centro: { $set: false },
-                noroeste: { $set: false },
-                norte: { $set: false },
-                oeste: { $set: false },
-                sudoeste: { $set: false },
-                sur: { $set: false }
-              },
-              estado: {
-                proyectado: { $set: false },
-                ejecutandose: { $set: false },
-                terminado: { $set: false },
-                pendiente: { $set: false },
-                perdedor: { $set: false }
-              },
-              anio: {
-                proyectos2017: { $set: false },
-                proyectos2018: { $set: false }
-              },
-              edad: {
-                adulto: { $set: true },
-                joven: { $set: false }
-              }
-            })
-          }, this.exposeFilters)
+          nextFilters.edad.adulto = true
           break
       }
+
+      this.setState({ appliedFilters: nextFilters }, this.exposeFilters)
     }
   }
 
   // FUNCTIONS
   handleDistritoFilterChange = (distrito) => {
-    distritoCurrent = distrito.name
     // resetea los filtros
     let appliedFilters = update(this.state.appliedFilters, {
       distrito: {
@@ -190,12 +122,11 @@ class FiltersNavbar extends Component {
       }
     })
     // setea el filtro activo
-    appliedFilters.distrito[distritoCurrent] = true
+    appliedFilters.distrito[distrito.name] = true
 
     // aplica los filtros actualizados
     this.setState({
-      appliedFilters: appliedFilters,
-      distrito: distritoCurrent
+      appliedFilters: appliedFilters
     }, () => {
       this.exposeFilters()
     })
@@ -273,18 +204,30 @@ class FiltersNavbar extends Component {
   // prepara los filtros para enviar la query definitiva a la API
   exposeFilters = () => {
     let exposedFilters = this.filterCleanup(this.state.appliedFilters)
+    let stageType
+    if (!this.props.stage) return
     switch (this.props.stage) {
       case 'seguimiento':
+        stageType = 'seguimiento'
         exposedFilters.estado.pendiente = false
         exposedFilters.estado.perdedor = false
         break
       case 'votacion-abierta':
+        stageType = 'votacion'
         exposedFilters.estado.perdedor = false
         break
       case 'votacion-cerrada':
+        stageType = 'votacion'
         exposedFilters.estado.pendiente = false
         break
     }
+
+    let strFilters = JSON.stringify(exposedFilters)
+    if (this.props.stage === 'seguimiento') this.calculateBadges()
+    if (!stageType) console.log('this.props.stage', this.props.stage)
+    if (strFilters === this.filtersCache) return
+    this.filtersCache = strFilters
+    sessionStorage.setItem(`filtros-${stageType}`, strFilters)
     this.props.updateFilters(exposedFilters)
   }
 
@@ -535,7 +478,8 @@ export default ReactOutsideEvent(FiltersNavbar)
 // Navbar en votacion abierta / votacion cerrada
 
 function DistritoFilter (props) {
-  const { active, onChange, stage, appliedFilters, changeEdad, changeStage } = props
+  const { onChange, stage, appliedFilters, changeEdad, changeStage } = props
+  const active = Object.keys(appliedFilters.distrito)[Object.values(appliedFilters.distrito).map((d, i) => [d, i]).filter(d => d[0])[0][1]]
   const ppStatus = JSON.parse(localStorage.getItem('ppStatus')) || {}
   const proyectos = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
   const votacionEnProceso = proyectos.length > 0

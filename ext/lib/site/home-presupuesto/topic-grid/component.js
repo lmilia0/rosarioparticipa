@@ -25,6 +25,10 @@ export default class TopicGrid extends Component {
   setScroll () {
     const selectedTopics = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
     const currentPadron = sessionStorage.getItem('pp-padron')
+    if (selectedTopics.length <= 0 && window.innerWidth <= 630) {
+      Anchor.goTo('distrito')
+      return
+    }
     if (selectedTopics.length <= 0) return
     if (currentPadron === 'joven') {
       Anchor.goTo('distrito')
