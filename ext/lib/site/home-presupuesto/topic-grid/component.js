@@ -25,6 +25,10 @@ export default class TopicGrid extends Component {
   setScroll () {
     const selectedTopics = JSON.parse(sessionStorage.getItem('pp-proyectos')) || []
     const currentPadron = sessionStorage.getItem('pp-padron')
+    if (selectedTopics.length <= 0 && window.innerWidth <= 630) {
+      Anchor.goTo('distrito')
+      return
+    }
     if (selectedTopics.length <= 0) return
     if (currentPadron === 'joven') {
       Anchor.goTo('distrito')
@@ -165,7 +169,7 @@ export default class TopicGrid extends Component {
                         return topic.attrs.area === '0'
                       })
                       .map((topic, i) => 
-                      <TopicCard key={i} topic={topic} />
+                        <TopicCard key={i} topic={topic} stage={this.props.stage} />
                     )}
                   </div>
                 </div>
@@ -183,7 +187,7 @@ export default class TopicGrid extends Component {
                       .filter((topic)=>{
                         return topic.attrs.area !== '0'
                       })
-                      .map((topic, i) => <TopicCard key={i} topic={topic} />
+                      .map((topic, i) => <TopicCard key={i} topic={topic} stage={this.props.stage} />
                     )}
                   </div>
                 </div>

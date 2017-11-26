@@ -9,7 +9,7 @@ const distritos = (function () {
   return c
 })()
 
-export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked }) => {
+export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked, stage }) => {
   topic.url = `/presupuesto/topic/${topic.id}`
   const topicUrl = `${window.location.origin}${topic.url}`
 
@@ -33,6 +33,10 @@ export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked }) 
 
   if (topic.attrs && topic.attrs.state && estadosPP.map((e) => e.name).includes(topic.attrs.state)) {
     state = estadosPP.find((attr) => attr.name === topic.attrs.state).title
+  }
+
+  if (topic.attrs && topic.attrs.state && topic.attrs.state === 'proyectado' && stage === 'votacion-cerrada') {
+    state = 'Ganador'
   }
 
   const classNames = ['ext-topic-card', 'presupuesto-topic-card']
@@ -76,14 +80,6 @@ export default withRouter(({ topic, router, fadeTopic, isSelected, isBlocked }) 
         <div
           className='topic-card-cover'
           style={{ backgroundImage: `url(${topic.coverUrl})` }} />
-      )}
-      {topic.extra && typeof topic.extra.votes === 'number' && (
-        <div className='topic-results'>
-          <h2>{prettyDecimals(topic.extra.votes)} Votos</h2>
-          <p>
-            Proyecto {topic.attrs && topic.attrs.winner ? 'ganador' : 'presentado'}
-          </p>
-        </div>
       )}
       <div className='topic-card-info'>
         {topic.attrs && topic.attrs.state && estadosPP.map((e) => e.name).includes(topic.attrs.state) && (

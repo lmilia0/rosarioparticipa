@@ -9,7 +9,7 @@ export default ({ topic, forum, user, toggleVotesModal }) => (
         topic={topic}
         user={user}
         toggleVotesModal={toggleVotesModal} /> }
-    {['proyectado', 'ejecutandose', 'terminado'].includes(topic.attrs.state) &&
+    {['proyectado', 'ejecutandose', 'terminado', 'perdedor'].includes(topic.attrs.state) &&
       <Proyectado
         forum={forum}
         topic={topic} /> }
