@@ -95,7 +95,7 @@ class FiltersNavbar extends Component {
         case 'votacion-cerrada':
           nextFilters.estado.proyectado = true
           nextFilters.estado.perdedor = true
-          nextFilters.anio.proyectos2017 = true
+          nextFilters.anio.proyectos2018 = true
           nextFilters.edad.adulto = true
           nextFilters.distrito.centro = true
           break
