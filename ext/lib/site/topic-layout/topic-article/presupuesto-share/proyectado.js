@@ -31,6 +31,8 @@ export default ({ topic, forum }) => {
             <div className='box-content-item'>
               {topic.attrs.number && <span className='numero-proyecto'>{`${prettyNumber(topic.attrs.number)}`}</span>}
               {topic.attrs.anio && <span className='anio-proyecto'><span className='box-content-bold'>{`${anioTitle}:`}</span> {`${topic.attrs.anio}`}</span> }
+              {topic.attrs.district && <span><span className='box-content-bold'>Distrito:</span> {`${topic.attrs.district}`}</span> }
+              {(topic.attrs.area && topic.attrs.area !== "0") && <span><span className='box-content-bold'>Area:</span> {`${topic.attrs.area}`}</span> }
               {topic.attrs.budget && <span className='presu-proyecto'><span className='box-content-bold'>Presupuesto asignado:</span> {`${prettyPrice(topic.attrs.budget)}`}</span>}
             </div>
           )
