@@ -51,7 +51,7 @@ class HomeConsultas extends Component {
         forum,
         topicStore.findAll({ forum: forum.id })
       ]))
-      .then(([forum, topics]) => {
+      .then(([forum, [topics, pagination]]) => {
         let filterKey = this.state.filter
         let filtered = filter(filterKey, topics)
 
@@ -77,7 +77,7 @@ class HomeConsultas extends Component {
 
   fetchTopics = () => {
     topicStore.findAll({ forum: this.state.forum.id })
-      .then((topics) => {
+      .then(([topics, pagination]) => {
         this.setState({
           topics: filter(this.state.filter, topics)
         })
@@ -87,7 +87,7 @@ class HomeConsultas extends Component {
 
   handleFilterChange = (key) => {
     topicStore.findAll({ forum: this.state.forum.id })
-      .then((topics) => {
+      .then(([topics, pagination]) => {
         this.setState({
           filter: key,
           topics: filter(key, topics)
