@@ -1,5 +1,5 @@
 {
-  "version": "2.3.16",
+  "version": "2.3.17",
   "name": "rosariociudad-democracyos",
   "description": "Municipalidad de la Ciudad de Rosario.",
   "main": "lib/boot",
