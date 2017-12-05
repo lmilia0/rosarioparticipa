@@ -52,7 +52,7 @@ class HomeDesafios extends Component {
         forum,
         topicStore.findAll({ forum: forum.id })
       ]))
-      .then(([forum, topics]) => {
+      .then(([forum, [topics, pagination]]) => {
         let filterKey = this.state.filter
         let filtered = filter(filterKey, topics)
 
@@ -110,7 +110,7 @@ class HomeDesafios extends Component {
 
   fetchTopics = () => {
     topicStore.findAll({ forum: this.state.forum.id })
-      .then((topics) => {
+      .then(([topics, pagination]) => {
         this.setState({ topics })
       })
       .catch((err) => { throw err })
@@ -118,7 +118,7 @@ class HomeDesafios extends Component {
 
   handleFilterChange = (key) => {
     topicStore.findAll({ forum: this.state.forum.id })
-      .then((topics) => {
+      .then(([topics, pagination]) => {
         Promise.all(filter(key, topics).map(this.getTopicCount))
           .then((topics) => { this.setState({ topics, filter: key }) })
           .catch((err) => { console.log(err) })

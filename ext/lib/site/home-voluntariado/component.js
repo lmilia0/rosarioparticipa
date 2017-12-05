@@ -27,7 +27,7 @@ class HomeVoluntariados extends Component {
         forum,
         topicStore.findAll({ forum: forum.id })
       ]))
-      .then(([forum, topics]) => {
+      .then(([forum, [topics, pagination]]) => {
         const tags = topics
           .map((topic) => topic.tags)
           .reduce((tagsAcc, tags) => {
@@ -56,7 +56,7 @@ class HomeVoluntariados extends Component {
 
   fetchTopics = () => {
     topicStore.findAll({ forum: this.state.forum.id })
-      .then((topics) => {
+      .then(([topics, pagination]) => {
         this.setState({ allTopics: topics }, this.updateTopics)
       })
       .catch((err) => { throw err })

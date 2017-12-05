@@ -100,7 +100,7 @@ class HomeIdeas extends Component {
     query.limit = 20
     query.sort = filters[this.state.filter].sort
     if (u.has('tag')) query.tag = u.get('tag')
-    return topicStore.findAll(query)
+    return topicStore.findAll(query).then(([topics, pagination]) => topics)
   }
 
   paginateForward = () => {
