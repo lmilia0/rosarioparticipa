@@ -9,6 +9,7 @@ services:
       - NODE_ENV=development
       - DEBUG=democracyos*
       - MONGO_URL=mongodb://mongo/rosario
+      - STAFF=lmilia0@rosario.gov.ar
     links:
       - mongo
     ports:
